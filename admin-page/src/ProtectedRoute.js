@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import { DataContext } from "./contexts/DataContext";
 
 const ProtectedRoute = () => {
-  const isAuth = true;
+  const { isAuth } = useContext(DataContext);
   //   if (localStorage.getItem("user")) {
   //     return <Outlet />;
   //   } else {
