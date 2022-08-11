@@ -29,6 +29,7 @@ const DataContextProvider = (props) => {
     } else if (!isAuth) {
       navigate("/signin");
     }
+    // eslint-disable-next-line
   }, [isAuth]);
 
   const value = { isAuth, signin, signout };
