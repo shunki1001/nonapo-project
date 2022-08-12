@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>今すぐ担当者と繋がろう|アポ無し商談システム「ノンアポ」</title>
+
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+      name="viewport"
+    />
+    <meta name="viewport" content="width=device-width" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="assets/img/apple-icon.png"
+    />
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+    <!--     Fonts and icons     -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- CSS Files -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/component.css" rel="stylesheet" />
+
+    <meta property="og:url" content="https://non-appoint.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="" />
+    <meta
+      name="”description“"
+      content="今すぐ担当者と繋がろう|アポ無し商談システム「ノンアポ」"
+    />
+
+    <!-- <meta property="og:site_name" content="Myalarm|マイアラーム"/> -->
+    <meta
+      property="og:description"
+      content="今すぐ担当者と繋がろう|アポ無し商談システム「ノンアポ」"
+    />
+    <meta
+      property="og:image"
+      content="https://non-appoint.com/Is/093mtg-url/opg1.png"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="" />
+    <meta
+      name="twitter:title"
+      content="【只今商談受付中】アポ無し商談システム「ノンアポ」"
+    />
+    <meta
+      name="twitter:image"
+      content="https://non-appoint.com/Is/093mtg-url/opg1.png"
+    />
+    <meta name="twitter:url" content="" />
+
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <style type="text/css">
+      .footer-logo {
+        width: 100px;
+      }
+      .text-white {
+        color: #fff;
+      }
+      .text-white a {
+        color: #fff;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div
+      class="image-container set-full-height"
+      style="background-image: url('assets/img/Wg')"
+    >
+      <a href="">
+        <div class="logo-container">
+          <div class="brand">
+            <div class="logo"></div>
+          </div>
+        </div>
+      </a>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8 col-sm-offset-2">
+            <!--      Wizard container        -->
+            <div class="wizard-container">
+              <div class="card wizard-card" data-color="red" id="wizard">
+                <form action="contact.php" id="form" method="post" name="send">
+                  <div class="wizard-header">
+                    <h4 class="wizard-title">
+                      <span
+                        class="btn btn--shockwave is-active"
+                        style="padding: 9px; margin-right: 10px"
+                      ></span
+                      >担当者へコールしております。
+                    </h4>
+                    <h5>下記内容を入力してお待ちください※全て必須項目です。</h5>
+                  </div>
+                  <div class="wizard-navigation">
+                    <ul>
+                      <li><a href="#details" data-toggle="tab">情報入力</a></li>
+                      <li>
+                        <a href="#captain" data-toggle="tab">商談相手選択</a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="tab-content">
+                    <div class="tab-pane" id="details">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <h4 class="info-text">
+                            お送り頂き次第web商談させて頂きます
+                          </h4>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="material-icons">person</i>
+                            </span>
+                            <div class="form-group label-floating">
+                              <label class="control-label"
+                                >お名前<small>(required)</small></label
+                              >
+                              <input
+                                name="name"
+                                type="text"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="material-icons">email</i>
+                            </span>
+                            <div class="form-group label-floating">
+                              <label class="control-label"
+                                >メールアドレス<small>(required)</small></label
+                              >
+                              <input
+                                name="mail"
+                                type="email"
+                                class="form-control"
+                                pattern="^(?!.*(gmail|yahoo|icloud.com|outlook.com)).*$"
+                              />
+                              <span style="font-size: 8px"
+                                >※gmailなどのフリーメールは受付ておりません</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="material-icons">portrait</i>
+                            </span>
+                            <div class="form-group label-floating">
+                              <label class="control-label"
+                                >会社名<small>(required)</small></label
+                              >
+                              <input
+                                name="companyname"
+                                type="text"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="material-icons">phone</i>
+                            </span>
+                            <div class="form-group label-floating">
+                              <label class="control-label"
+                                >携帯の電話番号(ハイフンありで入力)<small
+                                  >(required)</small
+                                ></label
+                              >
+                              <input
+                                name="tel"
+                                type="tel"
+                                pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+                                class="form-control"
+                              />
+                              <small></small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-8">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="material-icons">event</i>
+                            </span>
+                            <div class="form-group label-floating">
+                              <label class="control-label"
+                                >住所<small>(required)</small></label
+                              >
+                              <input
+                                name="address"
+                                type="text"
+                                class="form-control"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="captain">
+                      <div class="col-sm-12">
+                        <h4 class="info-text">商談相手を選択してください</h4>
+                      </div>
+
+                      <div class="select-os">
+                        <div class="scroll">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <input
+                                type="radio"
+                                id="windows"
+                                name="os"
+                                value="新倉りな"
+                                class="windows"
+                                checked
+                              />
+                              <label for="windows">
+                                <div class="chat-title">
+                                  <h1 style="display: inline">
+                                    面談担当:新倉 りな
+                                  </h1>
+                                  <span
+                                    class="pull-right"
+                                    style="color: #afafaf; font-size: 25px"
+                                    id="button4"
+                                  ></span
+                                  ><br />
+                                  <span
+                                    class="btn btn--shockwave is-active"
+                                  ></span
+                                  ><span style="color: #181b31; font-size: 12px"
+                                    >オンライン</span
+                                  >
+                                  <h2 style="display: inline">
+                                    My Alarm株式会社
+                                  </h2>
+
+                                  <figure class="avatar">
+                                    <img src="./assets/img/icon06.png" />
+                                  </figure>
+                                </div>
+                              </label>
+                            </div>
+
+                            <div class="col-sm-6">
+                              <input
+                                type="radio"
+                                id="osx"
+                                name="os"
+                                value="田中　桂"
+                                class="osx"
+                                disabled
+                              />
+                              <label for="osx">
+                                <div class="chat-title">
+                                  <h1 style="display: inline">
+                                    面談担当:田中　桂
+                                  </h1>
+                                  <span
+                                    class="pull-right"
+                                    style="color: #afafaf; font-size: 25px"
+                                    id="button4"
+                                  ></span
+                                  ><br />
+                                  <span
+                                    class="btn btn--shockwave passive"
+                                  ></span
+                                  ><span style="color: #181b31; font-size: 12px"
+                                    >オフライン</span
+                                  >
+                                  <h2 style="display: inline">
+                                    My Alarm株式会社
+                                  </h2>
+
+                                  <figure class="avatar">
+                                    <img src="./assets/img/icon06.png" />
+                                  </figure>
+                                </div>
+                              </label>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <input
+                                type="radio"
+                                id="linux"
+                                name="os"
+                                value="森まりこ"
+                                class="linux"
+                              />
+                              <label for="linux">
+                                <div class="chat-title">
+                                  <h1 style="display: inline">
+                                    面談担当:森 まりこ
+                                  </h1>
+                                  <span
+                                    class="pull-right"
+                                    style="color: #afafaf; font-size: 25px"
+                                    id="button4"
+                                  ></span
+                                  ><br />
+                                  <span
+                                    class="btn btn--shockwave is-active"
+                                  ></span
+                                  ><span style="color: #181b31; font-size: 12px"
+                                    >オンライン</span
+                                  >
+                                  <h2 style="display: inline">
+                                    My Alarm株式会社
+                                  </h2>
+
+                                  <figure class="avatar">
+                                    <img src="./assets/img/icon01.png" />
+                                  </figure>
+                                </div>
+                              </label>
+                            </div>
+                            <div class="col-sm-6">
+                              <input
+                                type="radio"
+                                id="osx1"
+                                name="os"
+                                value="柴田えり"
+                                class="osx1"
+                              />
+                              <label for="osx1">
+                                <div class="chat-title">
+                                  <h1 style="display: inline">
+                                    面談担当:柴田 えり
+                                  </h1>
+                                  <span
+                                    class="pull-right"
+                                    style="color: #afafaf; font-size: 25px"
+                                    id="button4"
+                                  ></span
+                                  ><br />
+                                  <span
+                                    class="btn btn--shockwave is-active"
+                                  ></span
+                                  ><span style="color: #181b31; font-size: 12px"
+                                    >オンライン</span
+                                  >
+                                  <h2 style="display: inline">
+                                    My Alarm株式会社
+                                  </h2>
+
+                                  <figure class="avatar">
+                                    <img src="./assets/img/icon05.png" />
+                                  </figure>
+                                </div>
+                              </label>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <input
+                                type="radio"
+                                id="linux2"
+                                name="os"
+                                value="森まりこ2"
+                                class="linux2"
+                              />
+                              <label for="linux2">
+                                <div class="chat-title">
+                                  <h1 style="display: inline">
+                                    面談担当:森 まりこ
+                                  </h1>
+                                  <span
+                                    class="pull-right"
+                                    style="color: #afafaf; font-size: 25px"
+                                    id="button4"
+                                  ></span
+                                  ><br />
+                                  <span
+                                    class="btn btn--shockwave is-active"
+                                  ></span
+                                  ><span style="color: #181b31; font-size: 12px"
+                                    >オンライン</span
+                                  >
+                                  <h2 style="display: inline">
+                                    My Alarm株式会社
+                                  </h2>
+
+                                  <figure class="avatar">
+                                    <img src="./assets/img/icon01.png" />
+                                  </figure>
+                                </div>
+                              </label>
+                            </div>
+                            <div class="col-sm-6">
+                              <input
+                                type="radio"
+                                id="osx2"
+                                name="os"
+                                value="柴田えり3"
+                                class="osx2"
+                              />
+                              <label for="osx2">
+                                <div class="chat-title">
+                                  <h1 style="display: inline">
+                                    面談担当:柴田 えり
+                                  </h1>
+                                  <span
+                                    class="pull-right"
+                                    style="color: #afafaf; font-size: 25px"
+                                    id="button4"
+                                  ></span
+                                  ><br />
+                                  <span
+                                    class="btn btn--shockwave is-active"
+                                  ></span
+                                  ><span style="color: #181b31; font-size: 12px"
+                                    >オンライン</span
+                                  >
+                                  <h2 style="display: inline">
+                                    My Alarm株式会社
+                                  </h2>
+
+                                  <figure class="avatar">
+                                    <img src="./assets/img/icon05.png" />
+                                  </figure>
+                                </div>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <h4 class="info-text">
+                        宜しければ下記の商談ボタンを押してください。
+                      </h4>
+                      <!-- <p class="text-center">合格者のみ登録頂いたメールアドレスに返信させて頂きます。</p> -->
+                      <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wizard-footer">
+                    <div class="pull-right">
+                      <input
+                        type="button"
+                        id="submit"
+                        class="btn btn-next btn-fill btn-danger btn-wd"
+                        name="next"
+                        value="次へ"
+                      />
+                      <input
+                        type="submit"
+                        id="submit"
+                        class="btn btn-finish btn-fill btn-danger btn-wd"
+                        name="finish"
+                        value="商談を始める"
+                      />
+                    </div>
+                    <div class="pull-left">
+                      <input
+                        type="button"
+                        class="btn btn-previous btn-fill btn-default btn-wd"
+                        name="previous"
+                        value="戻る"
+                      />
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- wizard container -->
+          </div>
+        </div>
+        <!-- row -->
+      </div>
+      <!--  big container -->
+
+      <div class="footer">
+        <div class="container text-center text-white">
+          supported by
+          <a href="https://non-appoint.com/"
+            ><img src="assets/img/log-tp.png" class="footer-logo" /></a
+          ><br />
+          © 2022 My alarm All Rights Reserved. <br />
+          運営会社:<a href="https://myalarm.site/company">My Alarm株式会社</a
+          ><br />
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="assets/js/jquery-2.2.4.min.js" type="text/javascript"></script>
+
+  <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="assets/js/jquery.bootstrap.js" type="text/javascript"></script>
+  <script src="https://ricostacruz.com/jquery.transit/jquery.transit.min.js"></script>
+
+  <script src="assets/js/form.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <script src="assets/js/jquery.validate.min.js"></script>
+</html>
