@@ -1,11 +1,13 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-import $ from "jquery";
+import "./component.css"
+import "./style.css"
 
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import { Button, Container, FloatingLabel, Form, InputGroup }  from "react-bootstrap";
+import { Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 
 function App() {
   return (
@@ -18,16 +20,16 @@ function App() {
         </div>
       </a>
 
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-8 col-sm-offset-2">
+        <Container>
+          <Row>
+            <Col sm={{ span: 8, offset: 2 }}>
             <div className="wizard-container">
               <div className="card wizard-card" data-color="red" id="wizard">
                 <form action="contact.php" id="form" method="post" name="send">
                   <div className="wizard-header">
                     <h4 className="wizard-title">
-                      <span className="btn btn--shockwave is-active"></span>
-                      担当者へコールしております。
+                      <Button className="btn btn--shockwave is-active" style={{border: "none",borderRadius:"50%", padding: "9px", marginRight:"10px"}}></Button>
+                      担当者へコールしております
                     </h4>
                     <h5>下記内容を入力してお待ちください※全て必須項目です。</h5>
                   </div>
@@ -46,19 +48,26 @@ function App() {
                     </ul>
                   </div> */}
 
-                  <Tabs className="tab-content" defaultActiveKey="情報入力">
+                  <Tabs defaultActiveKey="情報入力">
                     <Tab id="details" eventKey="情報入力" title="情報入力">
-                      <div className="row">
-                        <div className="col-sm-12">
+                        <Row>
+                          <Col sm={{span:12}}>
                           <h4 className="info-text">
                             お送り頂き次第web商談させて頂きます
                           </h4>
-                        </div>
-                        <div className="col-sm-6">
-                          <div className="input-group">
+                          </Col>
+                          <Col sm={{span: 6}}>
+                            <InputGroup>
                             <span className="input-group-addon">
                               <i className="material-icons">person</i>
                             </span>
+                            <FloatingLabel
+                              controlId="name"
+                              label="name"
+                              className="form-group"
+                            >
+                              <Form.Control type="text" placeholder="onamae" />
+                            </FloatingLabel>
                             <div className="form-group label-floating">
                               <label className="control-label">
                                 お名前<small>(required)</small>
@@ -69,8 +78,8 @@ function App() {
                                 className="form-control"
                               />
                             </div>
-                          </div>
-                          <div className="input-group">
+                            </InputGroup>
+                            <InputGroup>
                             <span className="input-group-addon">
                               <i className="material-icons">email</i>
                             </span>
@@ -88,9 +97,10 @@ function App() {
                                 ※gmailなどのフリーメールは受付ておりません
                               </span>
                             </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-6">
+                            </InputGroup>
+                        </Col>
+
+                        <Col sm={{span: 6}}>
                           <div className="input-group">
                             <span className="input-group-addon">
                               <i className="material-icons">portrait</i>
@@ -125,8 +135,8 @@ function App() {
                               <small></small>
                             </div>
                           </div>
-                        </div>
-                        <div className="col-sm-8">
+                        </Col>
+                        <Col sm={{span: 8}}>
                           <div className="input-group">
                             <span className="input-group-addon">
                               <i className="material-icons">event</i>
@@ -142,24 +152,24 @@ function App() {
                               />
                             </div>
                           </div>
-                        </div>
-                      </div>
+                        </Col>
+                        </Row>
                     </Tab>
                     <Tab
                       id="captain"
                       eventKey="商談相手選択"
                       title="商談相手選択"
                     >
-                      <div className="col-sm-12">
+                      <Col sm={{span: 12}}>
                         <h4 className="info-text">
                           商談相手を選択してください
                         </h4>
-                      </div>
+                      </Col>
 
                       <div className="select-os">
                         <div className="scroll">
-                          <div className="row">
-                            <div className="col-sm-6">
+                          <Row>
+                          <Col sm={{span: 6}}>
                               <input
                                 type="radio"
                                 id="windows"
@@ -185,9 +195,9 @@ function App() {
                                   </figure>
                                 </div>
                               </label>
-                            </div>
+                            </Col>
 
-                            <div className="col-sm-6">
+                            <Col sm={{span: 6}}>
                               <input
                                 type="radio"
                                 id="osx"
@@ -213,10 +223,11 @@ function App() {
                                   </figure>
                                 </div>
                               </label>
-                            </div>
-                          </div>
-                          <div className="row">
-                            <div className="col-sm-6">
+                            
+                          </Col>
+                          </Row>
+                          <Row>
+                          <Col sm={{span: 6}}>
                               <input
                                 type="radio"
                                 id="linux"
@@ -241,8 +252,8 @@ function App() {
                                   </figure>
                                 </div>
                               </label>
-                            </div>
-                            <div className="col-sm-6">
+                            </Col>
+                            <Col sm={{span: 6}}>
                               <input
                                 type="radio"
                                 id="osx1"
@@ -267,8 +278,8 @@ function App() {
                                   </figure>
                                 </div>
                               </label>
-                            </div>
-                          </div>
+                            </Col>
+                          </Row>
                           <div className="row">
                             <div className="col-sm-6">
                               <input
@@ -365,9 +376,9 @@ function App() {
                 </form>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+            </Col>
+          </Row>
+          </Container>
 
       <div className="footer">
         <div className="container text-center text-white">

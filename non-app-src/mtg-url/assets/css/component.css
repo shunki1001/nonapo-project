@@ -877,7 +877,6 @@ label.control-label {
 
 .form-group {
   padding-bottom: 7px;
-  margin: 27px 0 0 0;
 }
 .form-group .form-control {
   margin-bottom: 7px;
@@ -1092,6 +1091,7 @@ select.form-control[multiple], .form-group.is-focused select.form-control[multip
   border: 0;
   background: transparent;
   padding: 6px 15px 0px;
+  vertical-align: middle;
 }
 
 .form-group input[type=file] {
