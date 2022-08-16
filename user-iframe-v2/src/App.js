@@ -49,6 +49,8 @@ function App() {
     address: false,
   });
 
+  const [selected, setSelected] = useState("田中　桂");
+
   // 初回validationを防ぐため
   const renderCount = useRef(0);
   useEffect(() => {
@@ -258,7 +260,10 @@ function App() {
                         inputError.address ||
                         renderCount.current < 2
                       }>
-                      <PartnerCard />
+                      <PartnerCard
+                        selected={selected}
+                        setSelected={setSelected}
+                      />
                     </Tab>
                   </Tabs>
                   <div className="wizard-footer">

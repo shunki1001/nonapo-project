@@ -2,7 +2,8 @@ import { Col, Row } from "react-bootstrap";
 
 import icon01 from "../img/icon01.png";
 
-const PartnerCard = () => {
+const PartnerCard = (props) => {
+  const { selected, setSelected } = props;
   return (
     <>
       <Col sm={{ span: 12 }}>
@@ -19,6 +20,8 @@ const PartnerCard = () => {
                 name="os"
                 value="田中　桂"
                 className="osx"
+                checked={selected === "田中　桂"}
+                onChange={(e) => setSelected(e.target.value)}
               />
               <label for="osx">
                 <div className="chat-title">
@@ -42,9 +45,11 @@ const PartnerCard = () => {
                 type="radio"
                 id="osx"
                 name="os"
-                value="田中　桂"
+                value="田中　桂2"
                 className="osx"
                 disabled
+                checked={selected === "田中　桂2"}
+                onChange={(e) => setSelected(e.target.value)}
               />
               <label for="osx">
                 <div className="chat-title">
@@ -71,6 +76,8 @@ const PartnerCard = () => {
                 name="os"
                 value="森まりこ"
                 className="linux"
+                checked={selected === "森まりこ"}
+                onChange={(e) => setSelected(e.target.value)}
               />
               <label for="linux">
                 <div className="chat-title">
@@ -95,6 +102,8 @@ const PartnerCard = () => {
                 name="os"
                 value="柴田えり"
                 className="osx1"
+                checked={selected === "柴田えり"}
+                onChange={(e) => setSelected(e.target.value)}
               />
               <label for="osx1">
                 <div className="chat-title">
