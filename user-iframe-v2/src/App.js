@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/component.css";
 import "./styles/style.css";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import logTop from "./img/log-tp.png";
 
@@ -25,11 +25,94 @@ import BoxCoveringInput from "./components/BoxCoveringInpuut";
 import PartnerCard from "./components/PartnerCard";
 
 import TopText from "./components/TopText";
+import validationFunc from "./validationFunc";
 
 function App() {
   const [showBackButton, setShowBackButton] = useState(false);
   const [showNextButton, setShowNextButton] = useState(true);
   const [showSendButton, setShowSendButton] = useState(false);
+
+  const [validation, setValidation] = useState(false);
+
+  const [tabkey, setTabkey] = useState("input");
+  // タブ変化の検出state
+  const [tabkeyChange, setTabkeyChange] = useState(false);
+
+  const [name, setName] = useState("");
+  const [enterprise, setEnterprise] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+
+  // validation用state
+  const [inputError, setInputError] = useState({
+    name: false,
+    enterprise: false,
+    email: false,
+    phone: false,
+    address: false,
+  });
+
+  // 初回validationを防ぐため
+  const renderCount = useRef(0);
+  useEffect(() => {
+    renderCount.current = renderCount.current + 1;
+  }, []);
+
+  // validationレンダリング用
+  useEffect(() => {
+    if (renderCount.current > 2) {
+      if (validationFunc("name", name)) {
+        setInputError({ ...inputError, name: false });
+      } else {
+        setInputError({ ...inputError, name: true });
+      }
+    }
+    console.log(renderCount);
+  }, [name]);
+
+  useEffect(() => {
+    if (renderCount.current > 2) {
+      if (validationFunc("email", email)) {
+        setInputError({ ...inputError, email: false });
+      } else {
+        setInputError({ ...inputError, email: true });
+      }
+    }
+    console.log(renderCount);
+  }, [email]);
+  useEffect(() => {
+    if (renderCount.current > 2) {
+      if (validationFunc("enterprise", enterprise)) {
+        setInputError({ ...inputError, enterprise: false });
+      } else {
+        setInputError({ ...inputError, enterprise: true });
+      }
+    }
+    console.log(renderCount);
+  }, [enterprise]);
+
+  useEffect(() => {
+    if (renderCount.current > 2) {
+      if (validationFunc("phone", phone)) {
+        setInputError({ ...inputError, phone: false });
+      } else {
+        setInputError({ ...inputError, phone: true });
+      }
+    }
+    console.log(renderCount);
+  }, [phone]);
+
+  useEffect(() => {
+    if (renderCount.current > 2) {
+      if (validationFunc("address", address)) {
+        setInputError({ ...inputError, address: false });
+      } else {
+        setInputError({ ...inputError, address: true });
+      }
+    }
+    console.log(renderCount);
+  }, [address]);
 
   const handleClickSend = () => {
     console.log("submit button clicked!");
@@ -50,14 +133,15 @@ function App() {
           <Col md={{ span: 8, offset: 2 }}>
             <div className="wizard-container">
               <div className="card wizard-card" data-color="red" id="wizard">
-                <form action="contact.php" id="form" method="post" name="send">
+                <form id="form" name="send">
                   <TopText />
 
                   <Tabs
-                    defaultActiveKey="情報入力"
+                    activeKey={tabkey}
                     justify
+                    onSelect={(k) => setTabkey(k)}
                     className="custom-tab-nav">
-                    <Tab id="details" eventKey="情報入力" title="情報入力">
+                    <Tab id="details" eventKey="input" title="情報入力">
                       <Row>
                         <Col sm={{ span: 12 }}>
                           <h4 className="info-text">
@@ -75,6 +159,12 @@ function App() {
                               variant="standard"
                               required
                               fullWidth
+                              error={inputError.name}
+                              value={name}
+                              onChange={(e) => {
+                                setName(e.target.value);
+                                renderCount.current = renderCount.current + 1;
+                              }}
                             />
                           </BoxCoveringInput>
                           <BoxCoveringInput>
@@ -87,6 +177,12 @@ function App() {
                               variant="standard"
                               required
                               fullWidth
+                              error={inputError.email}
+                              value={email}
+                              onChange={(e) => {
+                                setEmail(e.target.value);
+                                renderCount.current = renderCount.current + 1;
+                              }}
                             />
                           </BoxCoveringInput>
                           <Typography variant="caption">
@@ -105,6 +201,12 @@ function App() {
                               variant="standard"
                               required
                               fullWidth
+                              error={inputError.enterprise}
+                              value={enterprise}
+                              onChange={(e) => {
+                                setEnterprise(e.target.value);
+                                renderCount.current = renderCount.current + 1;
+                              }}
                             />
                           </BoxCoveringInput>
                           <BoxCoveringInput>
@@ -117,6 +219,12 @@ function App() {
                               variant="standard"
                               required
                               fullWidth
+                              error={inputError.phone}
+                              value={phone}
+                              onChange={(e) => {
+                                setPhone(e.target.value);
+                                renderCount.current = renderCount.current + 1;
+                              }}
                             />
                           </BoxCoveringInput>
                         </Col>
@@ -131,6 +239,12 @@ function App() {
                               variant="standard"
                               required
                               fullWidth
+                              error={inputError.address}
+                              value={address}
+                              onChange={(e) => {
+                                setAddress(e.target.value);
+                                renderCount.current = renderCount.current + 1;
+                              }}
                             />
                           </BoxCoveringInput>
                         </Col>
@@ -138,8 +252,16 @@ function App() {
                     </Tab>
                     <Tab
                       id="captain"
-                      eventKey="商談相手選択"
-                      title="商談相手選択">
+                      eventKey="choice"
+                      title="商談相手選択"
+                      disabled={
+                        inputError.name ||
+                        inputError.email ||
+                        inputError.enterprise ||
+                        inputError.phone ||
+                        inputError.address ||
+                        renderCount.current < 2
+                      }>
                       <PartnerCard />
                     </Tab>
                   </Tabs>
@@ -148,16 +270,25 @@ function App() {
                       {showNextButton && (
                         <input
                           type="button"
-                          id="next"
+                          id="submit-input"
                           className="btn btn-next btn-fill btn-danger btn-wd"
                           name="next"
                           value="次へ"
                           onClick={() => {
-                            setShowBackButton(true);
-                            setShowNextButton(false);
-                            setShowSendButton(true);
-
-                            // formValidation();
+                            console.log(inputError.name);
+                            if (
+                              !inputError.name &&
+                              !inputError.email &&
+                              !inputError.enterprise &&
+                              !inputError.phone &&
+                              !inputError.address &&
+                              renderCount.current > 2
+                            ) {
+                              setShowBackButton(true);
+                              setShowNextButton(false);
+                              setShowSendButton(true);
+                              setTabkey("choice");
+                            }
                           }}
                         />
                       )}
@@ -183,6 +314,7 @@ function App() {
                             setShowBackButton(false);
                             setShowNextButton(true);
                             setShowSendButton(false);
+                            setTabkey("input");
                           }}
                         />
                       )}
