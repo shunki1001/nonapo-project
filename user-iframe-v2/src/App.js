@@ -32,11 +32,7 @@ function App() {
   const [showNextButton, setShowNextButton] = useState(true);
   const [showSendButton, setShowSendButton] = useState(false);
 
-  const [validation, setValidation] = useState(false);
-
   const [tabkey, setTabkey] = useState("input");
-  // タブ変化の検出state
-  const [tabkeyChange, setTabkeyChange] = useState(false);
 
   const [name, setName] = useState("");
   const [enterprise, setEnterprise] = useState("");
@@ -282,7 +278,12 @@ function App() {
                               !inputError.enterprise &&
                               !inputError.phone &&
                               !inputError.address &&
-                              renderCount.current > 2
+                              renderCount.current > 2 &&
+                              name.length > 0 &&
+                              email.length > 0 &&
+                              enterprise.length > 0 &&
+                              phone.length > 0 &&
+                              address.length > 0
                             ) {
                               setShowBackButton(true);
                               setShowNextButton(false);
