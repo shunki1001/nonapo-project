@@ -1,5 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import "./bootstrap.min.css"
 import "./component.css"
 import "./style.css"
 
@@ -20,7 +21,7 @@ function App() {
         </div>
       </a>
 
-        <Container>
+        <Container fluid>
           <Row>
             <Col sm={{ span: 8, offset: 2 }}>
             <div className="wizard-container">
@@ -61,23 +62,15 @@ function App() {
                             <span className="input-group-addon">
                               <i className="material-icons">person</i>
                             </span>
-                            <FloatingLabel
-                              controlId="name"
-                              label="name"
-                              className="form-group"
-                            >
-                              <Form.Control type="text" placeholder="onamae" />
-                            </FloatingLabel>
-                            <div className="form-group label-floating">
-                              <label className="control-label">
-                                お名前<small>(required)</small>
-                              </label>
-                              <input
-                                name="name"
-                                type="text"
-                                className="form-control"
+                            <Form.Floating className="mb-3">
+                              <Form.Control
+                                id="floatingInputCustom"
+                                type="email"
+                                placeholder="name@example.com"
                               />
-                            </div>
+                              <label className="control-label" htmlFor="floatingInputCustom">Email address</label>
+                            </Form.Floating>
+                
                             </InputGroup>
                             <InputGroup>
                             <span className="input-group-addon">
