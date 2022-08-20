@@ -14,6 +14,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: fontFamily,
+    fontSize: 14,
   },
 });
 

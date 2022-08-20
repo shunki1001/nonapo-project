@@ -1,52 +1,40 @@
-import { Box, Button, IconButton } from "@mui/material";
-import { useMediaQuery } from "react-responsive";
-import MenuIcon from "@mui/icons-material/Menu";
-import React, { useEffect, useState } from "react";
-import Menu from "./components/Menu";
+import React from "react";
 
-const drawerWidth = "240px";
+import HomeLayout from "../Layout/HomeLayout";
+import { Box, Grid } from "@mui/material";
+import PersonSetteings from "./components/PersonSetteings";
+import HelpSidebar from "./components/HelpSidebar";
 
 const Home = () => {
-  // hydrationエラー解消のため必要
-  // eslint-disable-next-line
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  // メディアクエリ
-  const isWideScreen = useMediaQuery({
-    query: "(min-width:768px)",
-  });
-  const [menuOpen, setMenuOpen] = useState(false);
   return (
-    <>
-      {isWideScreen ? (
-        // PCデザイン
-        <>
-          <Menu variant="permanent" drawerWidth={drawerWidth} />
-          <Box sx={{ ml: drawerWidth }}>ここにいろいろ入るよ</Box>
-        </>
-      ) : (
-        // スマホデザイン
-        <>
-          <Button
-            sx={{ position: "absolute" }}
-            onClick={() => setMenuOpen(true)}
-          >
-            <IconButton>
-              <MenuIcon />
-            </IconButton>
-          </Button>
-          <Menu
-            variant="temporary"
-            menuOpen={menuOpen}
-            setMenuOpen={setMenuOpen}
-            drawerWidth={drawerWidth}
-          />
-          <Box></Box>
-        </>
-      )}
-    </>
+    <HomeLayout title="商談対応者設定">
+      <Grid container sx={{ bgcolor: "transparent" }}>
+        <Grid item xs={12} sm={8}>
+          <Box
+            sx={{
+              bgcolor: "#F5F5F5",
+              borderRadius: "10px",
+              border: "none",
+              p: 3,
+            }}>
+            <PersonSetteings />
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={0.5} sx={{ bgcolor: "transparent" }}></Grid>
+        <Grid item xs={12} sm={3.5}>
+          <Box
+            sx={{
+              bgcolor: "#ffffff",
+              borderRadius: "10px",
+              border: "none",
+              boxShadow: "0px 3px 6px 0px",
+              p: 3,
+            }}>
+            <HelpSidebar />
+          </Box>
+        </Grid>
+      </Grid>
+    </HomeLayout>
   );
 };
 
