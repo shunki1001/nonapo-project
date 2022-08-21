@@ -4,12 +4,15 @@ import MailInput from "./inputComponent/MailInput";
 import ScheduleInput from "./inputComponent/ScheduleInput";
 import ThumbnailInput from "./inputComponent/ThumbnailInput";
 
-const RightColumn = () => {
+const RightColumn = (props) => {
   return (
     <Box>
       <ThumbnailInput />
       <MailInput />
-      <ScheduleInput />
+      <ScheduleInput
+        setGoogleDialog={props.setGoogleDialog}
+        setMailSetting={props.setMailSetting}
+      />
     </Box>
   );
 };

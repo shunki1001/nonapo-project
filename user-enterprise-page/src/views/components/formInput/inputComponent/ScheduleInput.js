@@ -5,7 +5,7 @@ import DateChoice from "./DateChoice";
 import GoogleCalendarChoice from "./GoogleCalendarChoice";
 
 // Todo: Timepicker で入力の制限
-const ScheduleInput = () => {
+const ScheduleInput = (props) => {
   const { isGoogleCalendar, setIsGoogleCalendar } = useContext(DataContext);
   const { endTime, setEndTime, startTime, setStartTime } =
     useContext(DataContext);
@@ -29,7 +29,11 @@ const ScheduleInput = () => {
         <Typography sx={{ display: "inline-block" }}>手動設置</Typography>
       </Box>
       <Box height="120px">
-        {isGoogleCalendar ? <GoogleCalendarChoice /> : <DateChoice />}
+        {isGoogleCalendar ? (
+          <GoogleCalendarChoice setGoogleDialog={props.setGoogleDialog} />
+        ) : (
+          <DateChoice />
+        )}
       </Box>
       <Grid container>
         <Grid item xs={12} sm={3.5}>
@@ -59,7 +63,7 @@ const ScheduleInput = () => {
           <Button
             variant="outlined"
             onClick={() => {
-              console.log("Button押された");
+              props.setMailSetting(true);
             }}
             sx={{ marginTop: "1.5em", mx: 1 }}>
             フォローメール設定

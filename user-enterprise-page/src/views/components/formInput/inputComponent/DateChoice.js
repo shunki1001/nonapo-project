@@ -1,8 +1,8 @@
-import { Checkbox } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
 import React, { useContext } from "react";
 import { DataContext } from "../../../../contexts/DataContext";
 
-const DateChoice = () => {
+const DateChoice = (props) => {
   const { dayOfWeekChoices, setDayOfWeekChoices } = useContext(DataContext);
   const { mon, tue, wed, thu, fri, sat, sun } = dayOfWeekChoices;
   const handleChange = (e) => {
@@ -13,7 +13,7 @@ const DateChoice = () => {
     console.log(dayOfWeekChoices);
   };
   return (
-    <>
+    <Box sx={{ fontSize: props.fontSize }}>
       {/* {dayOfWeekChoice.map((item) => {
         return (
           <>
@@ -33,7 +33,7 @@ const DateChoice = () => {
       <Checkbox checked={fri} onChange={handleChange} name="fri" />金
       <Checkbox checked={sat} onChange={handleChange} name="sat" />土
       <Checkbox checked={sun} onChange={handleChange} name="sun" />日
-    </>
+    </Box>
   );
 };
 

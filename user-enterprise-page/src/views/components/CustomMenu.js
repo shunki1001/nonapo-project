@@ -34,7 +34,7 @@ const menuOptions = [
 const CustomMenu = (props) => {
   const { menuOpen, setMenuOpen, variant, drawerWidth } = props;
 
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const navigate = useNavigate();
 
   const handleClickMenu = (menuItem, index) => {

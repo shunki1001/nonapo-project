@@ -94,7 +94,10 @@ const HomeLayout = (props) => {
             setMenuOpen={setMenuOpen}
             drawerWidth={drawerWidth}
           />
-          <Box sx={{ mt: 10, bgcolor: "transparent" }}>{props.children}</Box>
+          <Box sx={{ mt: 10, bgcolor: "transparent" }}>
+            設置するサイト{props.title === "商談対応者設定" && <SiteSelect />}
+            {props.children}
+          </Box>
         </>
       )}
     </>

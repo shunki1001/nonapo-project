@@ -6,8 +6,13 @@ import {
   Grid,
   Switch,
 } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { DataContext } from "../../contexts/DataContext";
+import GetTagDialog from "./Dialog/GetTagDialog";
+import GoogleDialog from "./Dialog/GoogleDialog";
+import MailSettingDialog from "./Dialog/MailSettingDialog";
+import RegistSiteDialog from "./Dialog/RegistSiteDialog";
+import ShowTagCode from "./Dialog/ShowTagCode";
 import CompanyInput from "./formInput/inputComponent/CompanyInput";
 import MainButtonInput from "./formInput/inputComponent/MainButtonInput";
 import PhoneInput from "./formInput/inputComponent/PhoneInput";
@@ -19,10 +24,15 @@ import RightColumn from "./formInput/RightColumn";
 import AccountSelect from "./selector/AccountSelect";
 
 const PersonSetteings = () => {
-  const { isFirst, setIsFirst } = useContext(DataContext);
+  const { isFirst, setIsFirst, isRegistedSite } = useContext(DataContext);
+  const [getTag, setGetTag] = useState(false);
+  const [showTag, setShowTag] = useState(false);
+  const [googleDialog, setGoogleDialog] = useState(false);
+  const [mailSetting, setMailSetting] = useState(false);
 
   const handleClickGoTag = () => {
     console.log("商談タグ発行ボタンクリック！");
+    setGetTag(true);
   };
 
   return (
@@ -49,7 +59,10 @@ const PersonSetteings = () => {
         </Grid>
         <Grid item sm={1} xs={12}></Grid>
         <Grid item sm={7} xs={12}>
-          <RightColumn />
+          <RightColumn
+            setGoogleDialog={setGoogleDialog}
+            setMailSetting={setMailSetting}
+          />
         </Grid>
       </Grid>
       <Grid container>
@@ -76,6 +89,28 @@ const PersonSetteings = () => {
       </Grid>
       <Divider sx={{ my: 2 }} />
       <InviteUrl />
+      {/* モーダルコンポーネント */}
+      {!isRegistedSite && <RegistSiteDialog />}
+      {getTag && (
+        <GetTagDialog
+          getTag={getTag}
+          setGetTag={setGetTag}
+          setShowTag={setShowTag}
+        />
+      )}
+      {showTag && <ShowTagCode showTag={showTag} setShowTag={setShowTag} />}
+      {googleDialog && (
+        <GoogleDialog
+          googleDialog={googleDialog}
+          setGoogleDialog={setGoogleDialog}
+        />
+      )}
+      {mailSetting && (
+        <MailSettingDialog
+          mailSetting={mailSetting}
+          setMailSetting={setMailSetting}
+        />
+      )}
     </>
   );
 };

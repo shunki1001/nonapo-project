@@ -38,11 +38,16 @@ const DataContextProvider = (props) => {
   // アカウント情報関係
   const [enterprise, setEnterprise] = useState("テスト株式会社　営業部");
   const [userSiteList, setUserSiteList] = useState([
-    "https://www.apple.com/jp/",
-    "https://www.google.com/",
-    "https://www.microsoft.com/ja-jp/",
+    // "https://www.apple.com/jp/",
+    // "https://www.google.com/",
+    // "https://www.microsoft.com/ja-jp/",
   ]);
-  const [userSite, setUserSite] = useState("https://www.apple.com/jp/");
+  const [userSite, setUserSite] = useState("");
+  useEffect(() => {
+    if (userSiteList.length !== 0) {
+      setUserSite(userSiteList[0]);
+    }
+  }, []);
   const [account, setAccount] = useState("ユーザー１");
   const [accountList, setAccountList] = useState([
     "ユーザー１",
@@ -50,7 +55,7 @@ const DataContextProvider = (props) => {
     "ユーザー３",
   ]);
   const [isFirst, setIsFirst] = useState(true);
-  const [avatar, setAvatar] = useState(defaultAvatar);
+  const [avatar, setAvatar] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
   const [email, setEmail] = useState("test@gmail.com");
   const [isGoogleCalendar, setIsGoogleCalendar] = useState(false);
@@ -70,11 +75,15 @@ const DataContextProvider = (props) => {
   const [url, setUrl] = useState("https://google.com");
   const [mainButton, setMainButton] = useState("アポなし商談");
   const [isOneSubButton, setIsOneSubButton] = useState(true);
+  const [googleId, setGoogleId] = useState("");
+  const [mailSubject, setMailSubject] = useState("");
+  const [mailContent, setMailContent] = useState("");
 
-  // システム側で制御するもの
+  // マスターで制御するもの
   const [InviteUrl, setInviteUrl] = useState(
     "https://non-appoint.com/Is/093mtg-url/"
   );
+  const [numberOfSites, setNumberOfSites] = useState(3);
 
   const value = {
     isAuth,
@@ -83,6 +92,7 @@ const DataContextProvider = (props) => {
     userSite,
     setUserSite,
     userSiteList,
+    setUserSiteList,
     enterprise,
     account,
     setAccount,
@@ -114,6 +124,13 @@ const DataContextProvider = (props) => {
     isOneSubButton,
     setIsOneSubButton,
     InviteUrl,
+    numberOfSites,
+    googleId,
+    setGoogleId,
+    mailSubject,
+    setMailSubject,
+    mailContent,
+    setMailContent,
   };
 
   return (

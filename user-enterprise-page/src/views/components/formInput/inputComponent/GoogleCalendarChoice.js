@@ -1,9 +1,10 @@
 import { Button, Typography } from "@mui/material";
 import React from "react";
 
-const GoogleCalendarChoice = () => {
+const GoogleCalendarChoice = (props) => {
   const handleClick = () => {
     console.log("GoogleCalendar同期ボタンクリック");
+    props.setGoogleDialog(true);
   };
   return (
     <>
