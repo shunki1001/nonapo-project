@@ -1,52 +1,19 @@
-import { Box, Button, IconButton } from "@mui/material";
-import { useMediaQuery } from "react-responsive";
-import MenuIcon from "@mui/icons-material/Menu";
-import React, { useEffect, useState } from "react";
-import Menu from "./components/Menu";
+import React, { useState } from "react";
 
-const drawerWidth = "240px";
+import DataTable from "./components/DataTable";
+
+import LabelOnTable from "./components/LabelOnTable";
+import HomeLayout from "../Layout/HomeLayout";
+import CreateModal from "./components/CreateModal";
 
 const Home = () => {
-  // hydrationエラー解消のため必要
-  // eslint-disable-next-line
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-  // メディアクエリ
-  const isWideScreen = useMediaQuery({
-    query: "(min-width:768px)",
-  });
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [newOpen, setNewOpen] = useState(false);
   return (
-    <>
-      {isWideScreen ? (
-        // PCデザイン
-        <>
-          <Menu variant="permanent" drawerWidth={drawerWidth} />
-          <Box sx={{ ml: drawerWidth }}>ここにいろいろ入るよ</Box>
-        </>
-      ) : (
-        // スマホデザイン
-        <>
-          <Button
-            sx={{ position: "absolute" }}
-            onClick={() => setMenuOpen(true)}
-          >
-            <IconButton>
-              <MenuIcon />
-            </IconButton>
-          </Button>
-          <Menu
-            variant="temporary"
-            menuOpen={menuOpen}
-            setMenuOpen={setMenuOpen}
-            drawerWidth={drawerWidth}
-          />
-          <Box></Box>
-        </>
-      )}
-    </>
+    <HomeLayout>
+      <LabelOnTable setNewOpen={setNewOpen} />
+      <DataTable />
+      <CreateModal newOpen={newOpen} setNewOpen={setNewOpen} />
+    </HomeLayout>
   );
 };
 
