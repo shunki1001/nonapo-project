@@ -1,390 +1,167 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "./bootstrap.min.css"
-import "./component.css"
-import "./style.css"
+import "./styles/ld-original.css";
+import "./styles/style.css";
+import testImage from "./img/64.png";
 
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import { Button, Container, FloatingLabel, Form, InputGroup }  from "react-bootstrap";
-import { Row } from "react-bootstrap";
-import { Col } from "react-bootstrap";
+import { Avatar, Button, Link } from "@mui/material";
 
 function App() {
+  const handleSubButton = () => {
+    alert("サブボタンクリック");
+  };
+  const handleAppointButton = () => {
+    alert("アポ無し商談クリック");
+  };
   return (
-    <div className="image-container set-full-height">
-      <a href="">
-        <div className="logo-container">
-          <div className="brand">
-            <div className="logo"></div>
+    <div id="wrap">
+      <main id="content" className="content">
+        <section className="vc_row fullheight d-flex flex-wrap align-items-center bg-cover pt-150">
+          <div className="container">
+            <div className="row"></div>
+          </div>
+        </section>
+
+        <div id="modal-container">
+          <div className="modal-background">
+            <div className="modal">
+              <svg
+                className="modal-svg"
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                height="100%"
+                preserveAspectRatio="none"
+              >
+                <rect
+                  x="0"
+                  y="0"
+                  fill="none"
+                  width="226"
+                  height="162"
+                  rx="3"
+                  ry="3"
+                ></rect>
+              </svg>
+            </div>
           </div>
         </div>
-      </a>
 
-        <Container fluid>
-          <Row>
-            <Col sm={{ span: 8, offset: 2 }}>
-            <div className="wizard-container">
-              <div className="card wizard-card" data-color="red" id="wizard">
-                <form action="contact.php" id="form" method="post" name="send">
-                  <div className="wizard-header">
-                    <h4 className="wizard-title">
-                      <Button className="btn btn--shockwave is-active" style={{border: "none",borderRadius:"50%", padding: "9px", marginRight:"10px"}}></Button>
-                      担当者へコールしております
-                    </h4>
-                    <h5>下記内容を入力してお待ちください※全て必須項目です。</h5>
-                  </div>
-                  {/* <div className="wizard-navigation">
-                    <ul>
-                      <li>
-                        <a href="#details" data-toggle="tab">
-                          情報入力
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#captain" data-toggle="tab">
-                          商談相手選択
-                        </a>
-                      </li>
-                    </ul>
-                  </div> */}
+        <div className="chat" id="p2">
+          <div className="chat-title">
+            <h1 style={{ display: "inline" }}>面談担当:新倉 りな </h1>
+            <span
+              className="pull-right"
+              style={{ color: "#afafaf", fontSize: "25px" }}
+              id="button4"
+            >
+              <i className="fa fa-close"></i>
+            </span>
+            <br />
+            <span className="atn btn--shockwave is-active"></span>
+            <span style={{ color: "#181b31", fontSize: "12px" }}>
+              オンライン
+            </span>
+            <h2 style={{ display: "inline" }}>My Alarm株式会社</h2>
 
-                  <Tabs defaultActiveKey="情報入力">
-                    <Tab id="details" eventKey="情報入力" title="情報入力">
-                        <Row>
-                          <Col sm={{span:12}}>
-                          <h4 className="info-text">
-                            お送り頂き次第web商談させて頂きます
-                          </h4>
-                          </Col>
-                          <Col sm={{span: 6}}>
-                            <InputGroup>
-                            <span className="input-group-addon">
-                              <i className="material-icons">person</i>
-                            </span>
-                            <Form.Floating className="mb-3">
-                              <Form.Control
-                                id="floatingInputCustom"
-                                type="email"
-                                placeholder="name@example.com"
-                              />
-                              <label className="control-label" htmlFor="floatingInputCustom">Email address</label>
-                            </Form.Floating>
-                
-                            </InputGroup>
-                            <InputGroup>
-                            <span className="input-group-addon">
-                              <i className="material-icons">email</i>
-                            </span>
-                            <div className="form-group label-floating">
-                              <label className="control-label">
-                                メールアドレス<small>(required)</small>
-                              </label>
-                              <input
-                                name="mail"
-                                type="email"
-                                className="form-control"
-                                pattern="^(?!.*(gmail|yahoo|icloud.com|outlook.com)).*$"
-                              />
-                              <span>
-                                ※gmailなどのフリーメールは受付ておりません
-                              </span>
-                            </div>
-                            </InputGroup>
-                        </Col>
-
-                        <Col sm={{span: 6}}>
-                          <div className="input-group">
-                            <span className="input-group-addon">
-                              <i className="material-icons">portrait</i>
-                            </span>
-                            <div className="form-group label-floating">
-                              <label className="control-label">
-                                会社名<small>(required)</small>
-                              </label>
-                              <input
-                                name="companyname"
-                                type="text"
-                                className="form-control"
-                              />
-                            </div>
-                          </div>
-
-                          <div className="input-group">
-                            <span className="input-group-addon">
-                              <i className="material-icons">phone</i>
-                            </span>
-                            <div className="form-group label-floating">
-                              <label className="control-label">
-                                携帯の電話番号(ハイフンありで入力)
-                                <small>(required)</small>
-                              </label>
-                              <input
-                                name="tel"
-                                type="tel"
-                                pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
-                                className="form-control"
-                              />
-                              <small></small>
-                            </div>
-                          </div>
-                        </Col>
-                        <Col sm={{span: 8}}>
-                          <div className="input-group">
-                            <span className="input-group-addon">
-                              <i className="material-icons">event</i>
-                            </span>
-                            <div className="form-group label-floating">
-                              <label className="control-label">
-                                住所<small>(required)</small>
-                              </label>
-                              <input
-                                name="address"
-                                type="text"
-                                className="form-control"
-                              />
-                            </div>
-                          </div>
-                        </Col>
-                        </Row>
-                    </Tab>
-                    <Tab
-                      id="captain"
-                      eventKey="商談相手選択"
-                      title="商談相手選択"
+            <Avatar sx={{ position: "absolute", top: "8px", left: "9px" }} />
+          </div>
+          <div className="messages">
+            <div className="messages-content scroll">
+              <div className="message new">
+                <figure className="avatar">
+                  <Avatar sx={{ width: "30px", height: "30px" }} />
+                </figure>
+                何かお困りの事はございませんか？
+              </div>
+              <div className="message new">
+                <figure className="avatar">
+                  <Avatar sx={{ width: "30px", height: "30px" }} />
+                </figure>
+                今すぐオンライン商談が可能です！
+                <br />
+                <img className="mtg-bg" src={testImage} />
+                <div className="mtg-btn message-submit btn-gradient-bg">
+                  <a href="#">アポなし面談</a>
+                </div>
+              </div>
+              <div className="message new">
+                <figure className="avatar">
+                  <img src="./assets/img/icon04.png" />
+                </figure>
+                下記からお選びください。
+                <br />
+                <br />
+                <div className="row chat-btns">
+                  <div className="col-md-12">
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      sx={{
+                        background: "rgb(255 255 255)",
+                        border: "1px solid #4762ff !important",
+                        color: "#4762ff !important",
+                        borderRadius: "15px",
+                        fontSize: "15px",
+                        boxShadow:
+                          "0px 3px 16px 0px rgb(0 0 0 / 12%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%)",
+                        fontWeight: "700",
+                        lineHeight: "2",
+                        py: 0,
+                      }}
                     >
-                      <Col sm={{span: 12}}>
-                        <h4 className="info-text">
-                          商談相手を選択してください
-                        </h4>
-                      </Col>
-
-                      <div className="select-os">
-                        <div className="scroll">
-                          <Row>
-                          <Col sm={{span: 6}}>
-                              <input
-                                type="radio"
-                                id="windows"
-                                name="os"
-                                value="新倉りな"
-                                className="windows"
-                                checked
-                              />
-                              <label for="windows">
-                                <div className="chat-title">
-                                  <h1>面談担当:新倉 りな</h1>
-                                  <span
-                                    className="pull-right"
-                                    id="button4"
-                                  ></span>
-                                  <br />
-                                  <span className="btn btn--shockwave is-active"></span>
-                                  <span>オンライン</span>
-                                  <h2>My Alarm株式会社</h2>
-
-                                  <figure className="avatar">
-                                    <img src="./assets/img/icon06.png" />
-                                  </figure>
-                                </div>
-                              </label>
-                            </Col>
-
-                            <Col sm={{span: 6}}>
-                              <input
-                                type="radio"
-                                id="osx"
-                                name="os"
-                                value="田中　桂"
-                                className="osx"
-                                disabled
-                              />
-                              <label for="osx">
-                                <div className="chat-title">
-                                  <h1>面談担当:田中　桂</h1>
-                                  <span
-                                    className="pull-right"
-                                    id="button4"
-                                  ></span>
-                                  <br />
-                                  <span className="btn btn--shockwave passive"></span>
-                                  <span>オフライン</span>
-                                  <h2>My Alarm株式会社</h2>
-
-                                  <figure className="avatar">
-                                    <img src="./assets/img/icon06.png" />
-                                  </figure>
-                                </div>
-                              </label>
-                            
-                          </Col>
-                          </Row>
-                          <Row>
-                          <Col sm={{span: 6}}>
-                              <input
-                                type="radio"
-                                id="linux"
-                                name="os"
-                                value="森まりこ"
-                                className="linux"
-                              />
-                              <label for="linux">
-                                <div className="chat-title">
-                                  <h1>面談担当:森 まりこ</h1>
-                                  <span
-                                    className="pull-right"
-                                    id="button4"
-                                  ></span>
-                                  <br />
-                                  <span className="btn btn--shockwave is-active"></span>
-                                  <span>オンライン</span>
-                                  <h2>My Alarm株式会社</h2>
-
-                                  <figure className="avatar">
-                                    <img src="./assets/img/icon01.png" />
-                                  </figure>
-                                </div>
-                              </label>
-                            </Col>
-                            <Col sm={{span: 6}}>
-                              <input
-                                type="radio"
-                                id="osx1"
-                                name="os"
-                                value="柴田えり"
-                                className="osx1"
-                              />
-                              <label for="osx1">
-                                <div className="chat-title">
-                                  <h1>面談担当:柴田 えり</h1>
-                                  <span
-                                    className="pull-right"
-                                    id="button4"
-                                  ></span>
-                                  <br />
-                                  <span className="btn btn--shockwave is-active"></span>
-                                  <span>オンライン</span>
-                                  <h2>My Alarm株式会社</h2>
-
-                                  <figure className="avatar">
-                                    <img src="./assets/img/icon05.png" />
-                                  </figure>
-                                </div>
-                              </label>
-                            </Col>
-                          </Row>
-                          <div className="row">
-                            <div className="col-sm-6">
-                              <input
-                                type="radio"
-                                id="linux2"
-                                name="os"
-                                value="森まりこ2"
-                                className="linux2"
-                              />
-                              <label for="linux2">
-                                <div className="chat-title">
-                                  <h1>面談担当:森 まりこ</h1>
-                                  <span
-                                    className="pull-right"
-                                    id="button4"
-                                  ></span>
-                                  <br />
-                                  <span className="btn btn--shockwave is-active"></span>
-                                  <span>オンライン</span>
-                                  <h2>My Alarm株式会社</h2>
-
-                                  <figure className="avatar">
-                                    <img src="./assets/img/icon01.png" />
-                                  </figure>
-                                </div>
-                              </label>
-                            </div>
-                            <div className="col-sm-6">
-                              <input
-                                type="radio"
-                                id="osx2"
-                                name="os"
-                                value="柴田えり3"
-                                className="osx2"
-                              />
-                              <label for="osx2">
-                                <div className="chat-title">
-                                  <h1>面談担当:柴田 えり</h1>
-                                  <span
-                                    className="pull-right"
-                                    id="button4"
-                                  ></span>
-                                  <br />
-                                  <span className="btn btn--shockwave is-active"></span>
-                                  <span>オンライン</span>
-                                  <h2>My Alarm株式会社</h2>
-
-                                  <figure className="avatar">
-                                    <img src="./assets/img/icon05.png" />
-                                  </figure>
-                                </div>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <h4 className="info-text">
-                        宜しければ下記の商談ボタンを押してください。
-                      </h4>
-
-                      <div className="row">
-                        <div className="col-sm-10 col-sm-offset-1"></div>
-                      </div>
-                    </Tab>
-                  </Tabs>
-                  <div className="wizard-footer">
-                    <div className="pull-right">
-                      <input
-                        type="button"
-                        id="submit"
-                        className="btn btn-next btn-fill btn-danger btn-wd"
-                        name="next"
-                        value="次へ"
-                      />
-                      <input
-                        type="submit"
-                        id="submit"
-                        className="btn btn-finish btn-fill btn-danger btn-wd"
-                        name="finish"
-                        value="商談を始める"
-                      />
-                    </div>
-                    <div className="pull-left">
-                      <input
-                        type="button"
-                        className="btn btn-previous btn-fill btn-default btn-wd"
-                        name="previous"
-                        value="戻る"
-                      />
-                    </div>
-                    <div className="clearfix"></div>
+                      <Link href="#">資料請求</Link>
+                    </Button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
-            </Col>
-          </Row>
-          </Container>
+          </div>
+          <div className="message-box">
+            <textarea
+              type="text"
+              className="message-input display-none"
+              placeholder="Type message..."
+            ></textarea>
+            <button type="submit" className=" display-none">
+              Send
+            </button>
 
-      <div className="footer">
-        <div className="container text-center text-white">
-          supported by
-          <a href="https://non-appoint.com/">
-            <img src="assets/img/log-tp.png" className="footer-logo" />
-          </a>
-          <br />
-          © 2022 My alarm All Rights Reserved. <br />
-          運営会社:<a href="https://myalarm.site/company">My Alarm株式会社</a>
-          <br />
+            <div className="content">
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="buttons">
+                    <Button
+                      onClick={handleSubButton}
+                      variant="outlined"
+                      sx={{ p: 0 }}
+                      className="button btn-now-bg circle message-sub"
+                    >
+                      その他/ヘルプ
+                    </Button>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="buttons">
+                    <Button
+                      onClick={handleAppointButton}
+                      variant="contained"
+                      sx={{ p: 0 }}
+                      className="button btn-apo-bg circle"
+                    >
+                      アポ無し商談
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+        {/* <div id="chat-circle" className="btn btn-raised">
+          <div id="chat-overlay"></div>
+          <i className="fa fa-laptop" style={{ fontSize: "28px" }}></i>
+        </div> */}
+      </main>
     </div>
   );
 }
