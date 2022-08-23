@@ -15,25 +15,31 @@ const Menu = (props) => {
     <Drawer
       variant={variant}
       sx={{
-        width: drawerWidth,
+        width: `${drawerWidth}px`,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: drawerWidth,
+          width: `${drawerWidth}px`,
           boxSizing: "border-box",
+          backgroundColor: "#2469B3",
         },
       }}
       open={menuOpen}
       onClose={() => setMenuOpen(false)}
     >
-      <Box height="30%"></Box>
+      <Box height="35vh"></Box>
       <List>
         {["企業管理"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton selected>
-              <ListItemIcon>
+            <ListItemButton
+              selected
+              sx={{
+                "&.Mui-selected": { backgroundColor: "rgba(0,0,0,0.2)" },
+              }}
+            >
+              <ListItemIcon sx={{ color: "#ffffff" }}>
                 <PersonIcon />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={text} sx={{ color: "#ffffff" }} />
             </ListItemButton>
           </ListItem>
         ))}
