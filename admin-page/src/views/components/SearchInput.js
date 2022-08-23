@@ -1,11 +1,19 @@
 import { Box, TextField } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import { DataContext } from "../../contexts/DataContext";
 
 const SearchInput = () => {
+  const { searchValue, setSearchValue } = useContext(DataContext);
   return (
     <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-      <TextField id="input-search" label="検索" variant="standard" />
+      <TextField
+        id="input-search"
+        label="検索"
+        variant="standard"
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
       <SearchIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
     </Box>
   );
