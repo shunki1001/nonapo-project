@@ -61,7 +61,8 @@ const registAccount = async (
   }
 
   try {
-    await updateDoc(doc(db, "multibutton", onlySubButton.id), {
+    multiSubButton.forEach(element);
+    await updateDoc((db, "account", localStorage.getItem("userId"), "button"), {
       title: onlySubButton.title,
       url: onlySubButton.url,
     });

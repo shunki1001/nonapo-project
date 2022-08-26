@@ -48,8 +48,6 @@ const PersonSetteings = () => {
     googleId,
     mailSubject,
     mailContent,
-    numberOfAccount,
-    setAccount,
     avatar,
     thumbnail,
     onlySubButton,
@@ -60,8 +58,6 @@ const PersonSetteings = () => {
   const [showTag, setShowTag] = useState(false);
   const [googleDialog, setGoogleDialog] = useState(false);
   const [mailSetting, setMailSetting] = useState(false);
-  const [createMode, setCreateMode] = useState(false);
-  const [count, setCount] = useState(1);
 
   const handleClickGoTag = () => {
     console.log("商談タグ発行ボタンクリック！");
@@ -91,90 +87,6 @@ const PersonSetteings = () => {
       multiSubButton,
       setErrorSnackOpen
     );
-    setCreateMode(false);
-  };
-  const handleCancel = async () => {
-    setCreateMode(false);
-    setCount((prev) => prev - 1);
-    // 一時的に作成したアカウントを削除
-    // localStorage.removeItem("userId");
-    try {
-      await deleteDoc(doc(db, "account", localStorage.getItem("userId")));
-    } catch (error) {
-      console.log(error);
-      setErrorSnackOpen({
-        open: true,
-        message: "一度、ログアウトしてください",
-      });
-    }
-    setAccount(accountList[0]);
-  };
-  const handleCreateMode = async () => {
-    setCreateMode(true);
-    setCount((prev) => prev + 1);
-    setAccount(`new user${count}`);
-    // 一時的にアカウント作成
-    try {
-      const tempDoc = await addDoc(collection(db, "account"), {
-        username: `new user${count}`,
-        enterprise: localStorage.getItem("id"),
-        isGoogleCalendar: false,
-        isOneSubButton: true,
-      });
-      localStorage.setItem("userId", tempDoc.id);
-      console.log(tempDoc.id);
-    } catch (error) {
-      setErrorSnackOpen({
-        open: true,
-        message: "アカウントを新規作成できません",
-      });
-    }
-    for (let i = 0; i < 4; i++) {
-      addDoc(
-        collection(db, "account", localStorage.getItem("userId"), "button"),
-        {
-          isOnly: false,
-          title: "",
-          url: "",
-        }
-      );
-    }
-    addDoc(
-      collection(db, "account", localStorage.getItem("userId"), "button"),
-      {
-        account: localStorage.getItem("userId"),
-        isOnly: true,
-        title: "",
-        url: "",
-      }
-    );
-    console.log(subButtonList);
-  };
-  const handleAccountCreate = () => {
-    registAccount(
-      account,
-      isFirst,
-      isGoogleCalendar,
-      email,
-      dayOfWeekChoices,
-      startTime,
-      endTime,
-      phone,
-      company,
-      url,
-      mainButton,
-      isOneSubButton,
-      googleId,
-      mailSubject,
-      mailContent,
-      avatar,
-      thumbnail,
-      onlySubButton,
-      multiSubButton,
-      setErrorSnackOpen
-    );
-    localStorage.removeItem("userId");
-    setCreateMode(false);
   };
 
   return (
@@ -190,15 +102,6 @@ const PersonSetteings = () => {
           }
           label="このユーザーを先頭に配置する"
         />
-        <Button
-          variant="contained"
-          onClick={handleCreateMode}
-          disabled={
-            accountList.length + 1 > numberOfAccount || createMode === true
-          }
-        >
-          担当者を新規作成
-        </Button>
         <Box sx={{ flexGrow: 1 }}></Box>
         <Button variant="contained" onClick={handleClickGoTag}>
           商談タグを発行
@@ -234,23 +137,14 @@ const PersonSetteings = () => {
         <Grid item xs={12} sm={12}>
           <SubButtonInput />
         </Grid>
-        <Grid item xs={12} sm={6}></Grid>
-        <Grid item xs={6} sm={3} sx={{ textAlign: "right", pr: 2 }}>
-          {createMode ? (
-            <Button onClick={handleCancel} variant="outlined">
-              キャンセル
-            </Button>
-          ) : (
-            <></>
-          )}
-        </Grid>
-        <Grid item xs={6} sm={3} sx={{ textAlign: "right", pr: 2 }}>
+        <Grid item xs={12} sm={9}></Grid>
+        <Grid item xs={12} sm={3} sx={{ textAlign: "right", pr: 2 }}>
           <Button
             variant="contained"
-            onClick={createMode ? handleAccountCreate : handleAccountUpdate}
+            onClick={handleAccountUpdate}
             disabled={account === ""}
           >
-            {createMode ? <>このユーザーを作成</> : <>変更内容を保存</>}
+            変更内容を保存
           </Button>
         </Grid>
       </Grid>
