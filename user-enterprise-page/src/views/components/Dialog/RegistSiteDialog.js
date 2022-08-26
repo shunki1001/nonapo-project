@@ -8,19 +8,26 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { DataContext } from "../../../contexts/DataContext";
+import registSite from "../../../functions/registSite";
 import SiteRadio from "../formInput/SiteRadio";
 
 const RegistSiteDialog = () => {
-  const { numberOfSites, userSiteList, setUserSiteList, userSite } =
+  const { numberOfSite, userSiteList, setUserSiteList, userSite } =
     useContext(DataContext);
   const [open, setOpen] = useState(true);
   const [addingSite, setAddingSite] = useState("");
 
+  const renderingRef = useRef(false);
   useEffect(() => {
-    if (userSiteList.length === 0) {
-      setOpen(true);
+    if (renderingRef.current === false) {
+      renderingRef.current = true;
+      console.log("１回目");
+    } else {
+      if (userSiteList.length === 0) {
+        setOpen(true);
+      }
     }
   }, [userSiteList]);
 
@@ -28,6 +35,7 @@ const RegistSiteDialog = () => {
     setUserSiteList([...userSiteList, addingSite]);
   };
   const handleClickDialog = () => {
+    registSite(userSiteList);
     setOpen(false);
   };
   return (
@@ -38,7 +46,7 @@ const RegistSiteDialog = () => {
             ノンアポを設置するサイトを追加してください
           </Typography>
           <Typography sx={{ fontSize: "12px", color: "#5E72E4" }}>
-            ※お客様のプランで登録できるサイトは{numberOfSites}つです
+            ※お客様のプランで登録できるサイトは{numberOfSite}つです
           </Typography>
         </Box>
         {userSiteList.length === 0 ? (
@@ -65,9 +73,8 @@ const RegistSiteDialog = () => {
           variant="contained"
           sx={{ mt: 2, ml: 3 }}
           onClick={handleAddClick}
-          disabled={
-            numberOfSites < userSiteList.length + 1 || addingSite === ""
-          }>
+          disabled={numberOfSite < userSiteList.length + 1 || addingSite === ""}
+        >
           追加
         </Button>
       </DialogContent>

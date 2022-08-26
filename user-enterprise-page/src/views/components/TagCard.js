@@ -28,7 +28,8 @@ const TagCard = () => {
             borderRadius: "25px",
             boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.161)",
             p: 2,
-          }}>
+          }}
+        >
           <Box sx={{ width: "100%", display: "flex", my: 2 }}>
             <Avatar src={avatar} />
             <Box sx={{ flexGrow: 1, m: 1, fontWeight: "bold" }}>{account}</Box>

@@ -16,11 +16,7 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    signin();
+    signin(data.get("email"), data.get("password"));
   };
 
   return (
@@ -30,17 +26,20 @@ export default function SignIn() {
         height: "100vh",
         paddingTop: "20vh",
         backgroundColor: "#2469B3",
-      }}>
+      }}
+    >
       <Container
         component="main"
         maxWidth="xs"
-        sx={{ backgroundColor: "#ffffff" }}>
+        sx={{ backgroundColor: "#ffffff" }}
+      >
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}>
+          }}
+        >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -51,7 +50,8 @@ export default function SignIn() {
             component="form"
             onSubmit={handleSubmit}
             noValidate
-            sx={{ mt: 1 }}>
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -76,7 +76,8 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}>
+              sx={{ mt: 3, mb: 2 }}
+            >
               ログイン
             </Button>
           </Box>
@@ -89,7 +90,8 @@ export default function SignIn() {
           alignItems: "center",
           maxWidth: "250px",
           margin: "16px auto",
-        }}>
+        }}
+      >
         <Grid container>
           <Grid item xs>
             <Link href="#" variant="body2" color="inherit">

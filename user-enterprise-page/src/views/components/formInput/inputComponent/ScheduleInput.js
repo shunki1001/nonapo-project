@@ -28,7 +28,7 @@ const ScheduleInput = (props) => {
         />
         <Typography sx={{ display: "inline-block" }}>手動設置</Typography>
       </Box>
-      <Box height="120px">
+      <Box height="5em">
         {isGoogleCalendar ? (
           <GoogleCalendarChoice setGoogleDialog={props.setGoogleDialog} />
         ) : (
@@ -48,7 +48,8 @@ const ScheduleInput = (props) => {
           item
           xs={12}
           sm={1}
-          sx={{ marginTop: "2em", textAlign: "center" }}>
+          sx={{ marginTop: "2em", textAlign: "center" }}
+        >
           ～
         </Grid>
         <Grid item xs={12} sm={3.5}>
@@ -65,7 +66,8 @@ const ScheduleInput = (props) => {
             onClick={() => {
               props.setMailSetting(true);
             }}
-            sx={{ marginTop: "1.5em", mx: 1 }}>
+            sx={{ marginTop: "1.5em", mx: 1 }}
+          >
             フォローメール設定
           </Button>
         </Grid>

@@ -3,7 +3,8 @@ import React, { useContext } from "react";
 import { DataContext } from "../../../../contexts/DataContext";
 
 const ThumbnailInput = () => {
-  const { thumbnail, setThumbnail } = useContext(DataContext);
+  const { setThumbnail, thumbnailLink, setThumbnailLink } =
+    useContext(DataContext);
   return (
     <Grid container sx={{ my: 4 }}>
       {/* <img src={} alt="thumbnail" /> */}
@@ -11,7 +12,7 @@ const ThumbnailInput = () => {
         <Avatar
           variant="rounded"
           sx={{ width: "100%", height: "100%" }}
-          src={thumbnail}
+          src={thumbnailLink}
         />
       </Grid>
       <Grid item xs={12} sm={1}></Grid>
@@ -25,7 +26,8 @@ const ThumbnailInput = () => {
             type="file"
             onChange={(e) => {
               let img = URL.createObjectURL(e.target.files[0]);
-              setThumbnail(img);
+              setThumbnailLink(img);
+              setThumbnail(e.target.files[0]);
             }}
           />
         </Button>

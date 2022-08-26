@@ -34,7 +34,8 @@ const HomeLayout = (props) => {
               background:
                 "linear-gradient(143.38deg, #354496 3.06%, #5238A8 118.21%)",
               opacity: "0.81",
-            }}>
+            }}
+          >
             <Box sx={{ display: "flex" }}>
               <Box
                 sx={{
@@ -43,7 +44,8 @@ const HomeLayout = (props) => {
                   mr: 4,
                   mt: 4,
                   border: "none",
-                }}>
+                }}
+              >
                 <UserSelect />
               </Box>
             </Box>
@@ -53,10 +55,12 @@ const HomeLayout = (props) => {
                 minHeight: "100vh",
                 py: 8,
                 px: 6,
-              }}>
+              }}
+            >
               <Typography
                 sx={{ color: "white", mb: 1, display: "inline-block" }}
-                variant="h6">
+                variant="h6"
+              >
                 {props.title}
               </Typography>
               <Box sx={{ display: "inline-block", mx: 2 }}>
@@ -77,7 +81,8 @@ const HomeLayout = (props) => {
               sx={{
                 width: "100%",
                 backgroundColor: "#f5f5f5",
-              }}>
+              }}
+            >
               <Toolbar>
                 <IconButton edge="start" onClick={() => setMenuOpen(true)}>
                   <MenuIcon />

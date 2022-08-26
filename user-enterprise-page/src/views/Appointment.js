@@ -1,18 +1,7 @@
 import React from "react";
 import HomeLayout from "../Layout/HomeLayout";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Box,
-  Button,
-  TableSortLabel,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 const columns = [

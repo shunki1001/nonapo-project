@@ -21,9 +21,14 @@ const SiteSelect = () => {
             paddingBottom: "5px",
           },
         }}
-        onChange={(e) => setUserSite(e.target.value)}>
+        onChange={(e) => setUserSite(e.target.value)}
+      >
         {userSiteList.map((item) => {
-          return <MenuItem value={item}>{item}</MenuItem>;
+          return (
+            <MenuItem value={item} key={item}>
+              {item}
+            </MenuItem>
+          );
         })}
       </Select>
     </>

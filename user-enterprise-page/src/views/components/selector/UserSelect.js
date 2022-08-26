@@ -8,7 +8,7 @@ const UserSelect = () => {
   const { enterprise } = useContext(DataContext);
 
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(<></>);
+  const [anchorEl, setAnchorEl] = useState();
 
   const handleClickSignout = () => {
     console.log("ログアウトします");
@@ -21,7 +21,8 @@ const UserSelect = () => {
           setAnchorEl(e.currentTarget);
         }}
         endIcon={<KeyboardArrowDownIcon />}
-        sx={{ color: "#ffffff" }}>
+        sx={{ color: "#ffffff" }}
+      >
         {enterprise}
       </Button>
       <Menu open={open} onClose={() => setOpen(false)} anchorEl={anchorEl}>
