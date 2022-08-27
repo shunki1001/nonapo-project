@@ -15,6 +15,7 @@ const addData = async (data) => {
     subscriptionCost: data.subscriptionCost,
     status: data.isAgreement,
     isAgreement: data.isAgreement,
+    site: [],
   });
   localStorage.setItem("tempId", docRef.id);
   // localStorage.setItem("company", docRef.data().enterprise);
