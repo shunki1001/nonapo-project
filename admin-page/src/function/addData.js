@@ -18,7 +18,6 @@ const addData = async (data) => {
     site: [],
   });
   localStorage.setItem("tempId", docRef.id);
-  // localStorage.setItem("company", docRef.data().enterprise);
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -41,7 +40,7 @@ const addData = async (data) => {
         },
         startTime: "",
         endTime: "",
-        company: localStorage.getItem("company"),
+        company: data.enterprise,
         isOneSubButton: true,
         mainButton: "",
         googleId: "",
@@ -50,27 +49,29 @@ const addData = async (data) => {
         enterprise: localStorage.getItem("tempId"),
       });
       const userId = docRef.id;
-      if (i === 0) {
-        try {
-          await addDoc(collection(db, "account", userId, "button"), {
-            isOnly: true,
-            title: "",
-            url: "",
-          });
-        } catch (error) {
-          console.log("アカウントのボタンコレクションでエラー");
-          console.log(error);
-        }
-      } else {
-        try {
-          await addDoc(collection(db, "account", userId, "button"), {
-            isOnly: false,
-            title: "",
-            url: "",
-          });
-        } catch (error) {
-          console.log("アカウントのボタンコレクションでエラー");
-          console.log(error);
+      for (let j = 0; j < 5; j++) {
+        if (j === 0) {
+          try {
+            await addDoc(collection(db, "account", userId, "button"), {
+              isOnly: true,
+              title: "",
+              url: "",
+            });
+          } catch (error) {
+            console.log("アカウントのボタンコレクションでエラー");
+            console.log(error);
+          }
+        } else {
+          try {
+            await addDoc(collection(db, "account", userId, "button"), {
+              isOnly: false,
+              title: "",
+              url: "",
+            });
+          } catch (error) {
+            console.log("アカウントのボタンコレクションでエラー");
+            console.log(error);
+          }
         }
       }
     } catch (error) {
