@@ -16,6 +16,62 @@ export const DataContext = createContext();
 const DataContextProvider = (props) => {
   const [isAuth, setIsAuth] = useState(false);
 
+  // アカウント情報関係
+  const [enterprise, setEnterprise] = useState("テスト株式会社　営業部");
+  const [userSiteList, setUserSiteList] = useState([]);
+  const [userSite, setUserSite] = useState("");
+  // firebase通信用のaccount（ユーザー名）
+  const [account, setAccount] = useState("");
+  // input上のアカウント（ユーザー名）
+  const [username, setUsername] = useState("");
+  // account情報のリスト
+  const [accountList, setAccountList] = useState([]);
+
+  const [isFirst, setIsFirst] = useState(true);
+  const [isFirstId, setIsFirstId] = useState("");
+  const [avatar, setAvatar] = useState(null);
+  const [avatarLink, setAvatarLink] = useState("");
+  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnailLink, setThumbnailLink] = useState("");
+  const [email, setEmail] = useState("");
+  const [isGoogleCalendar, setIsGoogleCalendar] = useState(false);
+  const [dayOfWeekChoices, setDayOfWeekChoices] = useState({
+    mon: true,
+    tue: true,
+    wed: false,
+    thu: true,
+    fri: true,
+    sat: false,
+    sun: false,
+  });
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [company, setCompany] = useState("");
+  const [phone, setPhone] = useState("");
+  const [url, setUrl] = useState("");
+  const [mainButton, setMainButton] = useState("アポなし商談");
+  const [isOneSubButton, setIsOneSubButton] = useState();
+  const [subButtonList, setSubButtonList] = useState([]);
+  const [onlySubButton, setOnlySubButton] = useState({});
+  const [subButtonTitle, setSubButtonTitle] = useState("");
+  const [multiSubButton, setMultiSubButton] = useState([]);
+  const [googleId, setGoogleId] = useState("");
+  const [mailSubject, setMailSubject] = useState("");
+  const [mailContent, setMailContent] = useState("");
+
+  // マスターで制御するもの
+  const [InviteUrl, setInviteUrl] = useState(
+    "https://non-appoint.com/Is/093mtg-url/"
+  );
+  const [numberOfSite, setNumberOfSite] = useState(0);
+  const [numberOfAccount, setNumberOfAccount] = useState(0);
+
+  // 通信エラーのSnackbar
+  const [errorSnackOpen, setErrorSnackOpen] = useState({
+    open: false,
+    message: "何らかのエラーが発生しました。",
+  });
+
   const navigate = useNavigate();
 
   // ログイン認証関係
@@ -55,8 +111,10 @@ const DataContextProvider = (props) => {
         const docSnap = await getDoc(docRef);
         setEnterprise(docSnap.data().enterprise);
         setUserSiteList(docSnap.data().site);
+        setUserSite(docSnap.data().site[0]);
         setNumberOfSite(docSnap.data().numberOfSite);
         setNumberOfAccount(docSnap.data().numberOfAccount);
+        setIsFirstId(docSnap.data().isFirst);
         localStorage.setItem("id", docSnap.id);
         setIsAuth(true);
         localStorage.setItem("isAuth", true);
@@ -82,19 +140,6 @@ const DataContextProvider = (props) => {
     // eslint-disable-next-line
   }, [isAuth]);
 
-  // アカウント情報関係
-  const [enterprise, setEnterprise] = useState("テスト株式会社　営業部");
-  const [userSiteList, setUserSiteList] = useState([]);
-  const [userSite, setUserSite] = useState("");
-  useEffect(() => {
-    if (userSiteList.length !== 0) {
-      setUserSite(userSiteList[0]);
-    }
-  }, []);
-  // 選択中のaccount
-  const [account, setAccount] = useState("");
-  // account情報のリスト
-  const [accountList, setAccountList] = useState([]);
   // enterpriseごとにaccountを取得
   useEffect(() => {
     const q = query(
@@ -111,10 +156,6 @@ const DataContextProvider = (props) => {
       });
       setAccountList(dataTemp);
     });
-    if (accountList.length !== 0) {
-      setAccount(accountList[0].username);
-      localStorage.setItem("userId", accountList[0].id);
-    }
     return () => unsubscribe();
   }, [enterprise]);
 
@@ -131,36 +172,37 @@ const DataContextProvider = (props) => {
     });
     setSubButtonList(dataTemp);
   };
-  const renderingFlag = useRef(false);
   useEffect(() => {
-    if (renderingFlag.current === false) {
-      renderingFlag.current = true;
-    } else {
+    if (account !== undefined && account !== null) {
       const targetAccount = accountList.filter(
         (item) => item.username === account
       );
-      getButtonList(targetAccount[0]?.id);
-      console.log(targetAccount[0]);
-      setEmail(targetAccount[0]?.email);
-      setIsGoogleCalendar(targetAccount[0]?.isGoogleCalendar);
-      setGoogleId(targetAccount[0]?.googleId);
-      setStartTime(targetAccount[0]?.startTime);
-      setEndTime(targetAccount[0]?.endTime);
-      setCompany(targetAccount[0]?.company);
-      setPhone(targetAccount[0]?.phone);
-      setUrl(targetAccount[0]?.url);
-      setMailContent(targetAccount[0]?.mailContent);
-      setMailSubject(targetAccount[0]?.mailSubject);
-      setMainButton(targetAccount[0]?.mainButton);
-      setAvatarLink(targetAccount[0]?.avatar);
-      setThumbnailLink(targetAccount[0]?.thumbnail);
-      setIsOneSubButton(targetAccount[0]?.isOneSubButton);
-      setSubButtonTitle(targetAccount[0]?.subButtonTitle);
-      if (targetAccount[0]?.dayOfWeekChoices !== undefined) {
-        setDayOfWeekChoices(targetAccount[0]?.dayOfWeekChoices);
+      if (targetAccount[0]?.id !== undefined) {
+        getButtonList(targetAccount[0].id);
+        setIsFirst(isFirstId === targetAccount[0].id);
+        setUsername(targetAccount[0]?.username);
+        setEmail(targetAccount[0]?.email);
+        setIsGoogleCalendar(targetAccount[0]?.isGoogleCalendar);
+        setGoogleId(targetAccount[0]?.googleId);
+        setStartTime(targetAccount[0]?.startTime);
+        setEndTime(targetAccount[0]?.endTime);
+        setCompany(targetAccount[0]?.company);
+        setPhone(targetAccount[0]?.phone);
+        setUrl(targetAccount[0]?.url);
+        setMailContent(targetAccount[0]?.mailContent);
+        setMailSubject(targetAccount[0]?.mailSubject);
+        setMainButton(targetAccount[0]?.mainButton);
+        setAvatarLink(targetAccount[0]?.avatar);
+        setThumbnailLink(targetAccount[0]?.thumbnail);
+        setIsOneSubButton(targetAccount[0]?.isOneSubButton);
+        setSubButtonTitle(targetAccount[0]?.subButtonTitle);
+        if (targetAccount[0]?.dayOfWeekChoices !== undefined) {
+          setDayOfWeekChoices(targetAccount[0]?.dayOfWeekChoices);
+        }
       }
     }
   }, [account]);
+
   // useEffect(() => {
   //   const q = query(
   //     collection(db, "multibutton"),
@@ -179,53 +221,6 @@ const DataContextProvider = (props) => {
   //   });
   //   return () => unsubscribe();
   // }, [account]);
-  const [isFirst, setIsFirst] = useState(true);
-  const [avatar, setAvatar] = useState(null);
-  const [avatarLink, setAvatarLink] = useState("");
-  const [thumbnail, setThumbnail] = useState(null);
-  const [thumbnailLink, setThumbnailLink] = useState("");
-  const [email, setEmail] = useState("");
-  const [isGoogleCalendar, setIsGoogleCalendar] = useState(false);
-  const [dayOfWeekChoices, setDayOfWeekChoices] = useState({
-    mon: true,
-    tue: true,
-    wed: false,
-    thu: true,
-    fri: true,
-    sat: false,
-    sun: false,
-  });
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [company, setCompany] = useState("");
-  const [phone, setPhone] = useState("");
-  const [url, setUrl] = useState("");
-  const [mainButton, setMainButton] = useState("アポなし商談");
-  const [isOneSubButton, setIsOneSubButton] = useState();
-  const [subButtonList, setSubButtonList] = useState([]);
-  const [onlySubButton, setOnlySubButton] = useState({});
-  const [subButtonTitle, setSubButtonTitle] = useState("");
-  const [multiSubButton, setMultiSubButton] = useState([]);
-  const [googleId, setGoogleId] = useState("");
-  const [mailSubject, setMailSubject] = useState("");
-  const [mailContent, setMailContent] = useState("");
-
-  useEffect(() => {
-    setOnlySubButton(subButtonList.filter((item) => item.isOnly === true)[0]);
-    setMultiSubButton(subButtonList.filter((item) => item.isOnly === false));
-  }, [subButtonList]);
-  // マスターで制御するもの
-  const [InviteUrl, setInviteUrl] = useState(
-    "https://non-appoint.com/Is/093mtg-url/"
-  );
-  const [numberOfSite, setNumberOfSite] = useState(0);
-  const [numberOfAccount, setNumberOfAccount] = useState(0);
-
-  // 通信エラーのSnackbar
-  const [errorSnackOpen, setErrorSnackOpen] = useState({
-    open: false,
-    message: "何らかのエラーが発生しました。",
-  });
 
   const value = {
     isAuth,
@@ -240,6 +235,8 @@ const DataContextProvider = (props) => {
     setAccount,
     accountList,
     setAccountList,
+    username,
+    setUsername,
     isFirst,
     setIsFirst,
     avatar,

@@ -33,6 +33,7 @@ const PersonSetteings = () => {
     isRegistedSite,
     setAccountList,
     account,
+    username,
     accountList,
     isFirst,
     isGoogleCalendar,
@@ -67,6 +68,7 @@ const PersonSetteings = () => {
   const handleAccountUpdate = () => {
     registAccount(
       account,
+      username,
       isFirst,
       isGoogleCalendar,
       email,
@@ -85,6 +87,7 @@ const PersonSetteings = () => {
       thumbnail,
       onlySubButton,
       multiSubButton,
+      subButtonList,
       setErrorSnackOpen
     );
   };
@@ -157,6 +160,7 @@ const PersonSetteings = () => {
           getTag={getTag}
           setGetTag={setGetTag}
           setShowTag={setShowTag}
+          accountList={accountList}
         />
       )}
       {showTag && <ShowTagCode showTag={showTag} setShowTag={setShowTag} />}

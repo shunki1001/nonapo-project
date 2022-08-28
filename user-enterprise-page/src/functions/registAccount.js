@@ -12,6 +12,7 @@ import { db, storage } from "../firebase";
 
 const registAccount = async (
   account,
+  username,
   isFirst,
   isGoogleCalendar,
   email,
@@ -30,12 +31,13 @@ const registAccount = async (
   thumbnail,
   onlySubButton,
   multiSubButton,
+  subButtonList,
   setErrorSnackOpen
 ) => {
   const docRef2 = doc(db, "account", localStorage.getItem("userId"));
   try {
     await updateDoc(docRef2, {
-      username: account,
+      username: username,
       email: email,
       phone: phone,
       url: url,
@@ -49,7 +51,6 @@ const registAccount = async (
       googleId: googleId,
       mailSubject: mailSubject,
       mailContent: mailContent,
-      enterprise: localStorage.getItem("id"),
     });
     setErrorSnackOpen({
       open: true,
@@ -60,26 +61,30 @@ const registAccount = async (
     setErrorSnackOpen({ open: true, message: "ユーザーの更新に失敗しました" });
   }
 
-  try {
-    multiSubButton.forEach(element);
-    await updateDoc((db, "account", localStorage.getItem("userId"), "button"), {
-      title: onlySubButton.title,
-      url: onlySubButton.url,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  subButtonList.forEach(async (item) => {
+    try {
+      await updateDoc(
+        doc(db, "account", localStorage.getItem("userId"), "button", item.id),
+        {
+          title: item.title,
+          url: item.url,
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
-  try {
-    multiSubButton.forEach(async (element) => {
-      await updateDoc(doc(db, "multibutton", element.id), {
-        title: element.title,
-        url: element.url,
-      });
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  // try {
+  //   multiSubButton.forEach(async (element) => {
+  //     await updateDoc(doc(db, "multibutton", element.id), {
+  //       title: element.title,
+  //       url: element.url,
+  //     });
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
   const docId = localStorage.getItem("id");
   const docRef = doc(db, "enterprise", docId);

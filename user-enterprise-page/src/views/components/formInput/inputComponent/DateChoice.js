@@ -12,6 +12,7 @@ const DateChoice = (props) => {
     });
     console.log(dayOfWeekChoices);
   };
+
   return (
     <Box sx={{ fontSize: props.fontSize }}>
       {/* {dayOfWeekChoice.map((item) => {
@@ -26,13 +27,16 @@ const DateChoice = (props) => {
           </>
         );
       })} */}
-      <Checkbox checked={mon} onChange={handleChange} name="mon" />月
-      <Checkbox checked={tue} onChange={handleChange} name="tue" />火
-      <Checkbox checked={wed} onChange={handleChange} name="wed" />水
-      <Checkbox checked={thu} onChange={handleChange} name="thu" />木
-      <Checkbox checked={fri} onChange={handleChange} name="fri" />金
-      <Checkbox checked={sat} onChange={handleChange} name="sat" />土
-      <Checkbox checked={sun} onChange={handleChange} name="sun" />日
+
+      <>
+        <Checkbox checked={mon} onChange={handleChange} name="mon" />月
+        <Checkbox checked={tue} onChange={handleChange} name="tue" />火
+        <Checkbox checked={wed} onChange={handleChange} name="wed" />水
+        <Checkbox checked={thu} onChange={handleChange} name="thu" />木
+        <Checkbox checked={fri} onChange={handleChange} name="fri" />金
+        <Checkbox checked={sat} onChange={handleChange} name="sat" />土
+        <Checkbox checked={sun} onChange={handleChange} name="sun" />日
+      </>
     </Box>
   );
 };

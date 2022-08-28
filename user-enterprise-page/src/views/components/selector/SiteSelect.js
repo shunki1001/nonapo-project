@@ -15,6 +15,7 @@ const SiteSelect = () => {
         value={userSite}
         label="サイト名"
         sx={{
+          maxWidth: "350px",
           "& .MuiSelect-select": {
             backgroundColor: "white",
             paddingTop: "5px",

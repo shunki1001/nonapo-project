@@ -1,26 +1,30 @@
 import { MenuItem, Select } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../contexts/DataContext";
 
 const AccountSelect = () => {
   const { account, setAccount, accountList } = useContext(DataContext);
+
+  const [renderFlag, setRenderFlag] = useState(false);
+
+  useEffect(() => {
+    if (accountList.length > 0) {
+      setRenderFlag(true);
+    } else {
+      setRenderFlag(false);
+    }
+  }, [accountList]);
+  useEffect(() => {
+    if (accountList.length > 0) {
+      setAccount(accountList[0].username);
+    } else {
+      setAccount("仮置き");
+    }
+  }, [accountList]);
+
   return (
     <>
-      {/* <InputLabel id="site-select-label" sx={{ color: "white" }}>
-        サイト名
-      </InputLabel> */}
-      {accountList.length === 0 ? (
-        <Select
-          value="none"
-          sx={{
-            "& .MuiSelect-select": {
-              backgroundColor: "white",
-              paddingTop: "5px",
-              paddingBottom: "5px",
-            },
-          }}
-        ></Select>
-      ) : (
+      {renderFlag == true && (
         <Select
           labelId="site-select-label"
           id="site-select"
@@ -33,8 +37,11 @@ const AccountSelect = () => {
               paddingBottom: "5px",
             },
           }}
-          onChange={(e) => {
-            setAccount(e.target.value);
+          onChange={(e, index) => {
+            if (accountList.length > 0) {
+              setAccount(e.target.value);
+            }
+
             const targetuser = accountList.filter(
               (item) => item.username === e.target.value
             );
