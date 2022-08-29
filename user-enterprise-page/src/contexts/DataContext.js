@@ -7,7 +7,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 
@@ -89,6 +89,7 @@ const DataContextProvider = (props) => {
         setNumberOfSite(doc.data().numberOfSite);
         setNumberOfAccount(doc.data().numberOfAccount);
         localStorage.setItem("id", doc.id);
+        console.log(doc.data());
       });
       setIsAuth(true);
       localStorage.setItem("isAuth", true);

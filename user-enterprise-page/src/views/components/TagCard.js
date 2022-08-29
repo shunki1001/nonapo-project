@@ -11,10 +11,17 @@ const TagCard = (props) => {
     dayOfWeekChoices,
     startTime,
     endTime,
+    id,
+    issueAccountList,
+    setIssueAccountList,
   } = props;
 
   const handleDelete = () => {
-    console.log("deleteされました");
+    setIssueAccountList(
+      issueAccountList.filter((element) => {
+        return element.id !== id;
+      })
+    );
   };
   return (
     <Grid item xs={12} sm={6}>
@@ -25,8 +32,7 @@ const TagCard = (props) => {
           borderRadius: "25px",
           boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.161)",
           p: 2,
-        }}
-      >
+        }}>
         <Box sx={{ width: "100%", display: "flex", my: 2 }}>
           <Avatar src={avatar} />
           <Box sx={{ flexGrow: 1, m: 1, fontWeight: "bold" }}>{username}</Box>
