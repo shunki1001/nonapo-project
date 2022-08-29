@@ -9,11 +9,12 @@ import {
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../contexts/DataContext";
+import registSiteTag from "../../../functions/registSiteTag";
 import TagCard from "../TagCard";
 
 const GetTagDialog = (props) => {
   const { getTag, setGetTag, setShowTag, accountList } = props;
-  const { userSite } = useContext(DataContext);
+  const { userSite, setErrorSnackOpen } = useContext(DataContext);
 
   const [issueAccountList, setIssueAccountList] = useState([]);
 
@@ -24,13 +25,15 @@ const GetTagDialog = (props) => {
   const handleClickDialog = () => {
     setGetTag(false);
     setShowTag(true);
+    registSiteTag(issueAccountList, userSite, setErrorSnackOpen);
   };
   return (
     <Dialog
       open={getTag}
       maxWidth="md"
       fullWidth
-      onClose={() => setGetTag(false)}>
+      onClose={() => setGetTag(false)}
+    >
       <DialogContent sx={{ mx: 2 }}>
         <Box sx={{ textAlign: "center", "& p": { marginTop: "1em" } }}>
           <Typography variant="h5">商談タグを発行確認画面</Typography>
@@ -65,7 +68,8 @@ const GetTagDialog = (props) => {
         <Button
           onClick={() => setGetTag(false)}
           variant="contained"
-          color="grey">
+          color="grey"
+        >
           キャンセル
         </Button>
         <Button onClick={() => handleClickDialog()} variant="contained">
