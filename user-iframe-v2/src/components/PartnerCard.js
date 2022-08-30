@@ -27,7 +27,7 @@ const PartnerCard = (props) => {
                 <div className="chat-title">
                   <h1>面談担当:田中　桂</h1>
                   <span className="pull-right" id="button4"></span>
-                  <span className="btn btn--shockwave passive"></span>
+                  <span className="btn btn_shockwave passive"></span>
                   <span style={{ color: "#181b31", fontSize: "12px" }}>
                     オフライン
                   </span>
@@ -55,7 +55,7 @@ const PartnerCard = (props) => {
                 <div className="chat-title">
                   <h1>面談担当:田中　桂</h1>
                   <span className="pull-right" id="button4"></span>
-                  <span className="btn btn--shockwave passive"></span>
+                  <span className="btn btn_shockwave passive"></span>
                   <span style={{ color: "#181b31", fontSize: "12px" }}>
                     オフライン
                   </span>
@@ -83,7 +83,7 @@ const PartnerCard = (props) => {
                 <div className="chat-title">
                   <h1>面談担当:森 まりこ</h1>
                   <span className="pull-right" id="button4"></span>
-                  <span className="btn btn--shockwave is-active"></span>
+                  <span className="btn btn_shockwave is-active"></span>
                   <span style={{ color: "#181b31", fontSize: "12px" }}>
                     オンライン
                   </span>
@@ -109,7 +109,7 @@ const PartnerCard = (props) => {
                 <div className="chat-title">
                   <h1>面談担当:柴田 えり</h1>
                   <span className="pull-right" id="button4"></span>
-                  <span className="btn btn--shockwave is-active"></span>
+                  <span className="btn btn_shockwave is-active"></span>
                   <span style={{ color: "#181b31", fontSize: "12px" }}>
                     オンライン
                   </span>
