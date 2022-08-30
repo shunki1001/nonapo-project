@@ -9,7 +9,7 @@ const SearchInput = () => {
     <Box sx={{ display: "flex", alignItems: "flex-end" }}>
       <TextField
         id="input-search"
-        label="検索"
+        label="企業名を検索"
         variant="standard"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}

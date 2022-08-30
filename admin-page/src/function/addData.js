@@ -15,6 +15,8 @@ const addData = async (data) => {
     subscriptionCost: data.subscriptionCost,
     status: data.isAgreement,
     isAgreement: data.isAgreement,
+    privacyPolicy: data.privacyPolicy,
+    domain: data.domain,
     site: [],
   });
   localStorage.setItem("tempId", docRef.id);
@@ -43,6 +45,7 @@ const addData = async (data) => {
         company: data.enterprise,
         isOneSubButton: true,
         mainButton: "",
+        subButtonTitle: "",
         googleId: "",
         mailSubject: "",
         mailContent: "",

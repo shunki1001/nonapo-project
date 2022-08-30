@@ -75,8 +75,8 @@ const DataTable = (props) => {
                   <IconButton onClick={() => handleEditButton(data)}>
                     <EditIcon />
                   </IconButton>
-                  <IconButton>
-                    <DeleteIcon onClick={() => handleDeleteButton(data.id)} />
+                  <IconButton onClick={() => handleDeleteButton(data.id)}>
+                    <DeleteIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>
