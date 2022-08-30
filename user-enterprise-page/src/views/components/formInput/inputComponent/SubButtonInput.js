@@ -64,6 +64,9 @@ const SubButtonInput = () => {
               value={subButtonTitle}
               onChange={(e) => setSubButtonTitle(e.target.value)}
             />
+            <Typography variant="caption" sx={{ ml: 3 }}>
+              左記ボタンが先頭表示されその後下記ボタンが選択肢となります。
+            </Typography>
             <Divider sx={{ my: 2 }} />
           </>
         )}

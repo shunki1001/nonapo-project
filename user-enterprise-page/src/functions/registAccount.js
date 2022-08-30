@@ -32,6 +32,7 @@ const registAccount = async (
   onlySubButton,
   multiSubButton,
   subButtonList,
+  subButtonTitle,
   setErrorSnackOpen
 ) => {
   const docRef2 = doc(db, "account", localStorage.getItem("userId"));
@@ -51,6 +52,7 @@ const registAccount = async (
       googleId: googleId,
       mailSubject: mailSubject,
       mailContent: mailContent,
+      subButtonTitle: subButtonTitle,
     });
     setErrorSnackOpen({
       open: true,
