@@ -27,6 +27,7 @@ const addData = async (data) => {
     try {
       const docRef = await addDoc(collection(db, "account"), {
         username: `ユーザー${i + 1}`,
+        accountIndex: Number(i + 1),
         email: "",
         phone: "",
         url: "",
