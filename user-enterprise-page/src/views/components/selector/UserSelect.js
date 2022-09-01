@@ -5,13 +5,13 @@ import React, { useContext, useState } from "react";
 import { DataContext } from "../../../contexts/DataContext";
 
 const UserSelect = () => {
-  const { enterprise } = useContext(DataContext);
+  const { enterprise, signout } = useContext(DataContext);
 
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState();
 
   const handleClickSignout = () => {
-    console.log("ログアウトします");
+    signout();
   };
   return (
     <>
