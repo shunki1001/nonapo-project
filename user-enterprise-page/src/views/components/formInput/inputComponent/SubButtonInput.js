@@ -9,6 +9,25 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../../contexts/DataContext";
 
+const placeholder = [
+  {
+    title: "まずは資料請求",
+    url: "https://example.com/document",
+  },
+  {
+    title: "よくある質問",
+    url: "https://example.com/help",
+  },
+  {
+    title: "サービスの紹介動画",
+    url: "https://example.com/youtube",
+  },
+  {
+    title: "デモ・体験版",
+    url: "https://example.com/demo",
+  },
+];
+
 const SubButtonInput = () => {
   const {
     isOneSubButton,
@@ -63,6 +82,7 @@ const SubButtonInput = () => {
             <TextField
               value={subButtonTitle}
               onChange={(e) => setSubButtonTitle(e.target.value)}
+              placeholder="ヘルプ・その他"
             />
             <Typography variant="caption" sx={{ ml: 3 }}>
               左記ボタンが先頭表示されその後下記ボタンが選択肢となります。
@@ -79,6 +99,7 @@ const SubButtonInput = () => {
                   <TextField
                     sx={{ width: "90%" }}
                     value={item.title}
+                    placeholder={placeholder[index].title}
                     onChange={(e) => {
                       setRenderList(
                         renderList.map((element, selectIndex) => {
@@ -106,6 +127,7 @@ const SubButtonInput = () => {
                   <TextField
                     sx={{ width: "90%" }}
                     value={item.url}
+                    placeholder={placeholder[index].url}
                     onChange={(e) => {
                       setRenderList(
                         renderList.map((element, selectIndex) => {

@@ -58,6 +58,8 @@ const DataContextProvider = (props) => {
   const [googleId, setGoogleId] = useState("");
   const [mailSubject, setMailSubject] = useState("");
   const [mailContent, setMailContent] = useState("");
+  const [accountIndex, setAccountIndex] = useState(1);
+  const [domain, setDomain] = useState("");
 
   // マスターで制御するもの
   const [InviteUrl, setInviteUrl] = useState(
@@ -88,6 +90,7 @@ const DataContextProvider = (props) => {
         setUserSiteList(doc.data().site);
         setNumberOfSite(doc.data().numberOfSite);
         setNumberOfAccount(doc.data().numberOfAccount);
+        setDomain(doc.data().domain);
         localStorage.setItem("id", doc.id);
         console.log(doc.data());
       });
@@ -116,6 +119,7 @@ const DataContextProvider = (props) => {
         setNumberOfSite(docSnap.data().numberOfSite);
         setNumberOfAccount(docSnap.data().numberOfAccount);
         setIsFirstId(docSnap.data().isFirst);
+        setDomain(doc.data().domain);
         localStorage.setItem("id", docSnap.id);
         setIsAuth(true);
         localStorage.setItem("isAuth", true);
@@ -197,6 +201,7 @@ const DataContextProvider = (props) => {
         setThumbnailLink(targetAccount[0]?.thumbnail);
         setIsOneSubButton(targetAccount[0]?.isOneSubButton);
         setSubButtonTitle(targetAccount[0]?.subButtonTitle);
+        setAccountIndex(targetAccount[0]?.accountIndex);
         if (targetAccount[0]?.dayOfWeekChoices !== undefined) {
           setDayOfWeekChoices(targetAccount[0]?.dayOfWeekChoices);
         }
@@ -284,6 +289,8 @@ const DataContextProvider = (props) => {
     setMailSubject,
     mailContent,
     setMailContent,
+    accountIndex,
+    domain,
     numberOfAccount,
     errorSnackOpen,
     setErrorSnackOpen,

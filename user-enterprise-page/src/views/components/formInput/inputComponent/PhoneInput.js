@@ -7,7 +7,11 @@ const PhoneInput = () => {
   return (
     <Box sx={{ mt: 5 }}>
       <Typography variant="h6">電話番号</Typography>
-      <TextField value={phone} onChange={(e) => setPhone(e.target.value)} />
+      <TextField
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        placeholder="090-0000-0000"
+      />
     </Box>
   );
 };

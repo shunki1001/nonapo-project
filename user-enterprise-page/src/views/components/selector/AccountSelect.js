@@ -16,9 +16,17 @@ const AccountSelect = () => {
   }, [accountList]);
   useEffect(() => {
     if (accountList.length > 0) {
-      setAccount(accountList[0].username);
-    } else {
-      setAccount("仮置き");
+      console.log(accountList);
+      if (account !== "") {
+        setAccount((prev) => {
+          const choicedAccount = accountList.filter((item) => {
+            return item.username === prev;
+          });
+          return choicedAccount[0]?.username;
+        });
+      } else {
+        setAccount(accountList[0].username);
+      }
     }
   }, [accountList]);
 

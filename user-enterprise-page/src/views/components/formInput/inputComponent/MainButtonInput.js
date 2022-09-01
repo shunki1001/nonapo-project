@@ -10,6 +10,7 @@ const MainButtonInput = () => {
       <TextField
         value={mainButton}
         onChange={(e) => setMainButton(e.target.value)}
+        placeholder="ノンアポ商談"
       />
     </Box>
   );

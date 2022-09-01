@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import HomeLayout from "../Layout/HomeLayout";
 
 import { Box, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../firebase";
+import { DataContext } from "../contexts/DataContext";
 
 const columns = [
   { field: "date", headerName: "商談日", width: 150 },
@@ -56,13 +59,32 @@ const columns = [
     width: 150,
   },
 ];
-const rows = [
-  { id: "000001", date: "2020 / 2 / 22", account2: "テスト太郎" },
-  { id: "000002", date: "2021 / 2 / 22", account2: "テスト太郎" },
-  { id: "000003", date: "2022 / 2 / 22", account2: "テスト太郎" },
-];
 
 const Appointment = () => {
+  const { enterprise } = useContext(DataContext);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const q = query(
+      collection(db, "appointment"),
+      where("enterprise", "==", localStorage.getItem("id"))
+    );
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const dataTemp = [];
+      let temp = {};
+      querySnapshot.forEach((doc) => {
+        temp = doc.data();
+        temp.id = doc.id;
+        dataTemp.push(temp);
+      });
+      setRows(dataTemp);
+    });
+    return () => unsubscribe();
+  }, [enterprise]);
+
+  useEffect(() => {
+    console.log(rows);
+  }, [rows]);
   const handleCsvExport = () => {
     alert("CSVエクスポートボタン");
   };

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import logoTop from "../../img/log-tp.png";
 
 const menuOptions = [
-  { label: "企業管理", url: "/", external: false },
+  { label: "商談対応者設定", url: "/", external: false },
   { label: "アポイント管理", url: "/appointment", external: false },
   {
     label: "ヘルプ・お問い合わせ",

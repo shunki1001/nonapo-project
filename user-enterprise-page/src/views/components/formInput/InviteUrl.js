@@ -1,11 +1,15 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../contexts/DataContext";
 
 const InviteUrl = () => {
-  const { InviteUrl } = useContext(DataContext);
+  const { accountIndex, domain } = useContext(DataContext);
+  const [InviteUrl, setInviteUrl] = useState("");
+  useEffect(() => {
+    setInviteUrl(`https://mtg-non-apo.web.app/${domain}/ls/${accountIndex}`);
+  }, [accountIndex, domain]);
   const handleCopyButton = () => {
     navigator.clipboard.writeText(InviteUrl);
     console.log("copied!");

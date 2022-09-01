@@ -22,16 +22,13 @@ const GoogleDialog = (props) => {
   const handleClickDialog = () => {
     setGoogleDialog(false);
   };
-
-  const handleClickGoogle = () => {
-    console.log("googleカレンダー連携API呼び出し");
-  };
   return (
     <Dialog
       open={googleDialog}
       maxWidth="md"
       fullWidth
-      onClose={() => setGoogleDialog(false)}>
+      onClose={() => setGoogleDialog(false)}
+    >
       <DialogContent sx={{ mx: 2 }}>
         <Box sx={{ textAlign: "center", mb: 3, "& p": { marginTop: "1em" } }}>
           <Typography variant="h5">Googleカレンダー連携</Typography>
@@ -56,13 +53,14 @@ const GoogleDialog = (props) => {
           />
           <IconButton
             sx={{ color: "action.active", ml: 1, mt: 1 }}
-            onClick={() => navigator.clipboard.writeText(googleAddress)}>
+            onClick={() => navigator.clipboard.writeText(googleAddress)}
+          >
             <ContentCopyIcon />
           </IconButton>
         </Box>
         <Typography sx={{ "& span": { fontWeight: "bold" }, mt: 3 }}>
           <span>STEP２</span>
-          ：連携したいカレンダーのカレンダーIDをノンアポの画面に登録。
+          ：連携したいカレンダーのカレンダーIDを以下に入力。
         </Typography>
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>
           <TextField
@@ -73,15 +71,6 @@ const GoogleDialog = (props) => {
             sx={{ width: "50%" }}
             onChange={(e) => setGoogleId(e.target.value)}
           />
-          <Button
-            onClick={handleClickGoogle}
-            variant="contained"
-            sx={{
-              bgcolor: "#F47474",
-              "&:hover": { backgroundColor: "#f97979" },
-            }}>
-            連携する
-          </Button>
         </Box>
         <Typography sx={{ "& span": { fontWeight: "bold" }, mt: 3 }}>
           <span>STEP３</span>
