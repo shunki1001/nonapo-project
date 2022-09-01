@@ -7,8 +7,12 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/:domain/ls" element={<FormPage />} />
-        <Route path="/:domain" element={<IframePage />} />
+        {/* iframeページ */}
+        <Route path="/iframe/:domain" element={<IframePage />} />
+        {/* iframeから遷移したページ */}
+        <Route path="/:domain" element={<FormPage />} />
+        {/* 個人リンクから遷移したページ */}
+        <Route path="/:domain/ls/:index" element={<FormPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,29 +1,37 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-// import "./bootstrap.min.css"
+// import "./bootstrap.min.css";
 import "../styles/ld-original.css";
 import "../styles/style.css";
 
 import { Avatar, Button, Link } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import getInfo from "../functions/getInfo";
 import { DataContext } from "../context/DataContext";
 
 function IframePage() {
-  const { setDomain, firstAccount } = useContext(DataContext);
-
+  // const { setDomain, firstAccount, domain } = useContext(DataContext);
+  const { setWhereFrom } = useContext(DataContext);
+  const [firstAccount, setFirstAccount] = useState({});
+  const [helpMessageOpen, setHelpMessageOpen] = useState(false);
   const navigate = useNavigate();
-
   let params = useParams();
-  useEffect(() => {
-    setDomain(params.domain);
-  }, []);
 
-  const handleSubButtonOpen = () => {
-    alert("サブボタンクリック");
-  };
-  const handleAppointButton = () => {
-    alert("アポ無し商談クリック");
-  };
+  const domain = params.domain;
+  // const fromUrl = document.referrer;
+  const fromUrl = "https://admin-non-appoint.web.app/";
+
+  useEffect(() => {
+    // ドメイン取得して、isFirstアカウントの情報を取得
+    console.log(domain);
+    console.log(fromUrl);
+    getInfo(domain, fromUrl, setFirstAccount);
+    setWhereFrom(fromUrl);
+  }, []);
+  useEffect(() => {
+    console.log(firstAccount);
+  }, [firstAccount]);
+
   return (
     <div id="wrap">
       <main id="content" className="content">
@@ -104,48 +112,46 @@ function IframePage() {
                   <a href="#">アポなし面談</a>
                 </div>
               </div>
-              <div className="message new">
-                <figure className="avatar">
-                  <img src={firstAccount?.thumbnail} />
-                </figure>
-                下記からお選びください。
-                <br />
-                <br />
-                <div className="row chat-btns">
-                  <div className="col-md-12">
-                    <Button
-                      fullWidth
-                      variant="outlined"
-                      sx={{
-                        background: "rgb(255 255 255)",
-                        border: "1px solid #4762ff !important",
-                        color: "#4762ff !important",
-                        borderRadius: "15px",
-                        fontSize: "15px",
-                        boxShadow:
-                          "0px 3px 16px 0px rgb(0 0 0 / 12%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%)",
-                        fontWeight: "700",
-                        lineHeight: "2",
-                        py: 0,
-                      }}
-                    >
-                      <Link href="#">資料請求</Link>
-                    </Button>
+              {helpMessageOpen && (
+                <div className="message new">
+                  <figure className="avatar">
+                    <img src={firstAccount?.thumbnail} />
+                  </figure>
+                  下記からお選びください。
+                  <br />
+                  <br />
+                  <div className="row chat-btns">
+                    <div className="col-md-12">
+                      {firstAccount?.button?.map((item) => {
+                        return (
+                          <Button
+                            key={item.title}
+                            fullWidth
+                            variant="outlined"
+                            sx={{
+                              background: "rgb(255 255 255)",
+                              border: "1px solid #4762ff !important",
+                              color: "#4762ff !important",
+                              borderRadius: "15px",
+                              fontSize: "15px",
+                              boxShadow:
+                                "0px 3px 16px 0px rgb(0 0 0 / 12%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%)",
+                              fontWeight: "700",
+                              lineHeight: "2",
+                              py: 0,
+                            }}
+                          >
+                            <Link href={item.url}>{item.title}</Link>
+                          </Button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
           <div className="message-box">
-            <textarea
-              type="text"
-              className="message-input display-none"
-              placeholder="Type message..."
-            ></textarea>
-            <button type="submit" className=" display-none">
-              Send
-            </button>
-
             <div className="content">
               <div className="row">
                 <div className="col-md-6">
@@ -161,12 +167,12 @@ function IframePage() {
                       </Button>
                     ) : (
                       <Button
-                        onClick={handleSubButtonOpen}
+                        onClick={() => setHelpMessageOpen(true)}
                         variant="outlined"
                         sx={{ p: 0 }}
                         className="button btn-now-bg circle message-sub"
                       >
-                        {firstAccount?.button[0].title}
+                        {firstAccount?.subButtonTitle}
                       </Button>
                     )}
                   </div>
@@ -174,7 +180,7 @@ function IframePage() {
                 <div className="col-md-6">
                   <div className="buttons">
                     <Button
-                      onClick={handleAppointButton}
+                      onClick={() => navigate(`/${domain}`)}
                       variant="contained"
                       sx={{ p: 0, color: "#fff" }}
                       className="button btn-apo-bg circle"
