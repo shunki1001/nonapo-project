@@ -55,6 +55,8 @@ const PersonSetteings = () => {
     multiSubButton,
     subButtonTitle,
     setErrorSnackOpen,
+    setAvatar,
+    setThumbnail,
   } = useContext(DataContext);
   const [getTag, setGetTag] = useState(false);
   const [showTag, setShowTag] = useState(false);
@@ -90,7 +92,9 @@ const PersonSetteings = () => {
       multiSubButton,
       subButtonList,
       subButtonTitle,
-      setErrorSnackOpen
+      setErrorSnackOpen,
+      setAvatar,
+      setThumbnail
     );
   };
 

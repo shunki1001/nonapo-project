@@ -33,7 +33,9 @@ const registAccount = async (
   multiSubButton,
   subButtonList,
   subButtonTitle,
-  setErrorSnackOpen
+  setErrorSnackOpen,
+  setAvatar,
+  setThumbnail
 ) => {
   const docRef2 = doc(db, "account", localStorage.getItem("userId"));
   try {
@@ -105,64 +107,70 @@ const registAccount = async (
     }
   }
 
-  const storageRef = ref(storage, `avatar/${localStorage.getItem("userId")}`);
+  if (avatar !== null) {
+    const storageRef = ref(storage, `avatar/${localStorage.getItem("userId")}`);
 
-  const uploadTask1 = uploadBytesResumable(storageRef, avatar);
-  uploadTask1.on(
-    "state_changed",
-    (snapshot) => {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
-    },
-    (error) => {
-      console.log(error);
-      setErrorSnackOpen({
-        open: true,
-        message: "画像の更新に失敗しました",
-      });
-    },
-    () => {
-      // Upload completed successfully, now we can get the download URL
-      getDownloadURL(uploadTask1.snapshot.ref).then((downloadURL) => {
-        console.log("File available at", downloadURL);
-        updateDoc(docRef2, {
-          avatar: downloadURL,
+    const uploadTask1 = uploadBytesResumable(storageRef, avatar);
+    uploadTask1.on(
+      "state_changed",
+      (snapshot) => {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        console.log(error);
+        setErrorSnackOpen({
+          open: true,
+          message: "画像の更新に失敗しました",
         });
-      });
-    }
-  );
-
-  const storageRef2 = ref(
-    storage,
-    `thumbnail/${localStorage.getItem("userId")}`
-  );
-  const uploadTask2 = uploadBytesResumable(storageRef2, thumbnail);
-  uploadTask2.on(
-    "state_changed",
-    (snapshot) => {
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
-    },
-    (error) => {
-      console.log(error);
-      setErrorSnackOpen({
-        open: true,
-        message: "画像の更新に失敗しました",
-      });
-    },
-    () => {
-      // Upload completed successfully, now we can get the download URL
-      getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
-        console.log("File available at", downloadURL);
-        updateDoc(docRef2, {
-          thumbnail: downloadURL,
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask1.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          updateDoc(docRef2, {
+            avatar: downloadURL,
+          });
         });
-      });
-    }
-  );
-
+      }
+    );
+  }
+  if (thumbnail !== null) {
+    const storageRef2 = ref(
+      storage,
+      `thumbnail/${localStorage.getItem("userId")}`
+    );
+    const uploadTask2 = uploadBytesResumable(storageRef2, thumbnail);
+    uploadTask2.on(
+      "state_changed",
+      (snapshot) => {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        console.log(error);
+        setErrorSnackOpen({
+          open: true,
+          message: "画像の更新に失敗しました",
+        });
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask2.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          updateDoc(docRef2, {
+            thumbnail: downloadURL,
+          });
+        });
+      }
+    );
+  }
+  setAvatar(null);
+  setThumbnail(null);
   return true;
 };
 

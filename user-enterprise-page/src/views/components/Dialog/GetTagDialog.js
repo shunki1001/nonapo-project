@@ -14,7 +14,7 @@ import TagCard from "../TagCard";
 
 const GetTagDialog = (props) => {
   const { getTag, setGetTag, setShowTag, accountList } = props;
-  const { userSite, setErrorSnackOpen } = useContext(DataContext);
+  const { userSite, setErrorSnackOpen, domain } = useContext(DataContext);
 
   const [issueAccountList, setIssueAccountList] = useState([]);
 
@@ -25,7 +25,7 @@ const GetTagDialog = (props) => {
   const handleClickDialog = () => {
     setGetTag(false);
     setShowTag(true);
-    registSiteTag(issueAccountList, userSite, setErrorSnackOpen);
+    registSiteTag(issueAccountList, userSite, setErrorSnackOpen, domain);
   };
   return (
     <Dialog

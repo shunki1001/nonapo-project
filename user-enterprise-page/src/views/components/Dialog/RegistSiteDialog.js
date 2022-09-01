@@ -23,7 +23,6 @@ const RegistSiteDialog = () => {
   useEffect(() => {
     if (renderingRef.current === false) {
       renderingRef.current = true;
-      console.log("１回目");
     } else {
       if (userSiteList.length === 0) {
         setOpen(true);

@@ -16,7 +16,6 @@ const AccountSelect = () => {
   }, [accountList]);
   useEffect(() => {
     if (accountList.length > 0) {
-      console.log(accountList);
       if (account !== "") {
         setAccount((prev) => {
           const choicedAccount = accountList.filter((item) => {

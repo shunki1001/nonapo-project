@@ -4,6 +4,7 @@ import {
   getDoc,
   getDocs,
   onSnapshot,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -86,16 +87,21 @@ const DataContextProvider = (props) => {
     try {
       const docSnap = await getDocs(q);
       docSnap.forEach((doc) => {
-        setEnterprise(doc.data().enterprise);
-        setUserSiteList(doc.data().site);
-        setNumberOfSite(doc.data().numberOfSite);
-        setNumberOfAccount(doc.data().numberOfAccount);
-        setDomain(doc.data().domain);
-        localStorage.setItem("id", doc.id);
-        console.log(doc.data());
+        if (doc.data().email !== email || doc.data().password !== password) {
+          console.log("エラー");
+          throw new Error("ログイン情報が一致しません");
+        } else {
+          setEnterprise(doc.data().enterprise);
+          setUserSiteList(doc.data().site);
+          setNumberOfSite(doc.data().numberOfSite);
+          setNumberOfAccount(doc.data().numberOfAccount);
+          setIsFirstId(doc.data().isFirst);
+          setDomain(doc.data().domain);
+          localStorage.setItem("id", doc.id);
+          setIsAuth(true);
+          localStorage.setItem("isAuth", true);
+        }
       });
-      setIsAuth(true);
-      localStorage.setItem("isAuth", true);
     } catch (error) {
       alert("ログイン情報が間違っているか、登録がありません");
       console.log(error);
@@ -131,15 +137,16 @@ const DataContextProvider = (props) => {
 
   useEffect(() => {
     if (localStorage.getItem("isAuth")) {
-      setIsAuth(localStorage.getItem("isAuth"));
+      setIsAuth(true);
     }
     reloadFunc();
   }, []);
 
   useEffect(() => {
-    if (isAuth) {
+    console.log("呼ばれた？");
+    if (localStorage.getItem("isAuth") === "true") {
       navigate("/");
-    } else if (!isAuth) {
+    } else {
       navigate("/signin");
     }
     // eslint-disable-next-line
@@ -149,7 +156,12 @@ const DataContextProvider = (props) => {
   useEffect(() => {
     const q = query(
       collection(db, "account"),
-      where("enterprise", "==", localStorage.getItem("id"))
+      where(
+        "enterprise",
+        "==",
+        localStorage.getItem("id"),
+        orderBy("accountIndex")
+      )
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const dataTemp = [];
@@ -229,7 +241,6 @@ const DataContextProvider = (props) => {
   // }, [account]);
 
   const value = {
-    isAuth,
     signin,
     signout,
     userSite,
