@@ -86,11 +86,8 @@ const DataContextProvider = (props) => {
     );
     try {
       const docSnap = await getDocs(q);
-      docSnap.forEach((doc) => {
-        if (doc.data().email !== email || doc.data().password !== password) {
-          console.log("エラー");
-          throw new Error("ログイン情報が一致しません");
-        } else {
+      if (!docSnap.empty) {
+        docSnap.forEach((doc) => {
           setEnterprise(doc.data().enterprise);
           setUserSiteList(doc.data().site);
           setNumberOfSite(doc.data().numberOfSite);
@@ -100,8 +97,10 @@ const DataContextProvider = (props) => {
           localStorage.setItem("id", doc.id);
           setIsAuth(true);
           localStorage.setItem("isAuth", true);
-        }
-      });
+        });
+      } else {
+        throw new Error("ログイン情報が間違っています。");
+      }
     } catch (error) {
       alert("ログイン情報が間違っているか、登録がありません");
       console.log(error);
@@ -111,6 +110,7 @@ const DataContextProvider = (props) => {
     setIsAuth(false);
     localStorage.removeItem("isAuth");
     localStorage.removeItem("id");
+    localStorage.removeItem("userId");
   };
   const reloadFunc = async () => {
     if (localStorage.getItem("id") === null) {
@@ -143,7 +143,6 @@ const DataContextProvider = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("呼ばれた？");
     if (localStorage.getItem("isAuth") === "true") {
       navigate("/");
     } else {
