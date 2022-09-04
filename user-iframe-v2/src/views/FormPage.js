@@ -88,7 +88,7 @@ function FormPage() {
   useEffect(() => {
     if (index === undefined) {
       console.log("iframeからの流入");
-      getInfoList(domain, whereFrom, setAccountList);
+      getInfoList(domain, whereFrom, setAccountList, setWhereFrom);
     } else {
       console.log("SNSからの流入");
       getInfoAccount(domain, index, setSelected, setAppointmentUrl);
@@ -194,9 +194,9 @@ function FormPage() {
                   <Tab id="details" eventKey="input" title="情報入力">
                     <Row>
                       <Col sm={{ span: 12 }}>
-                        <h4 className="info-text">
+                        <h5 className="info-text">
                           お送り頂き次第web商談させて頂きます
-                        </h4>
+                        </h5>
                       </Col>
                       <Col sm={{ span: 6 }}>
                         <BoxCoveringInput>

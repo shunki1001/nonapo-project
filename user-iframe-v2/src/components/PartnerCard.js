@@ -1,18 +1,16 @@
 import { Col, Row } from "react-bootstrap";
 
-import icon01 from "../img/icon01.png";
-
 const PartnerCard = (props) => {
   const { selected, setSelected, accountList } = props;
   return (
     <>
       <Col sm={{ span: 12 }}>
-        <h4 className="info-text">商談相手を選択してください</h4>
+        <h4 className="customize-info-text">商談相手を選択してください</h4>
       </Col>
 
       <div className="select-os">
-        <div className="scroll">
-          <Row>
+        <div className="scroll customize-scroll">
+          <Row className="cutomize-row">
             {accountList.map((account) => {
               return (
                 <Col sm={{ span: 6 }} key={account.id}>
@@ -49,7 +47,7 @@ const PartnerCard = (props) => {
         </div>
       </div>
 
-      <h4 className="info-text">
+      <h4 className="customize-info-text">
         宜しければ下記の商談ボタンを押してください。
       </h4>
 

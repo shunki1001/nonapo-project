@@ -2273,7 +2273,7 @@ body {
   line-height: 16px;
   text-decoration: none !important;
   background-color: #fff;
-  color: #4950f6 !important;
+  color: #4950f6;
   border: none;
   border-radius: 2px;
   cursor: pointer;

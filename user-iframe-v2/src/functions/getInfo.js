@@ -66,8 +66,11 @@ const getInfo = async (domain, fromUrl, setFirstAccount) => {
   } catch (error) {
     console.log(error);
   }
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   setFirstAccount(temp);
+  // オンライン、オフラインの判定
+  if (temp.isGoogleCalendar) {
+  }
 };
 
 export default getInfo;
