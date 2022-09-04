@@ -11,6 +11,21 @@ import {
 import { db } from "../firebase";
 
 const getInfoList = async (domain, whereFrom, setAccountList, setWhereFrom) => {
+  // アポイント予約時用の会社ID取得
+  let enterpriseId = "";
+  try {
+    const docRef = await getDocs(
+      query(collection(db, "enterprise"), where("domain", "==", domain))
+    );
+    docRef.forEach((element) => {
+      enterpriseId = element.id;
+      localStorage.setItem("id", element.id);
+    });
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  } catch (error) {
+    console.log(error);
+  }
+  // 一時予約情報DBから、遷移元URLを取得。ドメインと遷移元URL情報から、担当者リスト情報の取得
   let tempUrl = "";
   try {
     const tempDoc = await getDocs(
@@ -28,7 +43,7 @@ const getInfoList = async (domain, whereFrom, setAccountList, setWhereFrom) => {
   } catch (error) {
     console.log(error);
   }
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   setWhereFrom(tempUrl);
   await new Promise((resolve) => setTimeout(resolve, 100));
   let userIdList = [];

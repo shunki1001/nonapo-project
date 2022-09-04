@@ -22,6 +22,7 @@ const getInfoAccount = async (
     );
     docRef.forEach((element) => {
       enterpriseId = element.id;
+      localStorage.setItem("id", element.id);
     });
     await new Promise((resolve) => setTimeout(resolve, 500));
   } catch (error) {

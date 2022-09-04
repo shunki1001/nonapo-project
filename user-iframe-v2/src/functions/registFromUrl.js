@@ -12,8 +12,8 @@ const registFromUrl = async (domain, fromUrl, navigate) => {
     console.log(error);
   }
   await new Promise((resolve) => setTimeout(resolve, 500));
-  navigate(`/${domain}`);
-  //   window.open(`https://mtg-non-apo.web.app/${domain}`, "_top");
+  // navigate(`/${domain}`);
+  window.open(`https://mtg-non-apo.web.app/${domain}`, "_top");
 };
 
 export default registFromUrl;

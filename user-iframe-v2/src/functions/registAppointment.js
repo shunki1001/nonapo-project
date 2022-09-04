@@ -19,6 +19,7 @@ const registAppointment = async (
       fromUrl: whereFrom,
       selectedAccount: selected,
       state: 1,
+      enterpriseId: localStorage.getItem("id"),
     });
   } catch (error) {
     console.log(error);
