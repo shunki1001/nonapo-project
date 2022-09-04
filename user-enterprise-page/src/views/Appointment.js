@@ -7,67 +7,76 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { DataContext } from "../contexts/DataContext";
 
+const stateString = ["商談済み", "成約", "検討中", "商談希望あり"];
 const columns = [
-  { field: "date", headerName: "商談日", width: 150 },
+  { field: "date", headerName: "商談日" },
   {
     field: "enterprise",
     headerName: "会社名",
     sortable: false,
-    width: 150,
   },
   {
-    field: "account1",
+    field: "selectedAccount",
     headerName: "担当者名",
     sortable: false,
-    width: 150,
   },
   {
     field: "phone",
     headerName: "電話番号",
     sortable: false,
-    width: 150,
   },
   {
     field: "email",
     headerName: "Eメール",
-    description: "This column has a value getter and is not sortable.",
     sortable: false,
-    width: 160,
   },
   {
     field: "address",
     headerName: "住所",
     sortable: false,
-    width: 150,
   },
   {
     field: "fromUrl",
     headerName: "流入サイト",
     sortable: false,
-    width: 150,
   },
   {
     field: "state",
     headerName: "状態",
     sortable: false,
-    width: 150,
   },
   {
     field: "account2",
     headerName: "商談対応者",
     sortable: false,
-    width: 150,
   },
 ];
 
 const Appointment = () => {
   const { enterprise } = useContext(DataContext);
-  const [rows, setRows] = useState([]);
+  const [dataList, setDataList] = useState([]);
+
+  const rows = dataList.map((item) => {
+    let todayTimestamp = new Date(item.date.seconds * 1000);
+    return {
+      id: item.id,
+      date: `${todayTimestamp.getYear() + 2000 - 100}/${
+        todayTimestamp.getMonth() + 1
+      }/${todayTimestamp.getDate()}`,
+      enterprise: item.enterprise,
+      selectedAccount: item.selectedAccount,
+      phone: item.phone,
+      email: item.email,
+      address: item.address,
+      fromUrl: item.fromUrl,
+      state: stateString[item.state - 1],
+    };
+  });
 
   useEffect(() => {
     const q = query(
       collection(db, "appointment"),
-      where("enterprise", "==", localStorage.getItem("id"))
+      where("enterpriseId", "==", localStorage.getItem("id"))
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const dataTemp = [];
@@ -77,7 +86,7 @@ const Appointment = () => {
         temp.id = doc.id;
         dataTemp.push(temp);
       });
-      setRows(dataTemp);
+      setDataList(dataTemp);
     });
     return () => unsubscribe();
   }, [enterprise]);
