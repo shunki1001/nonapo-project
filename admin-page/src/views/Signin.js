@@ -16,11 +16,7 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    signin();
+    signin(data.get("email"), data.get("password"));
   };
 
   return (
@@ -28,7 +24,7 @@ export default function SignIn() {
       sx={{
         width: "100%",
         height: "100vh",
-        paddingTop: "20%",
+        paddingTop: "20vh",
         backgroundColor: "#2469B3",
       }}
     >

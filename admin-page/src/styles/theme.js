@@ -3,13 +3,13 @@ import { createTheme } from "@mui/material/styles";
 export const fontFamily = ["Montserrat", "sans-serif"].join(",");
 
 const theme = createTheme({
-  pallete: {
+  palette: {
     primary: {
       main: "#2469B3",
     },
     text: {
-      primary: "1B243D",
-      secondary: "BFBFBF",
+      primary: "#1b243d",
+      secondary: "#BFBFBF",
     },
   },
   typography: {
