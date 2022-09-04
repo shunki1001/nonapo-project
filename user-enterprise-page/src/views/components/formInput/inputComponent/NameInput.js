@@ -3,11 +3,16 @@ import React, { useContext } from "react";
 import { DataContext } from "../../../../contexts/DataContext";
 
 const NameInput = () => {
-  const { account, setAccount } = useContext(DataContext);
+  const { username, setUsername } = useContext(DataContext);
   return (
     <Box sx={{ mt: 5 }}>
       <Typography variant="h6">お名前（商談対応者）</Typography>
-      <TextField value={account} onChange={(e) => setAccount(e.target.value)} />
+      <TextField
+        value={username}
+        onChange={async (e) => {
+          setUsername(e.target.value);
+        }}
+      />
     </Box>
   );
 };

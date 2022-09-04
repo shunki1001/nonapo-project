@@ -3,14 +3,14 @@ import React, { useContext } from "react";
 import { DataContext } from "../../../../contexts/DataContext";
 
 const ProfileInput = () => {
-  const { avatar, setAvatar } = useContext(DataContext);
+  const { setAvatar, avatarLink, setAvatarLink } = useContext(DataContext);
 
   return (
     <Grid container sx={{ my: 4 }}>
       <Grid item xs={12} sm={4} sx={{ textAlign: "center" }}>
         <Avatar
           alt="Profile image"
-          src={avatar}
+          src={avatarLink}
           sx={{ width: "100%", height: "100%", margin: "0 auto" }}
         />
       </Grid>
@@ -25,7 +25,8 @@ const ProfileInput = () => {
             type="file"
             onChange={(e) => {
               let img = URL.createObjectURL(e.target.files[0]);
-              setAvatar(img);
+              setAvatarLink(img);
+              setAvatar(e.target.files[0]);
             }}
           />
         </Button>

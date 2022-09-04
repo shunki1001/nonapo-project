@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import logoTop from "../../img/log-tp.png";
 
 const menuOptions = [
-  { label: "企業管理", url: "/", external: false },
+  { label: "商談対応者設定", url: "/", external: false },
   { label: "アポイント管理", url: "/appointment", external: false },
   {
     label: "ヘルプ・お問い合わせ",
@@ -60,7 +60,8 @@ const CustomMenu = (props) => {
         },
       }}
       open={menuOpen}
-      onClose={() => setMenuOpen(false)}>
+      onClose={() => setMenuOpen(false)}
+    >
       <Box height="5vh"></Box>
       <Box height="5vh" width="100%">
         <img src={logoTop} alt="logo" style={{ maxHeight: "100%" }} />
@@ -69,14 +70,15 @@ const CustomMenu = (props) => {
       <List sx={{ height: "20vh" }}>
         {menuOptions.map((menuItem, index) => {
           return (
-            <>
-              <ListItem key={menuItem.label} disablePadding>
+            <Box key={menuItem.label}>
+              <ListItem disablePadding>
                 <ListItemButton
                   selected={index === selectedIndex}
                   onClick={() => handleClickMenu(menuItem, index)}
                   sx={{
                     "&.Mui-selected": { backgroundColor: "rgba(0,0,0,0.2)" },
-                  }}>
+                  }}
+                >
                   <ListItemText
                     primary={menuItem.label}
                     sx={{
@@ -87,7 +89,7 @@ const CustomMenu = (props) => {
                 </ListItemButton>
               </ListItem>
               {index === 1 && <Box height="40vh"></Box>}
-            </>
+            </Box>
           );
         })}
       </List>

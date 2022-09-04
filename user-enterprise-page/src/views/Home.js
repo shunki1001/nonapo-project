@@ -2,7 +2,7 @@ import React from "react";
 
 import HomeLayout from "../Layout/HomeLayout";
 import { Box, Grid } from "@mui/material";
-import PersonSetteings from "./components/PersonSetteings";
+import PersonSettings from "./components/PersonSettings";
 import HelpSidebar from "./components/HelpSidebar";
 
 const Home = () => {
@@ -16,8 +16,9 @@ const Home = () => {
               borderRadius: "10px",
               border: "none",
               p: 3,
-            }}>
-            <PersonSetteings />
+            }}
+          >
+            <PersonSettings />
           </Box>
         </Grid>
         <Grid item xs={12} sm={0.5} sx={{ bgcolor: "transparent" }}></Grid>
@@ -29,7 +30,8 @@ const Home = () => {
               border: "none",
               boxShadow: "0px 3px 6px 0px",
               p: 3,
-            }}>
+            }}
+          >
             <HelpSidebar />
           </Box>
         </Grid>

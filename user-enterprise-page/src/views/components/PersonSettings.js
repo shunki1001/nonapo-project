@@ -6,8 +6,11 @@ import {
   Grid,
   Switch,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../contexts/DataContext";
+import { db } from "../../firebase";
+import registAccount from "../../functions/registAccount";
 import GetTagDialog from "./Dialog/GetTagDialog";
 import GoogleDialog from "./Dialog/GoogleDialog";
 import MailSettingDialog from "./Dialog/MailSettingDialog";
@@ -24,7 +27,37 @@ import RightColumn from "./formInput/RightColumn";
 import AccountSelect from "./selector/AccountSelect";
 
 const PersonSetteings = () => {
-  const { isFirst, setIsFirst, isRegistedSite } = useContext(DataContext);
+  const {
+    subButtonList,
+    setIsFirst,
+    isRegistedSite,
+    setAccountList,
+    account,
+    username,
+    accountList,
+    isFirst,
+    isGoogleCalendar,
+    email,
+    dayOfWeekChoices,
+    startTime,
+    endTime,
+    phone,
+    company,
+    url,
+    mainButton,
+    isOneSubButton,
+    googleId,
+    mailSubject,
+    mailContent,
+    avatar,
+    thumbnail,
+    onlySubButton,
+    multiSubButton,
+    subButtonTitle,
+    setErrorSnackOpen,
+    setAvatar,
+    setThumbnail,
+  } = useContext(DataContext);
   const [getTag, setGetTag] = useState(false);
   const [showTag, setShowTag] = useState(false);
   const [googleDialog, setGoogleDialog] = useState(false);
@@ -33,6 +66,36 @@ const PersonSetteings = () => {
   const handleClickGoTag = () => {
     console.log("商談タグ発行ボタンクリック！");
     setGetTag(true);
+  };
+
+  const handleAccountUpdate = () => {
+    registAccount(
+      account,
+      username,
+      isFirst,
+      isGoogleCalendar,
+      email,
+      dayOfWeekChoices,
+      startTime,
+      endTime,
+      phone,
+      company,
+      url,
+      mainButton,
+      isOneSubButton,
+      googleId,
+      mailSubject,
+      mailContent,
+      avatar,
+      thumbnail,
+      onlySubButton,
+      multiSubButton,
+      subButtonList,
+      subButtonTitle,
+      setErrorSnackOpen,
+      setAvatar,
+      setThumbnail
+    );
   };
 
   return (
@@ -53,6 +116,7 @@ const PersonSetteings = () => {
           商談タグを発行
         </Button>
       </Box>
+      <Divider sx={{ my: 2 }} />
       <Grid container>
         <Grid item sm={4} xs={12}>
           <LeftColumn />
@@ -82,9 +146,15 @@ const PersonSetteings = () => {
         <Grid item xs={12} sm={12}>
           <SubButtonInput />
         </Grid>
-        <Grid item xs={12} sm={7}></Grid>
-        <Grid item xs={12} sm={5} sx={{ textAlign: "right", pr: 2 }}>
-          <Button variant="contained">変更内容を保存</Button>
+        <Grid item xs={12} sm={9}></Grid>
+        <Grid item xs={12} sm={3} sx={{ textAlign: "right", pr: 2 }}>
+          <Button
+            variant="contained"
+            onClick={handleAccountUpdate}
+            disabled={account === ""}
+          >
+            変更内容を保存
+          </Button>
         </Grid>
       </Grid>
       <Divider sx={{ my: 2 }} />
@@ -96,6 +166,7 @@ const PersonSetteings = () => {
           getTag={getTag}
           setGetTag={setGetTag}
           setShowTag={setShowTag}
+          accountList={accountList}
         />
       )}
       {showTag && <ShowTagCode showTag={showTag} setShowTag={setShowTag} />}

@@ -9,7 +9,12 @@ const MailInput = () => {
       <Typography variant="h6">
         商談希望があった場合の通知用メールアドレス
       </Typography>
-      <TextField value={email} onChange={(e) => setEmail(e.target.value)} />
+      <TextField
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="example@mail.com"
+        sx={{ width: "60%" }}
+      />
     </Box>
   );
 };

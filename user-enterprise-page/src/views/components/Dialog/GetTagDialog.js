@@ -4,26 +4,36 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  Grid,
   Typography,
 } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../contexts/DataContext";
+import registSiteTag from "../../../functions/registSiteTag";
 import TagCard from "../TagCard";
 
 const GetTagDialog = (props) => {
-  const { getTag, setGetTag, setShowTag } = props;
-  const { userSite } = useContext(DataContext);
+  const { getTag, setGetTag, setShowTag, accountList } = props;
+  const { userSite, setErrorSnackOpen, domain } = useContext(DataContext);
+
+  const [issueAccountList, setIssueAccountList] = useState([]);
+
+  useEffect(() => {
+    setIssueAccountList(accountList);
+  }, [accountList]);
 
   const handleClickDialog = () => {
     setGetTag(false);
     setShowTag(true);
+    registSiteTag(issueAccountList, userSite, setErrorSnackOpen, domain);
   };
   return (
     <Dialog
       open={getTag}
       maxWidth="md"
       fullWidth
-      onClose={() => setGetTag(false)}>
+      onClose={() => setGetTag(false)}
+    >
       <DialogContent sx={{ mx: 2 }}>
         <Box sx={{ textAlign: "center", "& p": { marginTop: "1em" } }}>
           <Typography variant="h5">商談タグを発行確認画面</Typography>
@@ -35,13 +45,31 @@ const GetTagDialog = (props) => {
             バツボタンで↑このサイトに不要な担当者を削除できます。
           </Typography>
         </Box>
-        <TagCard />
+        <Grid container spacing={2}>
+          {issueAccountList.map((item) => {
+            return (
+              <TagCard
+                key={item.id}
+                avatar={item.avatar}
+                username={item.username}
+                isGoogleCalendar={item.isGoogleCalendar}
+                startTime={item.startTime}
+                endTime={item.endTime}
+                dayOfWeekChoices={item.dayOfWeekChoices}
+                id={item.id}
+                issueAccountList={issueAccountList}
+                setIssueAccountList={setIssueAccountList}
+              />
+            );
+          })}
+        </Grid>
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center", m: 3 }}>
         <Button
           onClick={() => setGetTag(false)}
           variant="contained"
-          color="grey">
+          color="grey"
+        >
           キャンセル
         </Button>
         <Button onClick={() => handleClickDialog()} variant="contained">

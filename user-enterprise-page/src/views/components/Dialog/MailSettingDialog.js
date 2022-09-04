@@ -8,13 +8,36 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../contexts/DataContext";
 
 const MailSettingDialog = (props) => {
   const { mailSetting, setMailSetting } = props;
-  const { mailSubject, setMailSubject, mailContent, setMailContent } =
+  const { mailSubject, setMailSubject, mailContent, setMailContent, username } =
     useContext(DataContext);
+
+  useEffect(() => {
+    setMailSubject(`【${username}】商談依頼ありがとうございます。`);
+    setMailContent(`この度は、リード獲得自動化Saas「リードダイナミクス」にノンアポ商談依頼誠にありがとうございます。
+    
+いつも大変お世話になっております。
+    
+現在、別件のオンラインMTGに対応中でして、改めてオンラインMTGのお時間頂ければと思います。
+    
+下記日程でご都合いかがでしょうか。
+    
+日程調整URL
+https://google.com/calendar.app
+    
+こちらMTG URLになります。
+https://zoom.us/s/0000000（登録一切不要、お時間になりましたらアクセスお願いします）
+    
+当日は営業が対応致します。
+    
+緊急連絡先：090-0000-0000
+    
+ご返信お待ちしております。`);
+  }, []);
 
   const handleClickDialog = () => {
     navigator.clipboard.writeText("メールの設定を完了する");
@@ -25,7 +48,8 @@ const MailSettingDialog = (props) => {
       open={mailSetting}
       maxWidth="md"
       fullWidth
-      onClose={() => setMailSetting(false)}>
+      onClose={() => setMailSetting(false)}
+    >
       <DialogContent sx={{ mx: 2 }}>
         <Box sx={{ textAlign: "center", "& p": { marginTop: "1em" } }}>
           <Typography variant="h5">オフライン時のフォローメール設定</Typography>

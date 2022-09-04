@@ -16,7 +16,8 @@ const HelpSidebar = () => {
           px: 1,
           py: 0.5,
           borderRadius: "1em",
-        }}>
+        }}
+      >
         <Icon sx={{ fontSize: "1.2em" }}>
           <HelpIcon sx={{ fontSize: "1em" }} />
         </Icon>
@@ -29,7 +30,7 @@ const HelpSidebar = () => {
       <Box height="1em"></Box>
       <Typography>
         サムネイルの参考デザインは
-        <Link herf="https://non-appoint.com/thumbnail.html">こちら</Link>
+        <Link href="https://non-appoint.com/thumbnail.html">こちら</Link>
       </Typography>
       <Box height="2em"></Box>
       <Typography>LP掲載イメージ</Typography>

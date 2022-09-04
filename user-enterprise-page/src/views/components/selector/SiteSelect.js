@@ -15,15 +15,21 @@ const SiteSelect = () => {
         value={userSite}
         label="サイト名"
         sx={{
+          maxWidth: "350px",
           "& .MuiSelect-select": {
             backgroundColor: "white",
             paddingTop: "5px",
             paddingBottom: "5px",
           },
         }}
-        onChange={(e) => setUserSite(e.target.value)}>
+        onChange={(e) => setUserSite(e.target.value)}
+      >
         {userSiteList.map((item) => {
-          return <MenuItem value={item}>{item}</MenuItem>;
+          return (
+            <MenuItem value={item} key={item}>
+              {item}
+            </MenuItem>
+          );
         })}
       </Select>
     </>
