@@ -15,6 +15,9 @@ import React from "react";
 import addData from "../../function/addData";
 import editData from "../../function/editData";
 
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase";
+
 const CreateModal = (props) => {
   const { newOpen, setNewOpen, newData, setNewData } = props;
 
@@ -22,10 +25,21 @@ const CreateModal = (props) => {
     event.preventDefault();
     // 新規作成時
     if (newData.id === undefined) {
-      try {
-        addData(newData);
-      } catch (e) {
-        console.error("Error adding document: ", e);
+      let userList = [];
+      const docRef = await getDocs(
+        query(collection(db, "enterprise"), where("email", "==", newData.email))
+      );
+      docRef.forEach((item) => {
+        userList.push(item.data());
+      });
+      if (userList.length > 1) {
+        console.log("すでに登録済みのアカウントです");
+      } else {
+        try {
+          addData(newData);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
       }
     } else {
       // 編集時
@@ -114,6 +128,32 @@ const CreateModal = (props) => {
           onChange={(e) =>
             setNewData({ ...newData, numberOfSite: e.target.value })
           }
+        />
+        <TextField
+          required
+          margin="dense"
+          id="privacyPolicy"
+          name="privacyPolicy"
+          label="プライバシーポリシーURL"
+          type="text"
+          fullWidth
+          variant="filled"
+          value={newData.privacyPolicy}
+          onChange={(e) =>
+            setNewData({ ...newData, privacyPolicy: e.target.value })
+          }
+        />
+        <TextField
+          required
+          margin="dense"
+          id="domain"
+          name="domain"
+          label="MTG URL(サードレベルドメイン)"
+          type="text"
+          fullWidth
+          variant="filled"
+          value={newData.domain}
+          onChange={(e) => setNewData({ ...newData, domain: e.target.value })}
         />
         <DialogContentText>契約開始月</DialogContentText>
         <TextField
