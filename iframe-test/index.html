@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>サイトタイトル</title>
+    <meta name="description" content="ディスクリプションを入力" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- [endif] -->
+    <script type="text/javascript">
+      const createIframe = () => {
+        let modal = document.createElement("div");
+        modal.style.position = "fixed";
+        modal.style.botom = "0";
+        modal.style.right = "0";
+        // IFRAME 作成
+        let obj = document.createElement("iframe");
+        // IFRAME の見栄え属性をセット
+        obj.setAttribute("frameBorder", "0");
+        obj.setAttribute("scrolling", "no");
+
+        // IFRAME の配置属性をセット
+        obj.style.width = "300px";
+        obj.style.height = "400px";
+
+        // IFRAME の内容をセット
+        obj.src = "https://mtg-non-apo.web.app/iframe/tajimura";
+
+        // IFRAME を実装
+        modal.appendChild(obj);
+        document.body.appendChild(modal);
+      };
+      setTimeout(() => {
+        createIframe();
+      }, 1000);
+    </script>
+  </head>
+  <body>
+    <div style="width: 100%">
+      <!----- header----->
+      <header>ヘッダー</header>
+      <nav>ナビ</nav>
+      <!----- /header ----->
+
+      <!----- main ----->
+      <article>
+        <h1>タイトル</h1>
+        <section>
+          <h2>見出し２</h2>
+          <p>コンテンツの内容</p>
+          <div id="test"></div>
+        </section>
+      </article>
+      <!----- /main ----->
+
+      <!----- footer ----->
+      <footer>フッター</footer>
+    </div>
+    <!----- /footer ----->
+  </body>
+</html>

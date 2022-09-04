@@ -1,0 +1,53 @@
+.cover-blue {
+  background: transparent;
+  width: 100vw;
+  height: 100vh;
+}
+
+.chat-title-customize {
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.customize-message {
+  width: 220px;
+}
+
+.image-container::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #418dff;
+  z-index: -2;
+}
+.customize-scroll {
+  height: 216px;
+  overflow: auto;
+}
+.cutomize-row {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.customize-info-text {
+  text-align: center;
+  font-weight: 300;
+  margin: 10px 0 30px;
+  font-size: 1.3em;
+  line-height: 1.4em;
+}
+
+.customize-chat {
+  background: linear-gradient(
+    45deg,
+    rgba(39, 72, 193, 0.5),
+    rgba(41, 111, 239, 0.5),
+    rgba(94, 114, 228, 0.5),
+    rgba(104, 153, 255, 0.5)
+  );
+  height: 100vh;
+}
