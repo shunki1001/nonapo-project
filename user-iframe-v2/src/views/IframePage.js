@@ -16,6 +16,7 @@ function IframePage() {
   const { setWhereFrom } = useContext(DataContext);
   const [firstAccount, setFirstAccount] = useState({});
   const [helpMessageOpen, setHelpMessageOpen] = useState(false);
+  const [online, setOnline] = useState(true)
   const navigate = useNavigate();
   let params = useParams();
 
@@ -31,7 +32,7 @@ function IframePage() {
     // ドメイン取得して、isFirstアカウントの情報を取得
     console.log(domain);
     console.log(fromUrl);
-    getInfo(domain, fromUrl, setFirstAccount);
+    getInfo(domain, fromUrl, setFirstAccount, setOnline);
     setWhereFrom(fromUrl);
   }, []);
   useEffect(() => {

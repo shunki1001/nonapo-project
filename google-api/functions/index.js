@@ -9,6 +9,9 @@
 // });
 
 const express = require("express");
+const bodyParser = require("body-parser");
+const nodemailer = require("nodemailer");
+
 const { google } = require("googleapis");
 
 // The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
@@ -26,7 +29,6 @@ const GOOGLE_PRIVATE_KEY =
 const GOOGLE_CLIENT_EMAIL =
   "test-nagoya@test-calendar-361111.iam.gserviceaccount.com";
 const GOOGLE_PROJECT_NUMBER = "304748029086";
-const GOOGLE_CALENDAR_ID = "fateveriki@gmail.com";
 
 const jwtClient = new google.auth.JWT(
   GOOGLE_CLIENT_EMAIL,
@@ -44,9 +46,9 @@ const calendar = google.calendar({
 app.get("/", (req, res) => {
   calendar.events.list(
     {
-      calendarId: GOOGLE_CALENDAR_ID,
+      calendarId: req.query.google,
       timeMin: new Date().toISOString(),
-      maxResults: 10,
+      maxResults: 3,
       singleEvents: true,
       orderBy: "startTime",
     },
@@ -55,9 +57,29 @@ app.get("/", (req, res) => {
         res.send(JSON.stringify({ error: error }));
       } else {
         if (result.data.items.length) {
-          res.send(JSON.stringify({ events: result.data.items }));
+          const nowTime = Date.now()
+          const eventStartTime = new Date(result.data.items[0].start.dateTime)
+          const eventEndTime = new Date(result.data.items[0].end.dateTime)
+          console.log(result.data.items)
+          console.log(nowTime)
+          console.log(eventStartTime)
+          console.log(nowTime < eventStartTime)
+          console.log(eventEndTime)
+          console.log(nowTime < eventEndTime)
+          if(nowTime < eventStartTime){
+            res.send(JSON.stringify({ isOnline: true, message: "Next event has not yet started " }));
+          }else if(nowTime > eventStartTime){
+            if(nowTime < eventEndTime){
+              res.send(JSON.stringify({ isOneline: false, message: "event is going now " }));
+            }else{
+              res.send(JSON.stringify({ isOneline: false, message: "anyway offline" }));
+            }
+          }else{
+            res.send(JSON.stringify({ isOneline: false, message: "in switching time" }));
+          }
+          // res.send("Hello " + req.query.name);
         } else {
-          res.send(JSON.stringify({ message: "No upcoming events found." }));
+          res.send(JSON.stringify({ isOneline: false, message: "cacth error"}));
         }
       }
     }
@@ -65,6 +87,38 @@ app.get("/", (req, res) => {
 });
 
 // app.listen(3000, () => console.log(`App listening on port 3000!`));
-exports.widgets = functions.https.onRequest(app);
 
-// This code is contributed by Yashi Shukla
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+
+const transporter = nodemailer.createTransport({
+    port: 465,
+    host: "smtp.lolipop.jp",
+    auth: {
+        user: "info@sukenojo.com",
+        pass: "G8sh-qBOfV7_W_SG",
+    },
+    secure: true, // upgrades later with STARTTLS -- change this based on the PORT
+});
+
+
+app.post("/", (req, res) => {
+    const {to, subject, content } = req.body;
+    const mailData = {
+        from: "info@sukenojo.com",
+        to: to,
+        subject: subject,
+        html: content,
+    };
+
+    transporter.sendMail(mailData, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        res.status(200).send({ message: "Mail send", message_id: info.messageId });
+    });
+});
+
+// app.listen(3000, () => console.log(`App listening on port 3000!`));
+exports.mailsender = functions.https.onRequest(app);
