@@ -1,5 +1,22 @@
+// const functions = require("firebase-functions");
+
+// // // Create and Deploy Your First Cloud Functions
+// // // https://firebase.google.com/docs/functions/write-firebase-functions
+// //
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//   functions.logger.info("Hello logs!", { structuredData: true });
+//   response.send("Hello from Firebase!");
+// });
+
 const express = require("express");
 const { google } = require("googleapis");
+
+// The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
+const functions = require("firebase-functions");
+
+// The Firebase Admin SDK to access Firestore.
+// const admin = require("firebase-admin");
+// admin.initializeApp();
 
 const app = express();
 
@@ -47,6 +64,7 @@ app.get("/", (req, res) => {
   );
 });
 
-app.listen(3000, () => console.log(`App listening on port 3000!`));
+// app.listen(3000, () => console.log(`App listening on port 3000!`));
+exports.widgets = functions.https.onRequest(app);
 
 // This code is contributed by Yashi Shukla
