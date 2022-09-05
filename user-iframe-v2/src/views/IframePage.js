@@ -16,13 +16,13 @@ function IframePage() {
   const { setWhereFrom } = useContext(DataContext);
   const [firstAccount, setFirstAccount] = useState({});
   const [helpMessageOpen, setHelpMessageOpen] = useState(false);
-  const [online, setOnline] = useState(true)
+  const [online, setOnline] = useState(true);
   const navigate = useNavigate();
   let params = useParams();
 
   const domain = params.domain;
-  const fromUrl = document.referrer;
-  // const fromUrl = "https://sukenojo.com/";
+  // const fromUrl = document.referrer;
+  const fromUrl = "https://sukenojo.com/";
 
   const handleNextButton = async () => {
     registFromUrl(domain, fromUrl, navigate);
@@ -52,10 +52,22 @@ function IframePage() {
           <div className="chat-title chat-title-customize">
             <h1 style={{ display: "inline" }}>{firstAccount?.username}</h1>
             <br />
-            <span className="atn btn--shockwave is-active"></span>
-            <span style={{ color: "#181b31", fontSize: "12px" }}>
-              オンライン
-            </span>
+            {online ? (
+              <>
+                <span className="atn btn--shockwave is-active"></span>
+                <span style={{ color: "#181b31", fontSize: "12px" }}>
+                  オンライン
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="btn btn_shockwave passive"></span>
+                <span style={{ color: "#181b31", fontSize: "12px" }}>
+                  オフライン
+                </span>
+              </>
+            )}
+
             <h2 style={{ display: "inline" }}>{firstAccount?.company}</h2>
 
             <Avatar

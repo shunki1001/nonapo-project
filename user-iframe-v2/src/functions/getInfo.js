@@ -7,8 +7,10 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import axios from "axios";
+import availableChecker from "./availableChecker";
 
-const getInfo = async (domain, fromUrl, setFirstAccount,setOnline) => {
+const getInfo = async (domain, fromUrl, setFirstAccount, setOnline) => {
   let firstAccountId = "";
   try {
     const docRef = await getDocs(
@@ -71,16 +73,15 @@ const getInfo = async (domain, fromUrl, setFirstAccount,setOnline) => {
   // オンライン、オフラインの判定
   if (temp.isGoogleCalendar) {
     try {
-      const result = await axios.get(`https://us-central1-non-apo.cloudfunctions.net/widgets?google=${temp.googleId}`)
-      setOnline(result.isOnline)
+      const result = await axios.get(
+        `https://us-central1-non-apo.cloudfunctions.net/widgets?google=${temp.googleId}`
+      );
+      setOnline(result.isOnline);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }else{
-    const today = new Date()
-    const todayOfWeekStr = [ "sun", "mon", "tue", "wed", "thu", "fri", "" ][today.getDay()]
-    if(temp.dayOfWeekChoices.)
-    temp.
+  } else {
+    availableChecker(temp, setOnline);
   }
 };
 
