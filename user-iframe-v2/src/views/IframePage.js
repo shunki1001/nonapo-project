@@ -20,8 +20,8 @@ function IframePage() {
   let params = useParams();
 
   const domain = params.domain;
-  // const fromUrl = document.referrer;
-  const fromUrl = "https://sukenojo.com/";
+  const fromUrl = document.referrer;
+  // const fromUrl = "https://sukenojo.com/";
 
   const handleNextButton = async () => {
     registFromUrl(domain, fromUrl, navigate);
