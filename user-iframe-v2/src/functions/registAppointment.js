@@ -3,7 +3,7 @@ import { db } from "../firebase";
 
 const registAppointment = async (
   name,
-  phone,
+  phone,email,
   enterprise,
   address,
   whereFrom,
@@ -13,6 +13,7 @@ const registAppointment = async (
     const docRef = await addDoc(collection(db, "appointment"), {
       date: serverTimestamp(),
       name: name,
+      email:email,
       enterprise: enterprise,
       phone: phone,
       address: address,

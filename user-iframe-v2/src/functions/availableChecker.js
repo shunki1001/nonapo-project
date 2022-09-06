@@ -27,12 +27,25 @@ const availableChecker = (account, setOnline) => {
   );
   if (account.dayOfWeekChoices[todayOfWeekStr]) {
     if (startTime < today && today < endTime) {
-      setOnline(true);
+      if(setOnline === undefined){
+        return true
+      }else{
+        setOnline(true);
+      }
+      
     } else {
-      setOnline(false);
+      if(setOnline === undefined){
+        return false
+      }else{
+        setOnline(false);
+      }
     }
   } else {
-    setOnline(false);
+    if(setOnline === undefined){
+      return false
+    }else{
+      setOnline(false);
+    }
   }
 };
 

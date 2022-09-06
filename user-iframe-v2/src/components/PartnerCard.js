@@ -27,10 +27,18 @@ const PartnerCard = (props) => {
                     <div className="chat-title">
                       <h1>面談担当:{account.username}</h1>
                       <span className="pull-right" id="button4"></span>
-                      <span className="btn btn_shockwave passive"></span>
-                      <span style={{ color: "#181b31", fontSize: "12px" }}>
-                        オフライン
-                      </span>
+                      {account.online ? (
+                        <><span className="atn btn--shockwave is-active"></span>
+                        <span style={{ color: "#181b31", fontSize: "12px" }}>
+                          オンライン
+                        </span></>
+                      ):(
+                        <><span className="btn btn_shockwave passive"></span>
+                        <span style={{ color: "#181b31", fontSize: "12px" }}>
+                          オフライン
+                        </span></>
+                      )}
+                      
                       <h2 style={{ display: "inline-block" }}>
                         {account.company}
                       </h2>

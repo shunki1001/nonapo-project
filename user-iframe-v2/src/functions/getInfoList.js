@@ -9,6 +9,8 @@ import {
   limit,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import axios from "axios"
+import availableChecker from "./availableChecker";
 
 const getInfoList = async (domain, whereFrom, setAccountList, setWhereFrom) => {
   // アポイント予約時用の会社ID取得
@@ -65,43 +67,55 @@ const getInfoList = async (domain, whereFrom, setAccountList, setWhereFrom) => {
   } catch (error) {
     console.log(error);
   }
-  userIdList[0].forEach(async (accountElement) => {
-    let temp = {};
-    try {
-      const docRef2 = await getDoc(doc(db, "account", accountElement));
-      temp = docRef2.data();
-      temp.id = docRef2.id;
-      // ボタンの取得
-      let buttonTemp = [];
-      if (docRef2.data().isOneSubButton === true) {
-        const docRef3 = await getDocs(
-          query(
-            collection(db, "account", accountElement, "button"),
-            where("isOnly", "==", true)
-          )
-        );
-        docRef3.forEach((ele) => {
-          buttonTemp.push(ele.data());
-        });
-      } else {
-        const docRef4 = await getDocs(
-          query(
-            collection(db, "account", accountElement, "button"),
-            where("isOnly", "==", false)
-          )
-        );
-        docRef4.forEach((ele) => {
-          buttonTemp.push(ele.data());
-        });
-      }
-      temp.button = buttonTemp;
-      tempList.push(temp);
-    } catch (error) {
-      console.log(error);
-    }
-  });
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  try {
+    userIdList[0].forEach(async (accountElement) => {
+      let temp = {};
+
+        const docRef2 = await getDoc(doc(db, "account", accountElement));
+        temp = docRef2.data();
+        temp.id = docRef2.id;
+        // オンライン、オフラインの判定
+        if (temp.isGoogleCalendar) {
+          const result = await axios.get(
+            `https://us-central1-non-apo.cloudfunctions.net/functions/google?google=${temp.googleId}`
+          );
+          console.log(result)
+          temp.online = result.data.isOnline;
+        } else {
+          temp.online = availableChecker(temp);
+        }
+        // ボタンの取得
+        let buttonTemp = [];
+        if (docRef2.data().isOneSubButton === true) {
+          const docRef3 = await getDocs(
+            query(
+              collection(db, "account", accountElement, "button"),
+              where("isOnly", "==", true)
+            )
+          );
+          docRef3.forEach((ele) => {
+            buttonTemp.push(ele.data());
+          });
+        } else {
+          const docRef4 = await getDocs(
+            query(
+              collection(db, "account", accountElement, "button"),
+              where("isOnly", "==", false)
+            )
+          );
+          docRef4.forEach((ele) => {
+            buttonTemp.push(ele.data());
+          });
+        }
+        temp.button = buttonTemp;
+        tempList.push(temp);
+    }); 
+  } catch (error) {
+    console.log(error);
+  }
+  await new Promise((resolve) => setTimeout(resolve, 1500*userIdList[0].length ));
   setAccountList(tempList);
+  console.log(tempList)
 };
 
 export default getInfoList;

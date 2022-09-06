@@ -4,7 +4,7 @@ import "../styles/form-component.css";
 
 import { useEffect, useRef, useState, useContext } from "react";
 
-import { Link, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 
 import logTop from "../img/log-tp.png";
 
@@ -74,7 +74,8 @@ function FormPage() {
   const handleClickSend = () => {
     console.log("submit button clicked!");
     setSuccessDialogOpen(true);
-    registAppointment(name, phone, enterprise, address, whereFrom, selected);
+    registAppointment(name, phone,email, enterprise, address, whereFrom, selected);
+    
     // iframeから来た場合、選択された担当者のURLをセット
     if (index === undefined) {
       setAppointmentUrl(

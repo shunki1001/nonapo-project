@@ -74,7 +74,7 @@ const getInfo = async (domain, fromUrl, setFirstAccount, setOnline) => {
   if (temp.isGoogleCalendar) {
     try {
       const result = await axios.get(
-        `https://us-central1-non-apo.cloudfunctions.net/widgets?google=${temp.googleId}`
+        `https://us-central1-non-apo.cloudfunctions.net/functions/google?google=${temp.googleId}`
       );
       setOnline(result.isOnline);
     } catch (error) {

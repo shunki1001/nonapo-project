@@ -1,7 +1,5 @@
 import {
   collection,
-  doc,
-  getDoc,
   getDocs,
   query,
   where,
@@ -38,7 +36,7 @@ const getInfoAccount = async (
         where("accountIndex", "==", Number(index))
       )
     );
-    docRef2.forEach((element) => {
+    docRef2.forEach(async (element) => {
       console.log(element);
       tempName = element.data().username;
       tempUrl = element.data().url;

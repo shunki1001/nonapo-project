@@ -9,6 +9,7 @@
 // });
 
 const express = require("express");
+var cors = require("cors")
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 
@@ -22,6 +23,7 @@ const functions = require("firebase-functions");
 // admin.initializeApp();
 
 const app = express();
+app.use(cors())
 
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 const GOOGLE_PRIVATE_KEY =
@@ -107,11 +109,12 @@ app.get("/google", (req, res) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const userMail = "info@sukenojo.com",
 const transporter = nodemailer.createTransport({
   port: 465,
   host: "smtp.lolipop.jp",
   auth: {
-    user: "info@sukenojo.com",
+    user: userMail,
     pass: "G8sh-qBOfV7_W_SG",
   },
   secure: true, // upgrades later with STARTTLS -- change this based on the PORT
@@ -120,8 +123,41 @@ const transporter = nodemailer.createTransport({
 app.post("/mailer", (req, res) => {
   const { to, subject, content } = req.body;
   const mailData = {
-    from: "info@sukenojo.com",
+    from: userMail,
     to: to,
+    subject: subject,
+    html: content,
+  };
+
+  transporter.sendMail(mailData, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    res.status(200).send({ message: "Mail send", message_id: info.messageId });
+  });
+});
+
+app.post("/mailer/user", (req, res) => {
+  const { name, phone,email, enterprise, address, whereFrom } = req.body;
+  const mailData = {
+    from: userMail,
+    to: email,
+    subject: subject,
+    html: content,
+  };
+
+  transporter.sendMail(mailData, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    res.status(200).send({ message: "Mail send", message_id: info.messageId });
+  });
+});
+app.post("/mailer/account", (req, res) => {
+  const { name, phone,email, enterprise, address, whereFrom } = req.body;
+  const mailData = {
+    from: userMail,
+    to: email,
     subject: subject,
     html: content,
   };
