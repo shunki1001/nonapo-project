@@ -109,7 +109,7 @@ app.get("/google", (req, res) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const userMail = "info@sukenojo.com",
+const userMail = "info@sukenojo.com";
 const transporter = nodemailer.createTransport({
   port: 465,
   host: "smtp.lolipop.jp",
