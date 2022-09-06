@@ -4,7 +4,7 @@ import "../styles/form-component.css";
 
 import { useEffect, useRef, useState, useContext } from "react";
 
-import {useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import logTop from "../img/log-tp.png";
 
@@ -37,6 +37,7 @@ import { DataContext } from "../context/DataContext";
 import getInfoList from "../functions/getInfoList";
 import registAppointment from "../functions/registAppointment";
 import getInfoAccount from "../functions/getInfoAccount";
+import mailSender from "../functions/mailSender";
 
 function FormPage() {
   const { whereFrom, setWhereFrom } = useContext(DataContext);
@@ -70,12 +71,19 @@ function FormPage() {
   });
 
   const [selected, setSelected] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState();
 
-  const handleClickSend = () => {
+  const handleClickSend = async () => {
     console.log("submit button clicked!");
-    setSuccessDialogOpen(true);
-    registAppointment(name, phone,email, enterprise, address, whereFrom, selected);
-    
+    registAppointment(
+      name,
+      phone,
+      email,
+      enterprise,
+      address,
+      whereFrom,
+      selected
+    );
     // iframeから来た場合、選択された担当者のURLをセット
     if (index === undefined) {
       setAppointmentUrl(
@@ -84,6 +92,19 @@ function FormPage() {
         })[0].url
       );
     }
+    let selectedAccount = accountList[selectedIndex];
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // メール送信
+    mailSender(
+      name,
+      phone,
+      email,
+      enterprise,
+      address,
+      whereFrom,
+      selectedAccount
+    );
+    setSuccessDialogOpen(true);
   };
 
   useEffect(() => {
@@ -318,6 +339,7 @@ function FormPage() {
                       selected={selected}
                       setSelected={setSelected}
                       accountList={accountList}
+                      setSelectedIndex={setSelectedIndex}
                     />
                   </Tab>
                 </Tabs>

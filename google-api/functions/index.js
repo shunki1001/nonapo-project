@@ -9,9 +9,10 @@
 // });
 
 const express = require("express");
-var cors = require("cors")
+var cors = require("cors");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
+const getUrlTitle = require("get-url-title");
 
 const { google } = require("googleapis");
 
@@ -23,7 +24,11 @@ const functions = require("firebase-functions");
 // admin.initializeApp();
 
 const app = express();
-app.use(cors())
+app.use(
+  cors({
+    origin: "https://mtg-non-apo.web.app",
+  })
+);
 
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 const GOOGLE_PRIVATE_KEY =
@@ -45,6 +50,15 @@ const calendar = google.calendar({
   auth: jwtClient,
 });
 
+app.get("/get-title", async (req, res) => {
+  const hpTitle = await getUrlTitle(req.query.url);
+  if (hpTitle === undefined) {
+    res.send(JSON.stringify({ error: error }));
+  } else {
+    res.send(JSON.stringify({ title: hpTitle }));
+  }
+});
+
 app.get("/google", (req, res) => {
   calendar.events.list(
     {
@@ -62,12 +76,6 @@ app.get("/google", (req, res) => {
           const nowTime = Date.now();
           const eventStartTime = new Date(result.data.items[0].start.dateTime);
           const eventEndTime = new Date(result.data.items[0].end.dateTime);
-          console.log(result.data.items);
-          console.log(nowTime);
-          console.log(eventStartTime);
-          console.log(nowTime < eventStartTime);
-          console.log(eventEndTime);
-          console.log(nowTime < eventEndTime);
           if (nowTime < eventStartTime) {
             res.send(
               JSON.stringify({
@@ -120,13 +128,91 @@ const transporter = nodemailer.createTransport({
   secure: true, // upgrades later with STARTTLS -- change this based on the PORT
 });
 
-app.post("/mailer", (req, res) => {
-  const { to, subject, content } = req.body;
+// const userMail = "info@non-appoint.com";
+// const transporter = nodemailer.createTransport({
+//   port: 465,
+//   host: "sv7077.xserver.jp",
+//   auth: {
+//     user: userMail,
+//     pass: "3WdeJTtr",
+//   },
+//   secure: true, // upgrades later with STARTTLS -- change this based on the PORT
+// });
+
+app.post("/mailer/user", async (req, res) => {
+  const {
+    name,
+    phone,
+    email,
+    enterprise,
+    address,
+    whereFrom,
+    accountName,
+    mtgUrl,
+    accountEmail,
+  } = req.body;
+  const hpTitle = await getUrlTitle(whereFrom);
   const mailData = {
     from: userMail,
-    to: to,
-    subject: subject,
-    html: content,
+    to: accountEmail,
+    subject: `ノンアポ経由で商談依頼_${hpTitle}`,
+    html: `
+      <div>
+        <p>
+          遷移元サイト：${whereFrom} | ${hpTitle}
+        </p>
+        <br />
+        <p>お名前：${name}</p>
+        <p>会社名：${enterprise}</p>
+        <p>電話番号：${phone}</p>
+        <p>商談担当者：${accountName}</p>
+        <p>メール：${email}</p>
+        <br />
+        <br />
+        <p>アポ無し商談フォームから商談希望のお問い合わせがありました。</p>
+        <br />
+        <p>速やかにMTGルームにアクセスしてください</p>
+        <br />
+        <a href=${mtgUrl}>${mtgUrl}</a>
+      </div>
+    `,
+  };
+
+  transporter.sendMail(mailData, (error, info) => {
+    if (error) {
+      res.status(400).send({ error: error });
+    }
+    res.status(200).send({ message: "Mail send", message_id: info.messageId });
+  });
+});
+
+app.post("/mailer/online", (req, res) => {
+  const { email, enterprise, account, mtgUrl, phone } = req.body;
+  const mailData = {
+    from: userMail,
+    to: email,
+    subject: "アポ無し商談依頼ありがとうございます。",
+    html: `
+      <div>
+        <p>アポ無し商談依頼、誠にありがとうございます。</p>
+        <br />
+        <p>いつもお世話になっております。</p>
+        <p>
+          ${enterprise}の${account}でございます。
+        </p>
+        <br />
+        <p>こちらMTG URLになります。</p>
+        <br />
+        <a href=${mtgUrl}>${mtgUrl}</a>
+        <p>
+          （登録一切不要、アクセスお願いします）速やかにアクセスお願い致します。
+        </p>
+        <br />
+        <p>緊急連絡先：${phone}</p>
+        <br />
+        <p>ご返信お待ちしております。</p>
+      </div>
+    `,
   };
 
   transporter.sendMail(mailData, (error, info) => {
@@ -137,29 +223,20 @@ app.post("/mailer", (req, res) => {
   });
 });
 
-app.post("/mailer/user", (req, res) => {
-  const { name, phone,email, enterprise, address, whereFrom } = req.body;
+app.post("/mailer/offline", (req, res) => {
+  const { email, account, enterprise, contents } = req.body;
   const mailData = {
     from: userMail,
     to: email,
-    subject: subject,
-    html: content,
-  };
-
-  transporter.sendMail(mailData, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    res.status(200).send({ message: "Mail send", message_id: info.messageId });
-  });
-});
-app.post("/mailer/account", (req, res) => {
-  const { name, phone,email, enterprise, address, whereFrom } = req.body;
-  const mailData = {
-    from: userMail,
-    to: email,
-    subject: subject,
-    html: content,
+    subject: "不在_アポ無し商談依頼ありがとうございます。",
+    html: `
+      <div>
+        <p>
+          ${enterprise} ${account}様
+        </p>
+        <p>${contents}</p>
+      </div>
+    `,
   };
 
   transporter.sendMail(mailData, (error, info) => {

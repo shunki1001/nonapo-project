@@ -9,6 +9,7 @@ import {
 import { db } from "../firebase";
 import axios from "axios";
 import availableChecker from "./availableChecker";
+import { serverDomain } from "./mailSender";
 
 const getInfo = async (domain, fromUrl, setFirstAccount, setOnline) => {
   let firstAccountId = "";
@@ -74,7 +75,7 @@ const getInfo = async (domain, fromUrl, setFirstAccount, setOnline) => {
   if (temp.isGoogleCalendar) {
     try {
       const result = await axios.get(
-        `https://us-central1-non-apo.cloudfunctions.net/functions/google?google=${temp.googleId}`
+        `${serverDomain}/google?google=${temp.googleId}`
       );
       setOnline(result.isOnline);
     } catch (error) {

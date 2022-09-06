@@ -19,6 +19,7 @@
     "express": "^4.18.1",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.18.0",
+    "get-url-title": "^2.0.0",
     "googleapis": "^107.0.0",
     "nodemailer": "^6.7.8"
   },

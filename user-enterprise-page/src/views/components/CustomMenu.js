@@ -56,7 +56,7 @@ const CustomMenu = (props) => {
         "& .MuiDrawer-paper": {
           width: `${drawerWidth}px`,
           boxSizing: "border-box",
-          backgroundColor: "#2469B3",
+          backgroundColor: "#4357C9",
         },
       }}
       open={menuOpen}
@@ -64,7 +64,11 @@ const CustomMenu = (props) => {
     >
       <Box height="5vh"></Box>
       <Box height="5vh" width="100%">
-        <img src={logoTop} alt="logo" style={{ maxHeight: "100%" }} />
+        <img
+          src={logoTop}
+          alt="logo"
+          style={{ maxHeight: "100%", ml: "2em" }}
+        />
       </Box>
       <Box height="10vh"></Box>
       <List sx={{ height: "20vh" }}>
