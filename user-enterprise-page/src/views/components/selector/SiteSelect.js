@@ -18,8 +18,8 @@ const SiteSelect = () => {
           maxWidth: "350px",
           "& .MuiSelect-select": {
             backgroundColor: "white",
-            paddingTop: "5px",
-            paddingBottom: "5px",
+            paddingTop: "8px",
+            paddingBottom: "8px",
           },
         }}
         onChange={(e) => setUserSite(e.target.value)}

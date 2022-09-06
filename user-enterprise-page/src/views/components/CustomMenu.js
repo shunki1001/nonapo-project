@@ -63,12 +63,8 @@ const CustomMenu = (props) => {
       onClose={() => setMenuOpen(false)}
     >
       <Box height="5vh"></Box>
-      <Box height="5vh" width="100%">
-        <img
-          src={logoTop}
-          alt="logo"
-          style={{ maxHeight: "100%", ml: "2em" }}
-        />
+      <Box height="5vh" width="100%" sx={{ pl: "2em" }}>
+        <img src={logoTop} alt="logo" style={{ maxHeight: "100%" }} />
       </Box>
       <Box height="10vh"></Box>
       <List sx={{ height: "20vh" }}>

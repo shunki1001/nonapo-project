@@ -70,9 +70,9 @@ const ScheduleInput = (props) => {
             onClick={() => {
               props.setMailSetting(true);
             }}
-            sx={{ marginTop: "1.5em", mx: 1 }}
+            sx={{ marginTop: "1.5em", mx: 1, px: 1 }}
           >
-            フォローメール設定
+            オフライン時のフォローメール設定
           </Button>
         </Grid>
       </Grid>

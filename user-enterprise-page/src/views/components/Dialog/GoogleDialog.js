@@ -13,7 +13,8 @@ import React, { useContext } from "react";
 import { DataContext } from "../../../contexts/DataContext";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
-const googleAddress = "xxxxx-841@xxxxxx-000000.iam.gserviceaccount.com";
+const googleAddress =
+  "test-nagoya@test-calendar-361111.iam.gserviceaccount.com";
 
 const GoogleDialog = (props) => {
   const { googleDialog, setGoogleDialog } = props;

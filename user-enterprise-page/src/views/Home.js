@@ -12,7 +12,7 @@ const Home = () => {
         <Grid item xs={12} sm={8}>
           <Box
             sx={{
-              bgcolor: "#F5F5F5",
+              bgcolor: "#F0F2FA",
               borderRadius: "10px",
               border: "none",
               p: 3,

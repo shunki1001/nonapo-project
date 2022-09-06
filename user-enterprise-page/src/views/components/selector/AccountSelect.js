@@ -38,10 +38,15 @@ const AccountSelect = () => {
           value={account}
           label="アカウント名"
           sx={{
+            height: "46px",
+            fontSize: "18px",
+
             "& .MuiSelect-select": {
               backgroundColor: "white",
-              paddingTop: "5px",
-              paddingBottom: "5px",
+              width: "10em",
+            },
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: "none",
             },
           }}
           onChange={(e, index) => {

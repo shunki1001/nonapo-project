@@ -16,6 +16,48 @@ const theme = createTheme({
     fontFamily: fontFamily,
     fontSize: 14,
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: ({ ownerState }) => ({}),
+        root: ({ ownerState }) => ({
+          ...(ownerState.variant === "contained" && {
+            backgroundColor: "#5e72e4",
+            color: "#ffffff",
+            paddingLeft: "3em",
+            paddingRight: "3em",
+          }),
+          ...(ownerState.variant === "outlined" && {
+            borderColor: "#5e72e4",
+            color: "#5e72e4",
+            paddingLeft: "3em",
+            paddingRight: "3em",
+          }),
+        }),
+      },
+    },
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          "&.Mui-checked": {
+            color: "#5E72E4",
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#fff",
+          border: "none",
+          boxShadow: "0px 3px 6px 0px #00000029",
+          "& .MuiInput .MuiOutlinedInput-notchedOutline": {
+            border: "0",
+          },
+        },
+      },
+    },
+  },
 });
 
 export default theme;

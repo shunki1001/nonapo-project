@@ -58,8 +58,13 @@ const HomeLayout = (props) => {
               }}
             >
               <Typography
-                sx={{ color: "white", mb: 1, display: "inline-block" }}
-                variant="h6"
+                sx={{
+                  color: "white",
+                  mb: 1,
+                  display: "inline-block",
+                  fontSize: "34px",
+                  fontWeight: "600",
+                }}
               >
                 {props.title}
               </Typography>

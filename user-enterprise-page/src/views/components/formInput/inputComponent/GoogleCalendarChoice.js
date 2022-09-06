@@ -11,7 +11,17 @@ const GoogleCalendarChoice = (props) => {
       <Typography variant="caption" sx={{ display: "block" }}>
         ※カレンダーの空き状況で対応する場合、下記からカレンダーの同期をお願いします。
       </Typography>
-      <Button onClick={handleClick} varinat="outlined">
+      <Button
+        onClick={handleClick}
+        varinat="outlined"
+        sx={{
+          backgroundColor: "#fff",
+          borderRadius: "20px",
+          boxShadow: "0px 3px 6px 0px #00000029",
+          "& img": { width: "2em" },
+          px: 1,
+        }}
+      >
         <img
           src="https://img.icons8.com/color/48/000000/google-calendar--v2.png"
           alt="googleCalendar logo"
