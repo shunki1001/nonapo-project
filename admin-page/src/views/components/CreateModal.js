@@ -23,7 +23,8 @@ const CreateModal = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // 新規作成時
+    if(newData.enterprise.length > 0 && newData.email.length > 0 && newData.password.length > 0 && newData.numberOfSite.length > 0 && newData.domain.length > 0 && newData.numberOfAccount.length > 0){
+      // 新規作成時
     if (newData.id === undefined) {
       let userList = [];
       const docRef = await getDocs(
@@ -33,11 +34,12 @@ const CreateModal = (props) => {
         userList.push(item.data());
       });
       if (userList.length > 1) {
-        console.log("すでに登録済みのアカウントです");
+        alert("すでに登録済みのアカウントです");
       } else {
         try {
           addData(newData);
         } catch (e) {
+          alert('Cannnot add! Try again')
           console.error("Error adding document: ", e);
         }
       }
@@ -49,8 +51,10 @@ const CreateModal = (props) => {
         console.error("Error adding document: ", e);
       }
     }
-
     setNewOpen(false);
+    }else{
+      alert('You have to fill in all inputs')
+    }
   };
   return (
     <Dialog
