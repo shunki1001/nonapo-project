@@ -129,7 +129,7 @@ const CreateModal = (props) => {
             setNewData({ ...newData, numberOfSite: e.target.value })
           }
         />
-        <TextField
+        {/* <TextField
           required
           margin="dense"
           id="privacyPolicy"
@@ -142,7 +142,7 @@ const CreateModal = (props) => {
           onChange={(e) =>
             setNewData({ ...newData, privacyPolicy: e.target.value })
           }
-        />
+        /> */}
         <TextField
           required
           margin="dense"

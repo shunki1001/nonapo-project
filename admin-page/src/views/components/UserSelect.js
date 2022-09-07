@@ -1,13 +1,34 @@
-import { MenuItem, Select } from "@mui/material";
-import React, { useState } from "react";
+import { MenuItem, Select, Button, Menu } from "@mui/material";
+import React, { useState, useContext } from "react";
+import { DataContext } from "../../contexts/DataContext";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const UserSelect = () => {
-  const [user, setUser] = useState("testuser@gmail.com");
+  const { signout } = useContext(DataContext);
+
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState();
+
+  const handleClickSignout = () => {
+    signout();
+  };
   return (
     <>
-      <Select value={user} onChange={(e) => setUser(e.target.value)}>
-        <MenuItem value="testuser@gmail.com">testuser@gmail.com</MenuItem>
-      </Select>
+      <Button
+        onClick={(e) => {
+          setOpen(true);
+          setAnchorEl(e.currentTarget);
+        }}
+        endIcon={<KeyboardArrowDownIcon />}
+        sx={{ color: "#000" }}
+      >
+        testuser@gmail.com
+      </Button>
+      <Menu open={open} onClose={() => setOpen(false)} anchorEl={anchorEl}>
+        <MenuItem onClick={handleClickSignout} disableRipple>
+          ログアウト
+        </MenuItem>
+      </Menu>
     </>
   );
 };

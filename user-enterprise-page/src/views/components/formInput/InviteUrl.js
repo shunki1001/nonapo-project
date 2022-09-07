@@ -1,4 +1,10 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import React, { useContext, useEffect, useState } from "react";
@@ -12,7 +18,6 @@ const InviteUrl = () => {
   }, [accountIndex, domain]);
   const handleCopyButton = () => {
     navigator.clipboard.writeText(InviteUrl);
-    console.log("copied!");
   };
   return (
     <Box sx={{ mt: 5 }}>
@@ -20,12 +25,23 @@ const InviteUrl = () => {
         シェア用のURL
         <span>(SNS経由でアポなし商談を行う際にお使いください)</span>
       </Typography>
-      <Box>
-        <Typography sx={{ display: "inline-block" }}>{InviteUrl}</Typography>
-        <IconButton onClick={handleCopyButton}>
-          <ContentCopyIcon />
-        </IconButton>
-      </Box>
+      <TextField
+        id="input-with-icon-textfield"
+        fullWidth
+        value={InviteUrl}
+        disabled
+        sx={{ boxShadow: "none" }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleCopyButton}>
+                <ContentCopyIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+        variant="standard"
+      />
     </Box>
   );
 };

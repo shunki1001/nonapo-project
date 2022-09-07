@@ -88,7 +88,7 @@ const CustomMenu = (props) => {
                   />
                 </ListItemButton>
               </ListItem>
-              {index === 1 && <Box height="40vh"></Box>}
+              {index === 1 && <Box height="50vh"></Box>}
             </Box>
           );
         })}

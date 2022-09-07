@@ -28,7 +28,7 @@ const Home = () => {
               bgcolor: "#ffffff",
               borderRadius: "10px",
               border: "none",
-              boxShadow: "0px 3px 6px 0px",
+              boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.29)",
               p: 3,
             }}
           >

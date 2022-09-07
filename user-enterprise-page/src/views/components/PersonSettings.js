@@ -19,6 +19,7 @@ import ShowTagCode from "./Dialog/ShowTagCode";
 import CompanyInput from "./formInput/inputComponent/CompanyInput";
 import MainButtonInput from "./formInput/inputComponent/MainButtonInput";
 import PhoneInput from "./formInput/inputComponent/PhoneInput";
+import ScheduleInput from "./formInput/inputComponent/ScheduleInput";
 import SubButtonInput from "./formInput/inputComponent/SubButtonInput";
 import UrlInput from "./formInput/inputComponent/UrlInput";
 import InviteUrl from "./formInput/InviteUrl";
@@ -123,13 +124,17 @@ const PersonSetteings = () => {
         </Grid>
         <Grid item sm={1} xs={12}></Grid>
         <Grid item sm={7} xs={12}>
-          <RightColumn
+          <RightColumn />
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={12} sm={7}>
+          <ScheduleInput
             setGoogleDialog={setGoogleDialog}
             setMailSetting={setMailSetting}
           />
         </Grid>
-      </Grid>
-      <Grid container>
+        <Grid item xs={12} sm={5}></Grid>
         <Grid item xs={12} sm={4}>
           <CompanyInput />
         </Grid>

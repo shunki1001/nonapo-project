@@ -84,9 +84,11 @@ const SubButtonInput = () => {
               onChange={(e) => setSubButtonTitle(e.target.value)}
               placeholder="ヘルプ・その他"
             />
-            <Typography variant="caption" sx={{ ml: 3 }}>
-              左記ボタンが先頭表示されその後下記ボタンが選択肢となります。
-            </Typography>
+            <Box sx={{ display: "inline-block", mt: 2 }}>
+              <Typography variant="caption" sx={{ ml: 3 }}>
+                左記ボタンが先頭表示されその後下記ボタンが選択肢となります。
+              </Typography>
+            </Box>
             <Divider sx={{ my: 2 }} />
           </>
         )}
@@ -95,7 +97,7 @@ const SubButtonInput = () => {
             return (
               <Grid item container xs={12} sm={12} key={item.id}>
                 <Grid item xs={12} sm={5} sx={{ my: 1 }}>
-                  <Typography>ボタンタイトル（最大10文字）</Typography>
+                  <Typography>ボタンタイトル{index}（最大12文字）</Typography>
                   <TextField
                     sx={{ width: "90%" }}
                     value={item.title}
@@ -123,7 +125,7 @@ const SubButtonInput = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={7} sx={{ my: 1 }}>
-                  <Typography>遷移URL</Typography>
+                  <Typography>遷移先URL</Typography>
                   <TextField
                     sx={{ width: "90%" }}
                     value={item.url}

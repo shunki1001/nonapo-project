@@ -16,6 +16,7 @@ const HelpSidebar = () => {
           px: 1,
           py: 0.5,
           borderRadius: "1em",
+          mb: 4,
         }}
       >
         <Icon sx={{ fontSize: "1.2em" }}>

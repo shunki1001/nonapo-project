@@ -125,7 +125,7 @@ const DataContextProvider = (props) => {
         setNumberOfSite(docSnap.data().numberOfSite);
         setNumberOfAccount(docSnap.data().numberOfAccount);
         setIsFirstId(docSnap.data().isFirst);
-        setDomain(doc.data().domain);
+        setDomain(docSnap.data().domain);
         localStorage.setItem("id", docSnap.id);
         setIsAuth(true);
         localStorage.setItem("isAuth", true);

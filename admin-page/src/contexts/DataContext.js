@@ -16,8 +16,10 @@ const DataContextProvider = (props) => {
       password === process.env.REACT_APP_PASSWORD
     ) {
       setIsAuth(true);
+      localStorage.setItem("isAuth", true);
+    } else {
+      alert("ログイン情報が間違っています");
     }
-    localStorage.setItem("isAuth", true);
   };
   const signout = () => {
     setIsAuth(false);

@@ -9,10 +9,6 @@ const RightColumn = (props) => {
     <Box>
       <ThumbnailInput />
       <MailInput />
-      <ScheduleInput
-        setGoogleDialog={props.setGoogleDialog}
-        setMailSetting={props.setMailSetting}
-      />
     </Box>
   );
 };

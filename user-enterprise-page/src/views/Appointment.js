@@ -2,18 +2,26 @@ import React, { useContext, useEffect, useState } from "react";
 import HomeLayout from "../Layout/HomeLayout";
 
 import { Box, Button } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { DataGrid, GridToolbarExport } from "@mui/x-data-grid";
+import {
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { DataContext } from "../contexts/DataContext";
 
 const stateString = ["商談済み", "成約", "検討中", "商談希望あり"];
 const columns = [
-  { field: "date", headerName: "商談日" },
+  { field: "date", headerName: "商談日", width: "100" },
   {
     field: "enterprise",
     headerName: "会社名",
     sortable: false,
+    width: "150",
   },
   {
     field: "selectedAccount",
@@ -24,26 +32,33 @@ const columns = [
     field: "phone",
     headerName: "電話番号",
     sortable: false,
+    width: "150",
   },
   {
     field: "email",
     headerName: "Eメール",
     sortable: false,
+    width: "150",
   },
   {
     field: "address",
     headerName: "住所",
     sortable: false,
+    width: "150",
   },
   {
     field: "fromUrl",
     headerName: "流入サイト",
     sortable: false,
+    width: "150",
   },
   {
     field: "state",
     headerName: "状態",
     sortable: false,
+    type: "singleSelect",
+    valueOptions: stateString,
+    editable: true,
   },
   {
     field: "account2",
@@ -73,6 +88,17 @@ const Appointment = () => {
     };
   });
 
+  // Update
+  const processRowUpdate = async (newRow, oldRow) => {
+    // console.log(newRow);
+    // console.log(oldRow);
+    const updateData = {
+      state: newRow.state,
+    };
+    await updateDoc(doc(db, "appointment", newRow.id), updateData);
+    return { ...newRow };
+  };
+
   useEffect(() => {
     const q = query(
       collection(db, "appointment"),
@@ -100,23 +126,17 @@ const Appointment = () => {
   return (
     <HomeLayout title="アポイント管理">
       <Box sx={{ height: "100vh", width: "1400px", bgcolor: "#ffffff" }}>
-        <Box sx={{ width: "100%", textAlign: "right" }}>
-          <Button
-            variant="outlined"
-            onClick={handleCsvExport}
-            sx={{ mx: 2, my: 1 }}
-          >
-            CSVエクスポート
-          </Button>
-        </Box>
         <DataGrid
           rows={rows}
           columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
           disableSelectionOnClick
           experimentalFeatures={{ newEditingApi: true }}
           rowHeight={80}
+          processRowUpdate={(newRow, oldRow) =>
+            processRowUpdate(newRow, oldRow)
+          }
           sx={{
             border: "none",
             p: 2,
@@ -134,10 +154,21 @@ const Appointment = () => {
               my: 1,
             },
           }}
+          components={{
+            Toolbar: CustomToolbar,
+          }}
         />
       </Box>
     </HomeLayout>
   );
 };
+function CustomToolbar() {
+  //プロパティから utf8WithBom = Turue を渡してあげる。
+  return (
+    <Box sx={{ textAlign: "right", width: "100%" }}>
+      <GridToolbarExport csvOptions={{ utf8WithBom: true }} />
+    </Box>
+  );
+}
 
 export default Appointment;

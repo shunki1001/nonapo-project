@@ -15,7 +15,7 @@ const addData = async (data) => {
     subscriptionCost: data.subscriptionCost,
     status: data.isAgreement,
     isAgreement: data.isAgreement,
-    privacyPolicy: data.privacyPolicy,
+    // privacyPolicy: data.privacyPolicy,
     domain: data.domain,
     site: [],
   });

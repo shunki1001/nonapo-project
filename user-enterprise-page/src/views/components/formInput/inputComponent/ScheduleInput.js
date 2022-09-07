@@ -72,7 +72,9 @@ const ScheduleInput = (props) => {
             }}
             sx={{ marginTop: "1.5em", mx: 1, px: 1 }}
           >
-            オフライン時のフォローメール設定
+            オフライン時の
+            <br />
+            フォローメール設定
           </Button>
         </Grid>
       </Grid>

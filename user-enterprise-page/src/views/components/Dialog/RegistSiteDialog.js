@@ -62,7 +62,7 @@ const RegistSiteDialog = () => {
           label="サイトURL"
           type="text"
           variant="standard"
-          sx={{ width: "60%" }}
+          sx={{ width: "60%", boxShadow: "none" }}
           value={addingSite}
           onChange={(e) => {
             setAddingSite(e.target.value);
@@ -77,11 +77,21 @@ const RegistSiteDialog = () => {
           追加
         </Button>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setOpen(false)} disabled={userSite === ""}>
+      <DialogActions sx={{ justifyContent: "center" }}>
+        <Button
+          onClick={() => setOpen(false)}
+          disabled={userSite === ""}
+          variant="outlined"
+          sx={{ mx: 3 }}
+        >
           キャンセル
         </Button>
-        <Button onClick={() => handleClickDialog()} disabled={userSite === ""}>
+        <Button
+          onClick={() => handleClickDialog()}
+          disabled={userSite === ""}
+          variant="contained"
+          sx={{ mx: 3 }}
+        >
           このサイトに設置
         </Button>
       </DialogActions>
