@@ -44,6 +44,7 @@ const AccountSelect = () => {
             "& .MuiSelect-select": {
               backgroundColor: "white",
               width: "10em",
+              maxWidth: "200px",
             },
             "& .MuiOutlinedInput-notchedOutline": {
               border: "none",

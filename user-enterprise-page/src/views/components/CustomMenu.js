@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Drawer,
   List,
@@ -6,8 +7,9 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { DataContext } from "../../contexts/DataContext";
 
 import logoTop from "../../img/log-tp.png";
 
@@ -33,12 +35,13 @@ const menuOptions = [
 
 const CustomMenu = (props) => {
   const { menuOpen, setMenuOpen, variant, drawerWidth } = props;
+  const { newNotice } = useContext(DataContext);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleClickMenu = (menuItem, index) => {
-    setSelectedIndex(index);
     if (menuItem.external === true) {
       window.location.replace(menuItem.url);
       return null;
@@ -46,6 +49,13 @@ const CustomMenu = (props) => {
       navigate(menuItem.url);
     }
   };
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setSelectedIndex(0);
+    } else if (location.pathname === "/appointment") {
+      setSelectedIndex(1);
+    }
+  }, []);
 
   return (
     <Drawer
@@ -73,22 +83,36 @@ const CustomMenu = (props) => {
             <Box key={menuItem.label}>
               <ListItem disablePadding>
                 <ListItemButton
-                  selected={index === selectedIndex}
+                  selected={selectedIndex === index}
                   onClick={() => handleClickMenu(menuItem, index)}
                   sx={{
-                    "&.Mui-selected": { backgroundColor: "rgba(0,0,0,0.2)" },
+                    "&.Mui-selected": { backgroundColor: "#96A6FF" },
                   }}
                 >
-                  <ListItemText
-                    primary={menuItem.label}
-                    sx={{
-                      color: "#ffffff",
-                      "& span": { fontSize: "0.85rem" },
-                    }}
-                  />
+                  {index === 1 && newNotice === true ? (
+                    <Badge badgeContent="new" color="error">
+                      <ListItemText
+                        primary={menuItem.label}
+                        sx={{
+                          color: "#ffffff",
+                          ml: 4,
+                          "& span": { fontSize: "0.85rem" },
+                        }}
+                      />
+                    </Badge>
+                  ) : (
+                    <ListItemText
+                      primary={menuItem.label}
+                      sx={{
+                        color: "#ffffff",
+                        ml: 4,
+                        "& span": { fontSize: "0.85rem" },
+                      }}
+                    />
+                  )}
                 </ListItemButton>
               </ListItem>
-              {index === 1 && <Box height="50vh"></Box>}
+              {index === 1 && <Box height="53vh"></Box>}
             </Box>
           );
         })}

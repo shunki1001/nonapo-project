@@ -7,6 +7,7 @@ export const DataContext = createContext();
 
 const DataContextProvider = (props) => {
   const [isAuth, setIsAuth] = useState(false);
+  const [errorLogin, setErrorLogin] = useState(false);
 
   const navigate = useNavigate();
 
@@ -18,7 +19,7 @@ const DataContextProvider = (props) => {
       setIsAuth(true);
       localStorage.setItem("isAuth", true);
     } else {
-      alert("ログイン情報が間違っています");
+      setErrorLogin(true);
     }
   };
   const signout = () => {
@@ -93,6 +94,8 @@ const DataContextProvider = (props) => {
     setDataList,
     searchValue,
     setSearchValue,
+    errorLogin,
+    setErrorLogin,
   };
 
   return (

@@ -1,19 +1,45 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../firebase";
+const validationFunc = (index, validationText) => {
+  switch (index) {
+    case "name":
+      if (validationText.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
 
-const validation = async (data) => {
-  let userList = [];
-  const docRef = await getDocs(
-    query(collection(db, "enterprise"), where("email", "==", data.email))
-  );
-  docRef.forEach((item) => {
-    userList.push(item.data());
-  });
-  if (userList.lenth > 1) {
-    return false;
-  } else {
-    return true;
+    case "enterprise":
+      if (validationText.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    case "email":
+      const emailRegex =
+        /^([a-zA-Z0-9])+([a-zA-Z0-9._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9._-]+)+$/;
+      if (validationText.length > 0) {
+        if (validationText.match(emailRegex)) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    case "phone":
+      if (validationText.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    case "address":
+      if (validationText.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    default:
+      return false;
   }
 };
 
-export default validation;
+export default validationFunc;

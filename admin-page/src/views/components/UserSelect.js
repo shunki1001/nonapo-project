@@ -1,4 +1,4 @@
-import { MenuItem, Select, Button, Menu } from "@mui/material";
+import { MenuItem, Button, Menu } from "@mui/material";
 import React, { useState, useContext } from "react";
 import { DataContext } from "../../contexts/DataContext";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -20,7 +20,7 @@ const UserSelect = () => {
           setAnchorEl(e.currentTarget);
         }}
         endIcon={<KeyboardArrowDownIcon />}
-        sx={{ color: "#000" }}
+        sx={{ color: "#000", textTransform: "none" }}
       >
         testuser@gmail.com
       </Button>

@@ -1,5 +1,4 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -12,7 +11,7 @@ import { DataContext } from "../contexts/DataContext";
 import logo from "../img/log-tp.png";
 
 export default function SignIn() {
-  const { signin } = React.useContext(DataContext);
+  const { signin, errorLogin } = React.useContext(DataContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -29,7 +28,7 @@ export default function SignIn() {
         backgroundColor: "#2469B3",
       }}
     >
-      <Box width="280px" sx={{ margin: "2em auto" }}>
+      <Box width="260px" sx={{ margin: "0 auto", marginBottom: "4em" }}>
         <img src={logo} alt="logo" style={{ width: "100%" }} />
       </Box>
       <Container
@@ -47,6 +46,7 @@ export default function SignIn() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            px: 20,
           }}
         >
           <Typography sx={{ fontSize: "33px", fontWeight: "700" }}>
@@ -56,37 +56,64 @@ export default function SignIn() {
             component="form"
             onSubmit={handleSubmit}
             noValidate
-            sx={{ mt: 5 }}
+            sx={{ mt: 3 }}
           >
             <TextField
               margin="normal"
-              required
               fullWidth
               id="email"
               label="メールアドレス"
               name="email"
               autoComplete="email"
               autoFocus
+              variant="standard"
+              error={errorLogin}
+              InputProps={{
+                disableUnderline: true,
+              }}
               sx={{
-                "& .MuiFormLabel-root-MuiInputLabel-root": { fontSize: "33px" },
+                my: 2,
+                backgroundColor: "#f5f5f5",
+                "& label": { fontSize: "30px", ml: 2, mt: -1 },
+                "& div input": { fontSize: "30px" },
+                "& .MuiInput .MuiOutlinedInput-notchedOutline": {
+                  border: "0",
+                },
               }}
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               name="password"
               label="パスワード"
               type="password"
               id="password"
               autoComplete="current-password"
-              sx={{ fontSize: "33px" }}
+              variant="standard"
+              error={errorLogin}
+              InputProps={{
+                disableUnderline: true,
+              }}
+              sx={{
+                my: 2,
+                backgroundColor: "#f5f5f5",
+                "& label": { fontSize: "30px", ml: 2, mt: -1 },
+                "& div input": { fontSize: "30px" },
+                "& .MuiInput .MuiOutlinedInput-notchedOutline": {
+                  border: "0",
+                },
+              }}
             />
+            {errorLogin && (
+              <Typography variant="caption" color="error">
+                メールアドレスかパスワードが間違っています。
+              </Typography>
+            )}
             <Box sx={{ width: "100%", textAlign: "center" }}>
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ mt: 3, mb: 2, px: 3 }}
+                sx={{ mt: 10, mb: 2, px: 10, py: 2 }}
               >
                 ログイン
               </Button>
@@ -100,7 +127,7 @@ export default function SignIn() {
           flexDirection: "column",
           alignItems: "center",
           maxWidth: "250px",
-          margin: "16px auto",
+          margin: "32px auto",
         }}
       >
         <Grid container>

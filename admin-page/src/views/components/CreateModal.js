@@ -11,20 +11,33 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import addData from "../../function/addData";
 import editData from "../../function/editData";
 
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
+// import validation from "../../function/validation";
 
 const CreateModal = (props) => {
   const { newOpen, setNewOpen, newData, setNewData } = props;
+  const [inputError, setInputError] = useState({
+    enterprise: false,
+    email: false,
+    password: false,
+    address: false,
+    numberOfSite: false,
+    domain: false,
+    numberOfAccount: false,
+    subscriptionCost: false,
+    subscriptionDuration: false,
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if(newData.enterprise.length > 0 && newData.email.length > 0 && newData.password.length > 0 && newData.numberOfSite.length > 0 && newData.domain.length > 0 && newData.numberOfAccount.length > 0){
-      // 新規作成時
+    // // すべてのエラーキーがfalseなら登録実行
+    // if (!Object.values(inputError).includes(true)) {
+    // 新規作成時
     if (newData.id === undefined) {
       let userList = [];
       const docRef = await getDocs(
@@ -39,7 +52,7 @@ const CreateModal = (props) => {
         try {
           addData(newData);
         } catch (e) {
-          alert('Cannnot add! Try again')
+          alert("Cannnot add! Try again");
           console.error("Error adding document: ", e);
         }
       }
@@ -52,10 +65,9 @@ const CreateModal = (props) => {
       }
     }
     setNewOpen(false);
-    }else{
-      alert('You have to fill in all inputs')
-    }
+    // }
   };
+
   return (
     <Dialog
       open={newOpen}
@@ -78,10 +90,14 @@ const CreateModal = (props) => {
           type="text"
           fullWidth
           variant="filled"
+          error={inputError.enterprise}
           value={newData.enterprise}
           onChange={(e) =>
             setNewData({ ...newData, enterprise: e.target.value })
           }
+          sx={{
+            "& label": { mt: 1 },
+          }}
         />
         <TextField
           required
@@ -92,8 +108,10 @@ const CreateModal = (props) => {
           type="email"
           fullWidth
           variant="filled"
+          error={inputError.email}
           value={newData.email}
           onChange={(e) => setNewData({ ...newData, email: e.target.value })}
+          sx={{ "& label": { mt: 1 } }}
         />
         <TextField
           required
@@ -101,11 +119,13 @@ const CreateModal = (props) => {
           id="password"
           name="password"
           label="パスワード"
-          type="text"
+          type="password"
           fullWidth
           variant="filled"
+          error={inputError.password}
           value={newData.password}
           onChange={(e) => setNewData({ ...newData, password: e.target.value })}
+          sx={{ "& label": { mt: 1 } }}
         />
         <TextField
           required
@@ -116,8 +136,10 @@ const CreateModal = (props) => {
           type="text"
           fullWidth
           variant="filled"
+          error={inputError.address}
           value={newData.address}
           onChange={(e) => setNewData({ ...newData, address: e.target.value })}
+          sx={{ "& label": { mt: 1 } }}
         />
         <TextField
           required
@@ -128,10 +150,12 @@ const CreateModal = (props) => {
           type="number"
           fullWidth
           variant="filled"
+          error={inputError.numberOfSite}
           value={newData.numberOfSite}
           onChange={(e) =>
             setNewData({ ...newData, numberOfSite: e.target.value })
           }
+          sx={{ "& label": { mt: 1 } }}
         />
         {/* <TextField
           required
@@ -146,7 +170,7 @@ const CreateModal = (props) => {
           onChange={(e) =>
             setNewData({ ...newData, privacyPolicy: e.target.value })
           }
-        /> */}
+        sx={{ "& label": { mt: 1 },}} />  */}
         <TextField
           required
           margin="dense"
@@ -156,8 +180,10 @@ const CreateModal = (props) => {
           type="text"
           fullWidth
           variant="filled"
+          error={inputError.domain}
           value={newData.domain}
           onChange={(e) => setNewData({ ...newData, domain: e.target.value })}
+          sx={{ "& label": { mt: 1 } }}
         />
         <DialogContentText>契約開始月</DialogContentText>
         <TextField
@@ -172,10 +198,11 @@ const CreateModal = (props) => {
           onChange={(e) =>
             setNewData({ ...newData, subscriptionStartYear: e.target.value })
           }
+          sx={{ "& label": { mt: 1 } }}
         />
         <Typography
           variant="body"
-          sx={{ display: "inline-block", mt: 3, mr: 2 }}
+          sx={{ display: "inline-block", mt: 4, mr: 2 }}
         >
           年
         </Typography>
@@ -191,8 +218,9 @@ const CreateModal = (props) => {
           onChange={(e) =>
             setNewData({ ...newData, subscriptionStartMonth: e.target.value })
           }
+          sx={{ "& label": { mt: 1 } }}
         />
-        <Typography variant="body" sx={{ display: "inline-block", mt: 3 }}>
+        <Typography variant="body" sx={{ display: "inline-block", mt: 4 }}>
           月
         </Typography>
         <TextField
@@ -204,10 +232,12 @@ const CreateModal = (props) => {
           type="number"
           fullWidth
           variant="filled"
+          error={inputError.numberOfAccount}
           value={newData.numberOfAccount}
           onChange={(e) =>
             setNewData({ ...newData, numberOfAccount: e.target.value })
           }
+          sx={{ "& label": { mt: 1 } }}
         />
         <TextField
           required
@@ -217,10 +247,12 @@ const CreateModal = (props) => {
           name="subscriptionCost"
           label="月額"
           variant="filled"
+          error={inputError.subscriptionCost}
           value={newData.subscriptionCost}
           onChange={(e) =>
             setNewData({ ...newData, subscriptionCost: e.target.value })
           }
+          sx={{ "& label": { mt: 1 } }}
         />
         <TextField
           required
@@ -230,12 +262,14 @@ const CreateModal = (props) => {
           label="契約期間"
           type="number"
           variant="filled"
+          error={inputError.subscriptionDuration}
           value={newData.subscriptionDuration}
           onChange={(e) =>
             setNewData({ ...newData, subscriptionDuration: e.target.value })
           }
+          sx={{ "& label": { mt: 1 }, width: "80%" }}
         />
-        <Typography variant="body" sx={{ display: "inline-block", mt: 3 }}>
+        <Typography variant="body" sx={{ display: "inline-block", mt: 4 }}>
           ヶ月
         </Typography>
         <InputLabel id="select-label">ステータス</InputLabel>

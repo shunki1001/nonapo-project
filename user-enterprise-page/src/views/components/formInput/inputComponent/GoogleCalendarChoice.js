@@ -19,7 +19,10 @@ const GoogleCalendarChoice = (props) => {
           borderRadius: "20px",
           boxShadow: "0px 3px 6px 0px #00000029",
           "& img": { width: "2em" },
-          px: 1,
+          px: 2,
+          py: 1,
+          color: "#000000",
+          textTransform: "none",
         }}
       >
         <img

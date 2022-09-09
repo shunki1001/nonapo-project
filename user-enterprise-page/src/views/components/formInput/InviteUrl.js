@@ -10,6 +10,8 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../contexts/DataContext";
 
+import copyIcon from "../../../img/copyIcon.PNG";
+
 const InviteUrl = () => {
   const { accountIndex, domain } = useContext(DataContext);
   const [InviteUrl, setInviteUrl] = useState("");
@@ -30,15 +32,19 @@ const InviteUrl = () => {
         fullWidth
         value={InviteUrl}
         disabled
-        sx={{ boxShadow: "none" }}
+        sx={{ boxShadow: "none", py: 1, borderRadius: "10px", pl: 3 }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton onClick={handleCopyButton}>
-                <ContentCopyIcon />
+              <IconButton
+                onClick={handleCopyButton}
+                sx={{ "& img": { maxWidth: "1em", maxHeight: "1em" } }}
+              >
+                <img src={copyIcon} alt="copy icon" />
               </IconButton>
             </InputAdornment>
           ),
+          disableUnderline: true,
         }}
         variant="standard"
       />

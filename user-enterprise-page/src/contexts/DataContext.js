@@ -11,6 +11,8 @@ import {
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
+import firstSrc from "../img/defaultThumbnail.PNG";
+import firstSrcAvatar from "../img/defaultAvatar.PNG";
 
 export const DataContext = createContext();
 
@@ -75,6 +77,24 @@ const DataContextProvider = (props) => {
     message: "何らかのエラーが発生しました。",
   });
 
+  // アポイントの未読通知
+  const [newNotice, setNewNotice] = useState(false);
+  const newAppointmentCheck = async () => {
+    const q = query(
+      collection(db, "appointment"),
+      where("enterpriseId", "==", localStorage.getItem("id"))
+    );
+    const result = await getDocs(q);
+    result.forEach((element) => {
+      if (element.data().isChecked === undefined) {
+        setNewNotice(true);
+      }
+    });
+  };
+
+  useEffect(() => {
+    newAppointmentCheck();
+  }, [enterprise]);
   const navigate = useNavigate();
 
   // ログイン認証関係
@@ -208,8 +228,17 @@ const DataContextProvider = (props) => {
         setMailContent(targetAccount[0]?.mailContent);
         setMailSubject(targetAccount[0]?.mailSubject);
         setMainButton(targetAccount[0]?.mainButton);
-        setAvatarLink(targetAccount[0]?.avatar);
-        setThumbnailLink(targetAccount[0]?.thumbnail);
+        if (targetAccount[0]?.avatar === undefined) {
+          setAvatarLink(firstSrcAvatar);
+        } else {
+          setAvatarLink(targetAccount[0]?.avatar);
+        }
+        console.log();
+        if (targetAccount[0]?.thumbnail === undefined) {
+          setThumbnailLink(firstSrc);
+        } else {
+          setThumbnailLink(targetAccount[0]?.thumbnail);
+        }
         setIsOneSubButton(targetAccount[0]?.isOneSubButton);
         setSubButtonTitle(targetAccount[0]?.subButtonTitle);
         setAccountIndex(targetAccount[0]?.accountIndex);
@@ -304,6 +333,8 @@ const DataContextProvider = (props) => {
     numberOfAccount,
     errorSnackOpen,
     setErrorSnackOpen,
+    newNotice,
+    setNewNotice,
   };
 
   return (

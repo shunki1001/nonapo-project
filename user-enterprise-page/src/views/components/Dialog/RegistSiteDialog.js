@@ -38,9 +38,14 @@ const RegistSiteDialog = () => {
     setOpen(false);
   };
   return (
-    <Dialog open={open} maxWidth="md" fullWidth>
-      <DialogContent sx={{ mx: 2 }}>
-        <Box sx={{ textAlign: "center" }}>
+    <Dialog
+      open={open}
+      maxWidth="md"
+      fullWidth
+      sx={{ "& .MuiDialog-paper": { background: "#F8F9FE" } }}
+    >
+      <DialogContent sx={{ mx: 10 }}>
+        <Box sx={{ textAlign: "center", my: 4 }}>
           <Typography variant="h6">
             ノンアポを設置するサイトを追加してください
           </Typography>
@@ -55,34 +60,37 @@ const RegistSiteDialog = () => {
         ) : (
           <SiteRadio />
         )}
-        <Divider sx={{ my: 3 }} />
-        <TextField
-          autoFocus
-          margin="dense"
-          label="サイトURL"
-          type="text"
-          variant="standard"
-          sx={{ width: "60%", boxShadow: "none" }}
-          value={addingSite}
-          onChange={(e) => {
-            setAddingSite(e.target.value);
-          }}
-        />
-        <Button
-          variant="contained"
-          sx={{ mt: 2, ml: 3 }}
-          onClick={handleAddClick}
-          disabled={numberOfSite < userSiteList.length + 1 || addingSite === ""}
-        >
-          追加
-        </Button>
+        <Divider sx={{ my: 4 }} />
+        <Box sx={{ textAlign: "center" }}>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="サイトURL"
+            type="text"
+            sx={{ width: "60%" }}
+            value={addingSite}
+            onChange={(e) => {
+              setAddingSite(e.target.value);
+            }}
+          />
+          <Button
+            variant="contained"
+            sx={{ mt: 1, ml: 3, py: 2 }}
+            onClick={handleAddClick}
+            disabled={
+              numberOfSite < userSiteList.length + 1 || addingSite === ""
+            }
+          >
+            追加
+          </Button>
+        </Box>
       </DialogContent>
-      <DialogActions sx={{ justifyContent: "center" }}>
+      <DialogActions sx={{ justifyContent: "center", mt: 3, mb: 8 }}>
         <Button
           onClick={() => setOpen(false)}
           disabled={userSite === ""}
           variant="outlined"
-          sx={{ mx: 3 }}
+          sx={{ mx: 3, py: 1, px: 6 }}
         >
           キャンセル
         </Button>
@@ -90,7 +98,7 @@ const RegistSiteDialog = () => {
           onClick={() => handleClickDialog()}
           disabled={userSite === ""}
           variant="contained"
-          sx={{ mx: 3 }}
+          sx={{ mx: 3, py: 1, px: 6 }}
         >
           このサイトに設置
         </Button>

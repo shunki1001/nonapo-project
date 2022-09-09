@@ -6,11 +6,12 @@ const MainButtonInput = () => {
   const { mainButton, setMainButton } = useContext(DataContext);
   return (
     <Box sx={{ mt: 5 }}>
-      <Typography variant="h6">メインボタンタイトル（最大10文字）</Typography>
+      <Typography variant="h6">メインボタンのタイトル（最大10文字）</Typography>
       <TextField
+        sx={{ width: "20em" }}
         value={mainButton}
         onChange={(e) => setMainButton(e.target.value)}
-        placeholder="ノンアポ商談"
+        placeholder="アポなし商談"
       />
     </Box>
   );

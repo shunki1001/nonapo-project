@@ -10,10 +10,8 @@ const SiteSelect = () => {
         サイト名
       </InputLabel> */}
       <Select
-        labelId="site-select-label"
         id="site-select"
         value={userSite}
-        label="サイト名"
         sx={{
           maxWidth: "350px",
           "& .MuiSelect-select": {

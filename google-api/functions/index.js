@@ -117,27 +117,27 @@ app.get("/google", (req, res) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const userMail = "info@sukenojo.com";
-const transporter = nodemailer.createTransport({
-  port: 465,
-  host: "smtp.lolipop.jp",
-  auth: {
-    user: userMail,
-    pass: "G8sh-qBOfV7_W_SG",
-  },
-  secure: true, // upgrades later with STARTTLS -- change this based on the PORT
-});
-
-// const userMail = "info@non-appoint.com";
+// const userMail = "info@sukenojo.com";
 // const transporter = nodemailer.createTransport({
 //   port: 465,
-//   host: "sv7077.xserver.jp",
+//   host: "smtp.lolipop.jp",
 //   auth: {
 //     user: userMail,
-//     pass: "3WdeJTtr",
+//     pass: "G8sh-qBOfV7_W_SG",
 //   },
 //   secure: true, // upgrades later with STARTTLS -- change this based on the PORT
 // });
+
+const userMail = "info@non-appoint.com";
+const transporter = nodemailer.createTransport({
+  port: 465,
+  host: "sv7077.xserver.jp",
+  auth: {
+    user: userMail,
+    pass: "3WdeJTtr",
+  },
+  secure: true, // upgrades later with STARTTLS -- change this based on the PORT
+});
 
 app.post("/mailer/user", async (req, res) => {
   const {

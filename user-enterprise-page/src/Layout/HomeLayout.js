@@ -52,8 +52,8 @@ const HomeLayout = (props) => {
             <Menu variant="permanent" drawerWidth={drawerWidth} />
             <Box
               sx={{
-                minHeight: "100vh",
-                py: 8,
+                minHeight: "70vh",
+                pt: 2,
                 px: 6,
               }}
             >
@@ -85,7 +85,8 @@ const HomeLayout = (props) => {
               position="fixed"
               sx={{
                 width: "100%",
-                backgroundColor: "#f5f5f5",
+                background:
+                  "linear-gradient(143.38deg, #354496 3.06%, #5238A8 118.21%)",
               }}
             >
               <Toolbar>

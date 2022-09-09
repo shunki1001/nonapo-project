@@ -101,9 +101,10 @@ const PersonSetteings = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
         <AccountSelect />
         <FormControlLabel
+          sx={{ ml: 2 }}
           control={
             <Switch
               checked={isFirst}
@@ -113,57 +114,78 @@ const PersonSetteings = () => {
           label="このユーザーを先頭に配置する"
         />
         <Box sx={{ flexGrow: 1 }}></Box>
-        <Button variant="contained" onClick={handleClickGoTag}>
+        <Button variant="contained" onClick={handleClickGoTag} sx={{ px: 10 }}>
           商談タグを発行
         </Button>
       </Box>
       <Divider sx={{ my: 2 }} />
-      <Grid container>
-        <Grid item sm={4} xs={12}>
-          <LeftColumn />
+      <Box sx={{ overflow: "auto", height: "70vh" }}>
+        <Button
+          variant="contained"
+          onClick={handleAccountUpdate}
+          disabled={account === ""}
+          sx={{
+            px: 6,
+            py: 2,
+            position: "sticky",
+            top: "90%",
+            left: "80%",
+            zIndex: "100",
+          }}
+        >
+          変更内容を保存
+        </Button>
+        <Grid container sx={{ mt: -10 }}>
+          <Grid item md={4} xs={12}>
+            <LeftColumn />
+          </Grid>
+          <Grid item md={1} xs={12}></Grid>
+          <Grid item md={7} xs={12}>
+            <RightColumn />
+          </Grid>
         </Grid>
-        <Grid item sm={1} xs={12}></Grid>
-        <Grid item sm={7} xs={12}>
-          <RightColumn />
+        <Grid container>
+          <Grid item xs={12} xl={7}>
+            <ScheduleInput
+              setGoogleDialog={setGoogleDialog}
+              setMailSetting={setMailSetting}
+            />
+          </Grid>
+          <Grid item xs={12} xl={5}></Grid>
+          <Grid item xs={12} md={4.5}>
+            <CompanyInput />
+          </Grid>
+          <Grid item xs={12} md={0.5}></Grid>
+          <Grid item xs={12} md={7}>
+            <PhoneInput />
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <UrlInput />
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <MainButtonInput />
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <SubButtonInput />
+          </Grid>
+          {/* <Grid item xs={12} md={9}></Grid>
+          <Grid item xs={12} md={3} sx={{ textAlign: "right", pr: 2, my: 2 }}>
+            
+          </Grid> */}
         </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs={12} sm={7}>
-          <ScheduleInput
-            setGoogleDialog={setGoogleDialog}
-            setMailSetting={setMailSetting}
-          />
-        </Grid>
-        <Grid item xs={12} sm={5}></Grid>
-        <Grid item xs={12} sm={4}>
-          <CompanyInput />
-        </Grid>
-        <Grid item xs={12} sm={1}></Grid>
-        <Grid item xs={12} sm={7}>
-          <PhoneInput />
-        </Grid>
-        <Grid item xs={12} sm={12}>
-          <UrlInput />
-        </Grid>
-        <Grid item xs={12} sm={12}>
-          <MainButtonInput />
-        </Grid>
-        <Grid item xs={12} sm={12}>
-          <SubButtonInput />
-        </Grid>
-        <Grid item xs={12} sm={9}></Grid>
-        <Grid item xs={12} sm={3} sx={{ textAlign: "right", pr: 2 }}>
-          <Button
-            variant="contained"
-            onClick={handleAccountUpdate}
-            disabled={account === ""}
-          >
-            変更内容を保存
-          </Button>
-        </Grid>
-      </Grid>
-      <Divider sx={{ my: 2 }} />
-      <InviteUrl />
+        {/* <Box
+          sx={{
+            width: "100%",
+            
+          }}
+        > */}
+
+        {/* </Box> */}
+        <Divider sx={{ my: 2 }} />
+        <InviteUrl />
+        <Box sx={{ width: "100%", height: "10vh" }}></Box>
+      </Box>
+
       {/* モーダルコンポーネント */}
       {!isRegistedSite && <RegistSiteDialog />}
       {getTag && (

@@ -7,6 +7,9 @@ const theme = createTheme({
     primary: {
       main: "#2469B3",
     },
+    secondary: {
+      main: "#000000",
+    },
     text: {
       primary: "1B243D",
       secondary: "BFBFBF",
@@ -17,6 +20,15 @@ const theme = createTheme({
     fontSize: 14,
   },
   components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: ({ ownerState }) => ({
+          ...(ownerState.variant === "h6" && {
+            fontWeight: 700,
+          }),
+        }),
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: ({ ownerState }) => ({
@@ -27,7 +39,7 @@ const theme = createTheme({
             paddingRight: "3em",
           }),
           ...(ownerState.variant === "outlined" && {
-            borderColor: "#5e72e4",
+            border: "2px solid #5e72e4",
             color: "#5e72e4",
             paddingLeft: "3em",
             paddingRight: "3em",
@@ -52,6 +64,9 @@ const theme = createTheme({
           boxShadow: "0px 3px 6px 0px #00000029",
           "& .MuiInput .MuiOutlinedInput-notchedOutline": {
             border: "0",
+          },
+          "& input": {
+            fontWeight: 700,
           },
         },
       },

@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../../contexts/DataContext";
+import CircleIcon from "@mui/icons-material/Circle";
+import radioIcon from "../../../../img/radioIcon.svg";
 
 const placeholder = [
   {
@@ -62,23 +64,83 @@ const SubButtonInput = () => {
           checked={isOneSubButton === true}
           onChange={(e) => setIsOneSubButton(true)}
           name="a-radio"
+          icon={
+            <img
+              src={radioIcon}
+              alt="checked"
+              style={{
+                width: "1em",
+                fontSize: "1.5rem",
+              }}
+            />
+          }
+          checkedIcon={
+            <>
+              <img
+                src={radioIcon}
+                alt="checked"
+                style={{
+                  position: "absolute",
+                  width: "1em",
+                  fontSize: "1.5rem",
+                }}
+              />
+              <CircleIcon
+                fontSize="small"
+                sx={{
+                  color: "#5E72E4",
+                  position: "relative",
+                }}
+              />
+            </>
+          }
         />
-        <Typography sx={{ display: "inline-block" }}>
+        <Typography sx={{ display: "inline-block", fontWeight: 700 }}>
           サブボタンをつける（任意）
         </Typography>
         <Radio
           checked={isOneSubButton === false}
           onChange={(e) => setIsOneSubButton(false)}
           name="b-radio"
+          icon={
+            <img
+              src={radioIcon}
+              alt="checked"
+              style={{
+                width: "1em",
+                fontSize: "1.5rem",
+              }}
+            />
+          }
+          checkedIcon={
+            <>
+              <img
+                src={radioIcon}
+                alt="checked"
+                style={{
+                  position: "absolute",
+                  width: "1em",
+                  fontSize: "1.5rem",
+                }}
+              />
+              <CircleIcon
+                fontSize="small"
+                sx={{
+                  color: "#5E72E4",
+                  position: "relative",
+                }}
+              />
+            </>
+          }
         />
-        <Typography sx={{ display: "inline-block" }}>
+        <Typography sx={{ display: "inline-block", fontWeight: 700 }}>
           サブボタンを複数つける（任意）
         </Typography>
       </Box>
       <Box>
         {!isOneSubButton && (
           <>
-            <Typography>ボタンタイトル</Typography>
+            <Typography sx={{ fontWeight: 700 }}>ボタンタイトル</Typography>
             <TextField
               value={subButtonTitle}
               onChange={(e) => setSubButtonTitle(e.target.value)}
@@ -97,7 +159,13 @@ const SubButtonInput = () => {
             return (
               <Grid item container xs={12} sm={12} key={item.id}>
                 <Grid item xs={12} sm={5} sx={{ my: 1 }}>
-                  <Typography>ボタンタイトル{index}（最大12文字）</Typography>
+                  <Typography sx={{ fontWeight: 700 }}>
+                    {isOneSubButton ? (
+                      <>ボタンタイトル（最大10文字）</>
+                    ) : (
+                      <>ボタンタイトル{index + 1}（最大12文字）</>
+                    )}
+                  </Typography>
                   <TextField
                     sx={{ width: "90%" }}
                     value={item.title}
@@ -125,7 +193,7 @@ const SubButtonInput = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={7} sx={{ my: 1 }}>
-                  <Typography>遷移先URL</Typography>
+                  <Typography sx={{ fontWeight: 700 }}>遷移先URL</Typography>
                   <TextField
                     sx={{ width: "90%" }}
                     value={item.url}

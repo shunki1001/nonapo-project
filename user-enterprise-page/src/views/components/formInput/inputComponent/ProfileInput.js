@@ -7,17 +7,20 @@ const ProfileInput = () => {
 
   return (
     <Grid container sx={{ my: 4 }}>
-      <Grid item xs={12} sm={4} sx={{ textAlign: "center" }}>
+      <Grid item xs={12} xl={4} sx={{ textAlign: "center" }}>
         <Avatar
           alt="Profile image"
           src={avatarLink}
-          sx={{ width: "100%", height: "100%", margin: "0 auto" }}
+          sx={{
+            width: "112px",
+            height: "112px",
+            margin: "0 auto",
+          }}
         />
       </Grid>
-      <Grid item xs={12} sm={1}></Grid>
-      <Grid item xs={12} sm={7} sx={{ mt: 3, textAlign: "center" }}>
+      <Grid item xs={12} xl={8} sx={{ mt: 2, textAlign: "center" }}>
         <Typography variant="h6">プロフィール画像</Typography>
-        <Button variant="outlined" component="label">
+        <Button variant="outlined" component="label" sx={{ py: 1, mt: 1.5 }}>
           ファイルを選択
           <input
             hidden

@@ -7,7 +7,11 @@ const CompanyInput = () => {
   return (
     <Box sx={{ mt: 5 }}>
       <Typography variant="h6">会社名</Typography>
-      <TextField value={company} onChange={(e) => setCompany(e.target.value)} />
+      <TextField
+        value={company}
+        onChange={(e) => setCompany(e.target.value)}
+        fullWidth
+      />
     </Box>
   );
 };
