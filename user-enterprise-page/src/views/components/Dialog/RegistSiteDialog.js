@@ -72,7 +72,11 @@ const RegistSiteDialog = () => {
             sx={{ width: "60%" }}
             value={addingSite}
             onChange={(e) => {
-              setAddingSite(e.target.value);
+              if (e.target.value.slice(-1) === "/") {
+                setAddingSite(e.target.value.slice(0, -1));
+              } else {
+                setAddingSite(e.target.value);
+              }
             }}
           />
           <Button

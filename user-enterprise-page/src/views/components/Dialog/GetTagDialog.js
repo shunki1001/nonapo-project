@@ -25,7 +25,13 @@ const GetTagDialog = (props) => {
   const handleClickDialog = () => {
     setGetTag(false);
     setShowTag(true);
-    registSiteTag(issueAccountList, userSite, setErrorSnackOpen, domain);
+    registSiteTag(
+      issueAccountList,
+      userSite,
+      setErrorSnackOpen,
+      domain,
+      isFirstId
+    );
   };
   return (
     <Dialog

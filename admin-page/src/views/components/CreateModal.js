@@ -41,6 +41,7 @@ const CreateModal = (props) => {
   useEffect(() => {
     if (!newOpen) {
       setNewData({
+        id: "",
         enterprise: "",
         email: "",
         password: "",
@@ -54,12 +55,13 @@ const CreateModal = (props) => {
         isAgreement: true,
       });
     }
+    console.log(newData.id);
   }, [newOpen]);
 
   const onSubmit = async (data) => {
     console.log(data);
     // 新規作成時
-    if (newData.id === undefined) {
+    if (newData.id === undefined || newData.id === "") {
       let userList = [];
       const docRef = await getDocs(
         query(collection(db, "enterprise"), where("email", "==", data.email))
@@ -204,6 +206,7 @@ const CreateModal = (props) => {
           error={"numberOfSite" in errors}
           helperText={errors.numberOfSite?.message}
           {...register("numberOfSite")}
+          disabled={newData.id !== ""}
           // error={inputError.numberOfSite}
           // value={newData.numberOfSite}
           // onBlur={(e)=>handleBlur(e, "numberOfSite")}
@@ -300,6 +303,7 @@ const CreateModal = (props) => {
           error={"numberOfAccount" in errors}
           helperText={errors.numberOfAccount?.message}
           {...register("numberOfAccount")}
+          disabled={newData.id !== ""}
           // error={inputError.numberOfAccount}
           // value={newData.numberOfAccount}
           // onBlur={(e)=>handleBlur(e, "numberOfAccount")}

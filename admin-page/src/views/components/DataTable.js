@@ -10,7 +10,14 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { deleteDoc, doc } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  collection,
+  where,
+} from "firebase/firestore";
 import React, { useContext } from "react";
 import { db } from "../../firebase";
 import { DataContext } from "../../contexts/DataContext";
@@ -44,6 +51,12 @@ const DataTable = (props) => {
   const handleDeleteButton = async (id) => {
     try {
       await deleteDoc(doc(db, "enterprise", id));
+      const account_ref = await getDocs(
+        query(collection(db, "account"), where("enterprise", "==", id))
+      );
+      account_ref.forEach((item) => {
+        deleteDoc(doc(db, "account", item.id));
+      });
     } catch {
       console.log("通信エラー");
     }

@@ -159,16 +159,20 @@ const DataContextProvider = (props) => {
       const docRef = doc(db, "enterprise", localStorage.getItem("id"));
       try {
         const docSnap = await getDoc(docRef);
-        setEnterprise(docSnap.data().enterprise);
-        setUserSiteList(docSnap.data().site);
-        setUserSite(docSnap.data().site[0]);
-        setNumberOfSite(docSnap.data().numberOfSite);
-        setNumberOfAccount(docSnap.data().numberOfAccount);
-        setIsFirstId(docSnap.data().isFirst);
-        setDomain(docSnap.data().domain);
-        localStorage.setItem("id", docSnap.id);
-        setIsAuth(true);
-        localStorage.setItem("isAuth", true);
+        if (!docSnap.exists()) {
+          signout();
+        } else {
+          setEnterprise(docSnap.data().enterprise);
+          setUserSiteList(docSnap.data().site);
+          setUserSite(docSnap.data().site[0]);
+          setNumberOfSite(docSnap.data().numberOfSite);
+          setNumberOfAccount(docSnap.data().numberOfAccount);
+          setIsFirstId(docSnap.data().isFirst);
+          setDomain(docSnap.data().domain);
+          localStorage.setItem("id", docSnap.id);
+          setIsAuth(true);
+          localStorage.setItem("isAuth", true);
+        }
       } catch (error) {
         setIsAuth(false);
       }
@@ -176,9 +180,6 @@ const DataContextProvider = (props) => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("isAuth")) {
-      setIsAuth(true);
-    }
     reloadFunc();
   }, []);
 

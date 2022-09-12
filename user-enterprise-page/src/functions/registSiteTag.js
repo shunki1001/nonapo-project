@@ -5,13 +5,15 @@ const registSiteTag = async (
   issueAccountList,
   userSite,
   setErrorSnackOpen,
-  domain
+  domain,
+  isFirstId
 ) => {
   try {
     await addDoc(collection(db, "site"), {
       account: issueAccountList.map((item) => item.id),
       userSite: userSite,
       domain: domain,
+      isFirst: isFirstId,
     });
   } catch (error) {
     setErrorSnackOpen({

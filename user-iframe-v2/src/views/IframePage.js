@@ -21,7 +21,8 @@ function IframePage() {
   let params = useParams();
 
   const domain = params.domain;
-  const fromUrl = document.referrer;
+  let fromUrl = "";
+
   // const fromUrl = "https://sukenojo.com/";
 
   const handleNextButton = async () => {
@@ -29,15 +30,16 @@ function IframePage() {
   };
 
   useEffect(() => {
+    if (document.referrer.slice(-1) === "/") {
+      fromUrl = document.referrer.slice(0, -1);
+    } else {
+      fromUrl = document.referrer;
+    }
     // ドメイン取得して、isFirstアカウントの情報を取得
-    console.log(domain);
     console.log(fromUrl);
     getInfo(domain, fromUrl, setFirstAccount, setOnline);
     setWhereFrom(fromUrl);
   }, []);
-  useEffect(() => {
-    console.log(firstAccount);
-  }, [firstAccount]);
 
   return (
     <div id="wrap">
