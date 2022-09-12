@@ -49,7 +49,9 @@ const RegistSiteDialog = () => {
           <Typography variant="h6">
             ノンアポを設置するサイトを追加してください
           </Typography>
-          <Typography sx={{ fontSize: "12px", color: "#5E72E4" }}>
+          <Typography
+            sx={{ fontSize: "12px", color: "#5E72E4", fontWeight: 700 }}
+          >
             ※お客様のプランで登録できるサイトは{numberOfSite}つです
           </Typography>
         </Box>
@@ -90,7 +92,7 @@ const RegistSiteDialog = () => {
           onClick={() => setOpen(false)}
           disabled={userSite === ""}
           variant="outlined"
-          sx={{ mx: 3, py: 1, px: 6 }}
+          sx={{ mx: 3, py: 2, px: 6 }}
         >
           キャンセル
         </Button>
@@ -98,7 +100,7 @@ const RegistSiteDialog = () => {
           onClick={() => handleClickDialog()}
           disabled={userSite === ""}
           variant="contained"
-          sx={{ mx: 3, py: 1, px: 6 }}
+          sx={{ mx: 3, py: 2, px: 6 }}
         >
           このサイトに設置
         </Button>

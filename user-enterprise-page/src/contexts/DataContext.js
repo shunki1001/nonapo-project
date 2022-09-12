@@ -64,6 +64,26 @@ const DataContextProvider = (props) => {
   const [accountIndex, setAccountIndex] = useState(1);
   const [domain, setDomain] = useState("");
 
+  // validation
+  const [error, setError] = useState({
+    username: false,
+    mail: false,
+    phone: false,
+    subButtonTitle: false,
+    url: false,
+    firstRender: false,
+  });
+  useEffect(() => {
+    setError({
+      username: false,
+      mail: false,
+      phone: false,
+      subButtonTitle: false,
+      url: false,
+      firstRender: true,
+    });
+  }, [account]);
+
   // マスターで制御するもの
   const [InviteUrl, setInviteUrl] = useState(
     "https://non-appoint.com/Is/093mtg-url/"
@@ -215,6 +235,7 @@ const DataContextProvider = (props) => {
       );
       if (targetAccount[0]?.id !== undefined) {
         getButtonList(targetAccount[0].id);
+        localStorage.setItem("userId", targetAccount[0].id);
         setIsFirst(isFirstId === targetAccount[0].id);
         setUsername(targetAccount[0]?.username);
         setEmail(targetAccount[0]?.email);
@@ -335,6 +356,8 @@ const DataContextProvider = (props) => {
     setErrorSnackOpen,
     newNotice,
     setNewNotice,
+    error,
+    setError,
   };
 
   return (

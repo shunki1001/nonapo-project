@@ -6,10 +6,8 @@ import {
   Grid,
   Switch,
 } from "@mui/material";
-import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { DataContext } from "../../contexts/DataContext";
-import { db } from "../../firebase";
 import registAccount from "../../functions/registAccount";
 import GetTagDialog from "./Dialog/GetTagDialog";
 import GoogleDialog from "./Dialog/GoogleDialog";
@@ -26,6 +24,7 @@ import InviteUrl from "./formInput/InviteUrl";
 import LeftColumn from "./formInput/LeftColumn";
 import RightColumn from "./formInput/RightColumn";
 import AccountSelect from "./selector/AccountSelect";
+import SwitchIcon from "./SwitchIcon";
 
 const PersonSetteings = () => {
   const {
@@ -58,6 +57,7 @@ const PersonSetteings = () => {
     setErrorSnackOpen,
     setAvatar,
     setThumbnail,
+    error,
   } = useContext(DataContext);
   const [getTag, setGetTag] = useState(false);
   const [showTag, setShowTag] = useState(false);
@@ -104,14 +104,15 @@ const PersonSetteings = () => {
       <Box sx={{ display: "flex", flexWrap: "wrap" }}>
         <AccountSelect />
         <FormControlLabel
-          sx={{ ml: 2 }}
+          sx={{ ml: 3 }}
           control={
-            <Switch
+            <SwitchIcon
               checked={isFirst}
               onChange={(e) => setIsFirst(e.target.checked)}
+              sx={{ mr: 1 }}
             />
           }
-          label="このユーザーを先頭に配置する"
+          label="このユーザーを先頭に配置"
         />
         <Box sx={{ flexGrow: 1 }}></Box>
         <Button variant="contained" onClick={handleClickGoTag} sx={{ px: 10 }}>
@@ -123,7 +124,6 @@ const PersonSetteings = () => {
         <Button
           variant="contained"
           onClick={handleAccountUpdate}
-          disabled={account === ""}
           sx={{
             px: 6,
             py: 2,
@@ -132,6 +132,7 @@ const PersonSetteings = () => {
             left: "80%",
             zIndex: "100",
           }}
+          disabled={Object.values(error).includes(true) || account === ""}
         >
           変更内容を保存
         </Button>

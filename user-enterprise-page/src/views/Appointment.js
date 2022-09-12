@@ -214,6 +214,7 @@ const Appointment = () => {
               },
               "& .MuiDataGrid-cell": {
                 border: "none",
+                overflowWrap: "break-word",
               },
               "& .MuiDataGrid-cell:nth-child(8)": { color: "red" },
               "& .MuiDataGrid-row": {
@@ -235,7 +236,11 @@ const Appointment = () => {
 function CustomToolbar() {
   return (
     <Box sx={{ textAlign: "right", width: "100%" }}>
-      <GridToolbarExport csvOptions={{ utf8WithBom: true }} startIcon="" />
+      <GridToolbarExport
+        csvOptions={{ utf8WithBom: true }}
+        startIcon=""
+        variant="outlined"
+      />
     </Box>
   );
 }

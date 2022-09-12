@@ -42,11 +42,11 @@ function IframePage() {
   return (
     <div id="wrap">
       <main id="content" className="content">
-        <section className="cover-blue">
+        {/* <section className="cover-blue">
           <div className="container">
             <div className="row"></div>
           </div>
-        </section>
+        </section> */}
 
         <div className="chat customize-chat" id="p2">
           <div className="chat-title chat-title-customize">
@@ -161,7 +161,7 @@ function IframePage() {
           <div className="message-box">
             <div className="content">
               <div className="row">
-                <div className="col-md-6">
+                <div className="col-6">
                   <div className="buttons">
                     {firstAccount?.isOneSubButton ? (
                       <Button
@@ -187,7 +187,7 @@ function IframePage() {
                     )}
                   </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-6">
                   <div className="buttons">
                     <Button
                       onClick={() => {

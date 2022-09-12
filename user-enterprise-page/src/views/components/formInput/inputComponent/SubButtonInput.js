@@ -37,7 +37,7 @@ const SubButtonInput = () => {
     subButtonTitle,
     setSubButtonTitle,
     subButtonList,
-    setSubButtonList,
+    setSubButtonList,error,setError
   } = useContext(DataContext);
 
   // const [multiSubButton, setMultiSubButton] = useState([]);
@@ -45,6 +45,13 @@ const SubButtonInput = () => {
 
   const [renderList, setRenderList] = useState([]);
 
+  const handleBlur = (e)=>{
+    if(!(e.target.value)){
+      setError({...error, subButtonTitle:true,firstRender:false})
+    }else {
+      setError({...error, subButtonTitle:false,firstRender:false})
+    }
+  }
   // useEffect(() => {
   //   setOnlySubButton(subButtonList.filter((item) => item.isOnly === true)[0]);
   //   setMultiSubButton(subButtonList.filter((item) => item.isOnly === false));
@@ -145,6 +152,8 @@ const SubButtonInput = () => {
               value={subButtonTitle}
               onChange={(e) => setSubButtonTitle(e.target.value)}
               placeholder="ヘルプ・その他"
+              error={error.subButtonTitle}
+              onBlur={handleBlur}
             />
             <Box sx={{ display: "inline-block", mt: 2 }}>
               <Typography variant="caption" sx={{ ml: 3 }}>

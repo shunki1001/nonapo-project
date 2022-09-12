@@ -1,10 +1,9 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-const editData = async (data) => {
-  const { id, ...updateData } = data;
-  console.log(updateData);
-  const doc_ref = await updateDoc(doc(db, "enterprise", data.id), updateData);
+const editData = async (newData, data) => {
+  const { id } = newData;
+  const doc_ref = await updateDoc(doc(db, "enterprise", id), data);
   return doc_ref;
 };
 

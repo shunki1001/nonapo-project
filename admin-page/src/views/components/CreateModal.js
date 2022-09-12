@@ -10,47 +10,66 @@ import {
   Select,
   TextField,
   Typography,
+  FormControl,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
-import React, { useState } from "react";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import React, { useState, useEffect } from "react";
 import addData from "../../function/addData";
 import editData from "../../function/editData";
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import schema from "../../scema";
+
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../firebase";
-// import validation from "../../function/validation";
 
 const CreateModal = (props) => {
   const { newOpen, setNewOpen, newData, setNewData } = props;
-  const [inputError, setInputError] = useState({
-    enterprise: false,
-    email: false,
-    password: false,
-    address: false,
-    numberOfSite: false,
-    domain: false,
-    numberOfAccount: false,
-    subscriptionCost: false,
-    subscriptionDuration: false,
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({ resolver: yupResolver(schema) });
+  const [isRevealPassword, setIsRevealPassword] = useState(false);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    // // すべてのエラーキーがfalseなら登録実行
-    // if (!Object.values(inputError).includes(true)) {
+  // when modal is closed, newData is reset
+  useEffect(() => {
+    if (!newOpen) {
+      setNewData({
+        enterprise: "",
+        email: "",
+        password: "",
+        address: "",
+        numberOfSite: 1,
+        subscriptionStartYear: 2022,
+        subscriptionStartMonth: 1,
+        numberOfAccount: 1,
+        subscriptionCost: "",
+        subscriptionDuration: "",
+        isAgreement: true,
+      });
+    }
+  }, [newOpen]);
+
+  const onSubmit = async (data) => {
+    console.log(data);
     // 新規作成時
     if (newData.id === undefined) {
       let userList = [];
       const docRef = await getDocs(
-        query(collection(db, "enterprise"), where("email", "==", newData.email))
+        query(collection(db, "enterprise"), where("email", "==", data.email))
       );
-      docRef.forEach((item) => {
-        userList.push(item.data());
-      });
-      if (userList.length > 1) {
+      if (!docRef.empty) {
         alert("すでに登録済みのアカウントです");
       } else {
         try {
-          addData(newData);
+          await addData(data);
+          setNewOpen(false);
         } catch (e) {
           alert("Cannnot add! Try again");
           console.error("Error adding document: ", e);
@@ -59,14 +78,17 @@ const CreateModal = (props) => {
     } else {
       // 編集時
       try {
-        editData(newData);
+        await editData(newData, data);
+        setNewOpen(false);
       } catch (e) {
+        alert("Cannnot add! Try again");
         console.error("Error adding document: ", e);
       }
     }
-    setNewOpen(false);
-    // }
   };
+  useEffect(() => {
+    reset(newData);
+  }, [newData]);
 
   return (
     <Dialog
@@ -90,11 +112,14 @@ const CreateModal = (props) => {
           type="text"
           fullWidth
           variant="filled"
-          error={inputError.enterprise}
-          value={newData.enterprise}
-          onChange={(e) =>
-            setNewData({ ...newData, enterprise: e.target.value })
-          }
+          error={"enterprise" in errors}
+          helperText={errors.enterprise?.message}
+          {...register("enterprise")}
+          // value={newData.enterprise}
+          // onBlur={(e)=>handleBlur(e, "enterprise")}
+          // onChange={(e) =>
+          //   setNewData({ ...newData, enterprise: e.target.value })
+          // }
           sx={{
             "& label": { mt: 1 },
           }}
@@ -108,9 +133,13 @@ const CreateModal = (props) => {
           type="email"
           fullWidth
           variant="filled"
-          error={inputError.email}
-          value={newData.email}
-          onChange={(e) => setNewData({ ...newData, email: e.target.value })}
+          error={"email" in errors}
+          helperText={errors.email?.message}
+          {...register("email")}
+          // error={inputError.email}
+          // value={newData.email}
+          // onBlur={(e)=>handleBlur(e, "email")}
+          // onChange={(e) => setNewData({ ...newData, email: e.target.value })}
           sx={{ "& label": { mt: 1 } }}
         />
         <TextField
@@ -119,13 +148,31 @@ const CreateModal = (props) => {
           id="password"
           name="password"
           label="パスワード"
-          type="password"
+          type={isRevealPassword ? "text" : "password"}
           fullWidth
           variant="filled"
-          error={inputError.password}
-          value={newData.password}
-          onChange={(e) => setNewData({ ...newData, password: e.target.value })}
+          error={"password" in errors}
+          helperText={errors.password?.message}
+          {...register("password")}
+          // error={inputError.password}
+          // value={newData.password}
+          // onBlur={(e)=>handleBlur(e, "password")}
+          // onChange={(e) => setNewData({ ...newData, password: e.target.value })}
           sx={{ "& label": { mt: 1 } }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => {
+                    setIsRevealPassword(!isRevealPassword);
+                  }}
+                  edge="end"
+                >
+                  {isRevealPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <TextField
           required
@@ -136,9 +183,13 @@ const CreateModal = (props) => {
           type="text"
           fullWidth
           variant="filled"
-          error={inputError.address}
-          value={newData.address}
-          onChange={(e) => setNewData({ ...newData, address: e.target.value })}
+          error={"address" in errors}
+          helperText={errors.address?.message}
+          {...register("address")}
+          // error={inputError.address}
+          // value={newData.address}
+          // onBlur={(e)=>handleBlur(e, "address")}
+          // onChange={(e) => setNewData({ ...newData, address: e.target.value })}
           sx={{ "& label": { mt: 1 } }}
         />
         <TextField
@@ -150,11 +201,15 @@ const CreateModal = (props) => {
           type="number"
           fullWidth
           variant="filled"
-          error={inputError.numberOfSite}
-          value={newData.numberOfSite}
-          onChange={(e) =>
-            setNewData({ ...newData, numberOfSite: e.target.value })
-          }
+          error={"numberOfSite" in errors}
+          helperText={errors.numberOfSite?.message}
+          {...register("numberOfSite")}
+          // error={inputError.numberOfSite}
+          // value={newData.numberOfSite}
+          // onBlur={(e)=>handleBlur(e, "numberOfSite")}
+          // onChange={(e) =>
+          //   setNewData({ ...newData, numberOfSite: e.target.value })
+          // }
           sx={{ "& label": { mt: 1 } }}
         />
         {/* <TextField
@@ -180,9 +235,13 @@ const CreateModal = (props) => {
           type="text"
           fullWidth
           variant="filled"
-          error={inputError.domain}
-          value={newData.domain}
-          onChange={(e) => setNewData({ ...newData, domain: e.target.value })}
+          error={"domain" in errors}
+          helperText={errors.domain?.message}
+          {...register("domain")}
+          // error={inputError.domain}
+          // value={newData.domain}
+          // onBlur={(e)=>handleBlur(e, "domain")}
+          // onChange={(e) => setNewData({ ...newData, domain: e.target.value })}
           sx={{ "& label": { mt: 1 } }}
         />
         <DialogContentText>契約開始月</DialogContentText>
@@ -194,11 +253,14 @@ const CreateModal = (props) => {
           label="年"
           type="number"
           variant="filled"
-          value={newData.subscriptionStartYear}
-          onChange={(e) =>
-            setNewData({ ...newData, subscriptionStartYear: e.target.value })
-          }
-          sx={{ "& label": { mt: 1 } }}
+          error={"subscriptionStartYear" in errors}
+          helperText={errors.subscriptionStartYear?.message}
+          {...register("subscriptionStartYear")}
+          // value={newData.subscriptionStartYear}
+          // onChange={(e) =>
+          //   setNewData({ ...newData, subscriptionStartYear: e.target.value })
+          // }
+          sx={{ width: "42.5%", "& label": { mt: 1 } }}
         />
         <Typography
           variant="body"
@@ -214,11 +276,14 @@ const CreateModal = (props) => {
           label="月"
           type="number"
           variant="filled"
-          value={newData.subscriptionStartMonth}
-          onChange={(e) =>
-            setNewData({ ...newData, subscriptionStartMonth: e.target.value })
-          }
-          sx={{ "& label": { mt: 1 } }}
+          error={"subscriptionStartMonth" in errors}
+          helperText={errors.subscriptionStartMonth?.message}
+          {...register("subscriptionStartMonth")}
+          // value={newData.subscriptionStartMonth}
+          // onChange={(e) =>
+          //   setNewData({ ...newData, subscriptionStartMonth: e.target.value })
+          // }
+          sx={{ width: "42.5%", "& label": { mt: 1 } }}
         />
         <Typography variant="body" sx={{ display: "inline-block", mt: 4 }}>
           月
@@ -232,11 +297,15 @@ const CreateModal = (props) => {
           type="number"
           fullWidth
           variant="filled"
-          error={inputError.numberOfAccount}
-          value={newData.numberOfAccount}
-          onChange={(e) =>
-            setNewData({ ...newData, numberOfAccount: e.target.value })
-          }
+          error={"numberOfAccount" in errors}
+          helperText={errors.numberOfAccount?.message}
+          {...register("numberOfAccount")}
+          // error={inputError.numberOfAccount}
+          // value={newData.numberOfAccount}
+          // onBlur={(e)=>handleBlur(e, "numberOfAccount")}
+          // onChange={(e) =>
+          //   setNewData({ ...newData, numberOfAccount: e.target.value })
+          // }
           sx={{ "& label": { mt: 1 } }}
         />
         <TextField
@@ -247,11 +316,15 @@ const CreateModal = (props) => {
           name="subscriptionCost"
           label="月額"
           variant="filled"
-          error={inputError.subscriptionCost}
-          value={newData.subscriptionCost}
-          onChange={(e) =>
-            setNewData({ ...newData, subscriptionCost: e.target.value })
-          }
+          error={"subscriptionCost" in errors}
+          helperText={errors.subscriptionCost?.message}
+          {...register("subscriptionCost")}
+          // error={inputError.subscriptionCost}
+          // value={newData.subscriptionCost}
+          // onBlur={(e)=>handleBlur(e, "subscriptionCost")}
+          // onChange={(e) =>
+          //   setNewData({ ...newData, subscriptionCost: e.target.value })
+          // }
           sx={{ "& label": { mt: 1 } }}
         />
         <TextField
@@ -262,33 +335,46 @@ const CreateModal = (props) => {
           label="契約期間"
           type="number"
           variant="filled"
-          error={inputError.subscriptionDuration}
-          value={newData.subscriptionDuration}
-          onChange={(e) =>
-            setNewData({ ...newData, subscriptionDuration: e.target.value })
-          }
-          sx={{ "& label": { mt: 1 }, width: "80%" }}
+          error={"subscriptionDuration" in errors}
+          helperText={errors.subscriptionDuration?.message}
+          {...register("subscriptionDuration")}
+          // error={inputError.subscriptionDuration}
+          // value={newData.subscriptionDuration}
+          // onChange={(e) =>
+          //   setNewData({ ...newData, subscriptionDuration: e.target.value })
+          // }
+          sx={{ "& label": { mt: 1 }, width: "90%" }}
         />
         <Typography variant="body" sx={{ display: "inline-block", mt: 4 }}>
           ヶ月
         </Typography>
-        <InputLabel id="select-label">ステータス</InputLabel>
-        <Select
-          labelId="select-label"
-          id="simple-select"
-          value={newData.isAgreement}
-          label="ステータス"
-          onChange={(e) => {
-            setNewData({ ...newData, isAgreement: e.target.value });
-          }}
-        >
-          <MenuItem value={true}>契約中</MenuItem>
-          <MenuItem value={false}>解約中</MenuItem>
-        </Select>
+        <FormControl variant="filled" fullWidth>
+          <InputLabel id="select-label">ステータス</InputLabel>
+          <Select
+            labelId="select-label"
+            id="simple-select"
+            value={newData.isAgreement}
+            label="ステータス"
+            onChange={(e) => {
+              setNewData({ ...newData, isAgreement: e.target.value });
+            }}
+          >
+            <MenuItem value={true}>契約中</MenuItem>
+            <MenuItem value={false}>解約中</MenuItem>
+          </Select>
+        </FormControl>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setNewOpen(false)}>CANCEL</Button>
-        <Button onClick={handleSubmit}>SAVE</Button>
+      <DialogActions sx={{ my: 2 }}>
+        <Button
+          onClick={() => setNewOpen(false)}
+          variant="contained"
+          color="cancel"
+        >
+          CANCEL
+        </Button>
+        <Button onClick={handleSubmit(onSubmit)} variant="contained">
+          SAVE
+        </Button>
       </DialogActions>
     </Dialog>
   );

@@ -60,6 +60,7 @@ const SiteRadio = () => {
                 display: "inline-block",
                 flexGrow: 1,
                 p: 1,
+                fontWeight: 700,
               }}
             >
               {item}

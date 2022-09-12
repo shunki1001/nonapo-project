@@ -1,5 +1,5 @@
 import { db } from "../firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 
 const addData = async (data) => {
   const docRef = await addDoc(collection(db, "enterprise"), {
@@ -53,6 +53,7 @@ const addData = async (data) => {
         enterprise: localStorage.getItem("tempId"),
       });
       const userId = docRef.id;
+      // button collection added
       for (let j = 0; j < 5; j++) {
         if (j === 0) {
           try {
@@ -78,12 +79,17 @@ const addData = async (data) => {
           }
         }
       }
+      // isFirstId is set in enterprise collection
+      if (i === 0) {
+        await updateDoc(doc(db, "enterprise", localStorage.getItem("tempId")), {
+          isFirst: userId,
+        });
+      }
     } catch (error) {
       console.log("アカウントの登録でエラー");
       console.log(error);
     }
   }
-  return docRef;
 };
 
 export default addData;

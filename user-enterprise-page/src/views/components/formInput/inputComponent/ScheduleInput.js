@@ -51,7 +51,7 @@ const ScheduleInput = (props) => {
           }
         />
         <Typography sx={{ display: "inline-block", fontWeight: 700 }}>
-          Googleカレンダー同期
+          Googleカレンダー連携
         </Typography>
         <Radio
           checked={isGoogleCalendar === false}

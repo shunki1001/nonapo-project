@@ -35,11 +35,17 @@ const GetTagDialog = (props) => {
       onClose={() => setGetTag(false)}
     >
       <DialogContent sx={{ mx: 2 }}>
-        <Box sx={{ textAlign: "center", "& p": { marginTop: "1em" } }}>
+        <Box
+          sx={{
+            textAlign: "center",
+            mb: 2,
+            "& p": { marginTop: "1em", fontWeight: 700 },
+          }}
+        >
           <Typography variant="h5">商談タグを発行確認画面</Typography>
           <Typography>商談担当者の情報をご確認ください</Typography>
           <Typography sx={{ "& span": { color: "#4357C9" } }}>
-            設置するサイト：<span>{userSite}</span>
+            タグを設置するサイト：<span>{userSite}</span>
           </Typography>
           <Typography>
             バツボタンで↑このサイトに不要な担当者を削除できます。
@@ -69,10 +75,15 @@ const GetTagDialog = (props) => {
           onClick={() => setGetTag(false)}
           variant="contained"
           color="grey"
+          sx={{ py: 2, px: 6 }}
         >
           キャンセル
         </Button>
-        <Button onClick={() => handleClickDialog()} variant="contained">
+        <Button
+          sx={{ py: 2, px: 6 }}
+          onClick={() => handleClickDialog()}
+          variant="contained"
+        >
           スクリプトタグを発行
         </Button>
       </DialogActions>

@@ -32,8 +32,7 @@ const HomeLayout = (props) => {
               height: "30vh",
               ml: `${drawerWidth}px`,
               background:
-                "linear-gradient(143.38deg, #354496 3.06%, #5238A8 118.21%)",
-              opacity: "0.81",
+                "linear-gradient(143.38deg, rgba(53, 68, 150, 0.81) 3.06%, rgba(82, 56, 168, 0.81) 118.21%)",
             }}
           >
             <Box sx={{ display: "flex" }}>
@@ -41,7 +40,7 @@ const HomeLayout = (props) => {
                 sx={{
                   flexGrow: 1,
                   textAlign: "right",
-                  mr: 4,
+                  mr: 6,
                   mt: 4,
                   border: "none",
                 }}

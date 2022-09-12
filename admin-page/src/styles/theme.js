@@ -10,6 +10,9 @@ const theme = createTheme({
     text: {
       primary: "#1b243d",
       secondary: "#BFBFBF",
+    },cancel: {
+      main: '#808080',
+      contrastText: '#fff',
     },
   },
   typography: {
