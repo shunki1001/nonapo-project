@@ -46,16 +46,7 @@ const DataContextProvider = (props) => {
   const [dataList, setDataList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   useEffect(() => {
-    let q;
-    // 検索文字が入力されたか、されていないかで場合分け
-    if (searchValue.length > 0) {
-      q = query(
-        collection(db, "enterprise"),
-        where("enterprise", "==", searchValue)
-      );
-    } else {
-      q = query(collection(db, "enterprise"));
-    }
+    let q = query(collection(db, "enterprise"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const dataTemp = [];
       let temp = {};
@@ -67,7 +58,7 @@ const DataContextProvider = (props) => {
       setDataList(dataTemp);
     });
     return () => unsubscribe();
-  }, [searchValue]);
+  }, []);
 
   // Todo: 検索機能
   // const [afterSearchList, setAfterSearchList] = useState([]);

@@ -10,9 +10,14 @@ const theme = createTheme({
     secondary: {
       main: "#000000",
     },
+
     text: {
       primary: "1B243D",
       secondary: "BFBFBF",
+    },
+    cancel: {
+      main: "#808080",
+      contrastText: "#fff",
     },
   },
   typography: {
@@ -44,6 +49,11 @@ const theme = createTheme({
             paddingLeft: "3em",
             paddingRight: "3em",
           }),
+          "&.Mui-disabled": {
+            backgroundColor: "#5E72E4",
+            opacity: "0.45",
+            color: "#fff",
+          },
         }),
       },
     },

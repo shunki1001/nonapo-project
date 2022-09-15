@@ -1,4 +1,9 @@
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  Timestamp,
+} from "firebase/firestore";
 import { db } from "../firebase";
 
 const registSiteTag = async (
@@ -14,16 +19,17 @@ const registSiteTag = async (
       userSite: userSite,
       domain: domain,
       isFirst: isFirstId,
+      created_at: serverTimestamp(),
     });
+    return true;
   } catch (error) {
     setErrorSnackOpen({
       open: true,
       message: "商談タグの発行に失敗。更新してやり直してください。",
     });
     console.log(error);
+    return false;
   }
-
-  return <div>registSiteTag</div>;
 };
 
 export default registSiteTag;

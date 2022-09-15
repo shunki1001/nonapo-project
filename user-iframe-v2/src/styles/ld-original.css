@@ -115,7 +115,7 @@ Chat
   width: 297px;
   height: 80vh;
   max-height: 364px;
-  z-index: 4;
+  z-index: 9999;
   overflow: hidden;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
   background: rgb(255 252 252 / 50%);

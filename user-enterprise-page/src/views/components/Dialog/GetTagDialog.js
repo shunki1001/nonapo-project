@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
   Grid,
   Typography,
 } from "@mui/material";
@@ -14,7 +15,8 @@ import TagCard from "../TagCard";
 
 const GetTagDialog = (props) => {
   const { getTag, setGetTag, setShowTag, accountList } = props;
-  const { userSite, setErrorSnackOpen, domain } = useContext(DataContext);
+  const { userSite, setErrorSnackOpen, domain, isFirstId } =
+    useContext(DataContext);
 
   const [issueAccountList, setIssueAccountList] = useState([]);
 
@@ -22,16 +24,20 @@ const GetTagDialog = (props) => {
     setIssueAccountList(accountList);
   }, [accountList]);
 
-  const handleClickDialog = () => {
-    setGetTag(false);
-    setShowTag(true);
-    registSiteTag(
+  const handleClickDialog = async () => {
+    const result = await registSiteTag(
       issueAccountList,
       userSite,
       setErrorSnackOpen,
       domain,
       isFirstId
     );
+    if (result === true) {
+      setGetTag(false);
+      setShowTag(true);
+    } else {
+      setGetTag(false);
+    }
   };
   return (
     <Dialog
@@ -40,12 +46,13 @@ const GetTagDialog = (props) => {
       fullWidth
       onClose={() => setGetTag(false)}
     >
-      <DialogContent sx={{ mx: 2 }}>
+      <DialogTitle>
         <Box
           sx={{
             textAlign: "center",
-            mb: 2,
-            "& p": { marginTop: "1em", fontWeight: 700 },
+            mb: 1,
+            "& p": { marginTop: "1em" },
+            "& h5": { fontWeight: 700 },
           }}
         >
           <Typography variant="h5">商談タグを発行確認画面</Typography>
@@ -57,7 +64,9 @@ const GetTagDialog = (props) => {
             バツボタンで↑このサイトに不要な担当者を削除できます。
           </Typography>
         </Box>
-        <Grid container spacing={2}>
+      </DialogTitle>
+      <DialogContent sx={{ mx: 15, height: "450px" }}>
+        <Grid container spacing={3}>
           {issueAccountList.map((item) => {
             return (
               <TagCard
@@ -76,22 +85,31 @@ const GetTagDialog = (props) => {
           })}
         </Grid>
       </DialogContent>
-      <DialogActions sx={{ justifyContent: "center", m: 3 }}>
-        <Button
-          onClick={() => setGetTag(false)}
-          variant="contained"
-          color="grey"
-          sx={{ py: 2, px: 6 }}
-        >
-          キャンセル
-        </Button>
-        <Button
-          sx={{ py: 2, px: 6 }}
-          onClick={() => handleClickDialog()}
-          variant="contained"
-        >
-          スクリプトタグを発行
-        </Button>
+      <DialogActions sx={{ mt: 3, mb: 6 }}>
+        <Box sx={{ width: "50%", textAlign: "right", pr: 1 }}>
+          <Button
+            onClick={() => setGetTag(false)}
+            variant="contained"
+            sx={{
+              width: "13em",
+              background: "grey",
+              borderRadius: "10px",
+              px: 0,
+              py: 2,
+            }}
+          >
+            キャンセル
+          </Button>
+        </Box>
+        <Box sx={{ width: "50%", textAlign: "left", pl: 1 }}>
+          <Button
+            sx={{ width: "13em", borderRadius: "10px", px: 0, py: 2 }}
+            onClick={() => handleClickDialog()}
+            variant="contained"
+          >
+            スクリプトタグを発行
+          </Button>
+        </Box>
       </DialogActions>
     </Dialog>
   );

@@ -3,7 +3,7 @@ import axios from "axios";
 // export const serverDomain =
 //   "http://127.0.0.1:5001/non-apo/us-central1/functions";
 export const serverDomain =
-  "https://us-central1-non-apo.cloudfunctions.net/functions";
+  "https://asia-northeast1-non-apo.cloudfunctions.net/functions";
 
 const mailSender = async (
   name,

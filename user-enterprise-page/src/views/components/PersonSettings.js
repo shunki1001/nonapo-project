@@ -58,6 +58,7 @@ const PersonSetteings = () => {
     setAvatar,
     setThumbnail,
     error,
+    setIsFirstId,
   } = useContext(DataContext);
   const [getTag, setGetTag] = useState(false);
   const [showTag, setShowTag] = useState(false);
@@ -108,7 +109,14 @@ const PersonSetteings = () => {
           control={
             <SwitchIcon
               checked={isFirst}
-              onChange={(e) => setIsFirst(e.target.checked)}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setIsFirstId(localStorage.getItem("userId"));
+                  setIsFirst(e.target.checked);
+                } else {
+                  alert("誰か一人を選ぶ必要があります");
+                }
+              }}
               sx={{ mr: 1 }}
             />
           }
@@ -131,6 +139,11 @@ const PersonSetteings = () => {
             top: "90%",
             left: "80%",
             zIndex: "100",
+            "&.Mui-disabled": {
+              backgroundColor: "#5E72E4",
+              opacity: "0.45",
+              color: "#fff",
+            },
           }}
           disabled={Object.values(error).includes(true) || account === ""}
         >

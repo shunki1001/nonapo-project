@@ -9,6 +9,10 @@ const MainLayout = () => {
     <>
       <Outlet />
       <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
         open={errorSnackOpen.open}
         message={errorSnackOpen.message}
         autoHideDuration={6000}

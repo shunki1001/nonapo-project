@@ -113,7 +113,7 @@ export default function SignIn() {
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ mt: 10, mb: 2, px: 10, py: 2 }}
+                sx={{ mt: 6, mb: 2, px: 10, py: 2 }}
               >
                 ログイン
               </Button>

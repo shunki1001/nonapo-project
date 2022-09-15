@@ -5,34 +5,66 @@ import {
   getDocs,
   query,
   where,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import axios from "axios";
 import availableChecker from "./availableChecker";
 import { serverDomain } from "./mailSender";
 
-const getInfo = async (domain, fromUrl, setFirstAccount, setOnline) => {
+const getInfo = async (
+  domain,
+  fromUrl,
+  setFirstAccount,
+  setOnline,
+  setHaveSubbutton
+) => {
   let firstAccountId = "";
   try {
-    const docRef = await getDocs(
-      query(
-        collection(db, "site"),
-        where("domain", "==", domain),
-        where("userSite", "==", fromUrl)
-      )
-    );
-    let userIdList = [];
-    let tempFirstId = "";
-    docRef.forEach((element) => {
-      userIdList.push(element.data().account);
-      tempFirstId = element.data().isFirst;
-    });
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    if (fromUrl.slice(-1) === "/") {
+      const docRef = await getDocs(
+        query(
+          collection(db, "site"),
+          where("domain", "==", domain),
+          where("userSite", "==", fromUrl.slice(0, -1))
+        )
+      );
+      console.log(docRef);
+      let userIdList = [];
+      let tempFirstId = "";
+      docRef.forEach((element) => {
+        userIdList.push(element.data().account);
+        tempFirstId = element.data().isFirst;
+      });
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-    // 表示するアカウントを選択
-    firstAccountId = userIdList[0].filter((item) => {
-      return item === tempFirstId;
-    })[0];
+      // 表示するアカウントを選択
+      firstAccountId = userIdList[0].filter((item) => {
+        return item === tempFirstId;
+      })[0];
+    } else {
+      const docRef = await getDocs(
+        query(
+          collection(db, "site"),
+          where("domain", "==", domain),
+          where("userSite", "==", fromUrl)
+        )
+      );
+      console.log(docRef);
+      let userIdList = [];
+      let tempFirstId = "";
+      docRef.forEach((element) => {
+        userIdList.push(element.data().account);
+        tempFirstId = element.data().isFirst;
+      });
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      // 表示するアカウントを選択
+      firstAccountId = userIdList[0].filter((item) => {
+        return item === tempFirstId;
+      })[0];
+    }
   } catch (error) {
     console.log(error);
   }
@@ -53,6 +85,11 @@ const getInfo = async (domain, fromUrl, setFirstAccount, setOnline) => {
       );
       docRef3.forEach((ele) => {
         buttonTemp.push(ele.data());
+        if (ele.data().title === "") {
+          setHaveSubbutton(false);
+        } else {
+          setHaveSubbutton(true);
+        }
       });
     } else {
       const docRef4 = await getDocs(

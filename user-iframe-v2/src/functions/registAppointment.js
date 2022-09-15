@@ -12,7 +12,7 @@ const registAppointment = async (
   whereFrom,
   selected
 ) => {
-  const title = await axios.get(`${serverDomain}/get-title?url=${whereFrom}`);
+  const result = await axios.get(`${serverDomain}/get-title?url=${whereFrom}`);
   try {
     const docRef = await addDoc(collection(db, "appointment"), {
       date: serverTimestamp(),
@@ -22,7 +22,7 @@ const registAppointment = async (
       phone: phone,
       address: address,
       fromUrl: whereFrom,
-      title: title,
+      title: result.data.title,
       selectedAccount: selected,
       state: 1,
       enterpriseId: localStorage.getItem("id"),

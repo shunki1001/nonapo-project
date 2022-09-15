@@ -27,8 +27,13 @@ const PartnerCard = (props) => {
                     }}
                   />
                   <label htmlFor={account.id}>
-                    <div className="chat-title">
-                      <h1>面談担当:{account.username}</h1>
+                    <div
+                      className="chat-title"
+                      style={{ padding: "10px 10px 10px 76px" }}
+                    >
+                      <h1 style={{ marginBottom: "0.5em" }}>
+                        面談担当:{account.username}
+                      </h1>
                       <span className="pull-right" id="button4"></span>
                       {account.online ? (
                         <>
@@ -39,18 +44,33 @@ const PartnerCard = (props) => {
                         </>
                       ) : (
                         <>
-                          <span className="btn btn_shockwave passive"></span>
-                          <span style={{ color: "#181b31", fontSize: "12px" }}>
+                          <span
+                            className="btn btn_shockwave passive"
+                            style={{
+                              margin: "0",
+                            }}
+                          ></span>
+                          <span
+                            style={{
+                              color: "#181b31",
+                              fontSize: "12px",
+                            }}
+                          >
                             オフライン
                           </span>
                         </>
                       )}
 
-                      <h2 style={{ display: "inline-block" }}>
+                      <h2
+                        style={{ display: "inline-block", marginLeft: "1em" }}
+                      >
                         {account.company}
                       </h2>
 
-                      <figure className="avatar">
+                      <figure
+                        className="avatar"
+                        style={{ width: "54px", height: "54px" }}
+                      >
                         <img src={account.avatar} alt="" />
                       </figure>
                     </div>

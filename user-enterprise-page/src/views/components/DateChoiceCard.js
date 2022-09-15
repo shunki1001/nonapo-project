@@ -18,13 +18,55 @@ const DateChoiceCard = (props) => {
         );
       })} */}
       <>
-        <Checkbox checked={dayOfWeekChoices.mon} name="mon" />月
-        <Checkbox checked={dayOfWeekChoices.tue} name="tue" />火
-        <Checkbox checked={dayOfWeekChoices.wed} name="wed" />水
-        <Checkbox checked={dayOfWeekChoices.thu} name="thu" />木
-        <Checkbox checked={dayOfWeekChoices.fri} name="fri" />金
-        <Checkbox checked={dayOfWeekChoices.sat} name="sat" />土
-        <Checkbox checked={dayOfWeekChoices.sun} name="sun" />日
+        <Checkbox
+          checked={dayOfWeekChoices.mon}
+          name="mon"
+          size="small"
+          sx={{ padding: "0px 3px" }}
+        />
+        月
+        <Checkbox
+          checked={dayOfWeekChoices.tue}
+          name="tue"
+          size="small"
+          sx={{ padding: "0px 3px" }}
+        />
+        火
+        <Checkbox
+          checked={dayOfWeekChoices.wed}
+          name="wed"
+          size="small"
+          sx={{ padding: "0px 3px" }}
+        />
+        水
+        <Checkbox
+          checked={dayOfWeekChoices.thu}
+          name="thu"
+          size="small"
+          sx={{ padding: "0px 3px" }}
+        />
+        木
+        <Checkbox
+          checked={dayOfWeekChoices.fri}
+          name="fri"
+          size="small"
+          sx={{ padding: "0px 3px" }}
+        />
+        金
+        <Checkbox
+          checked={dayOfWeekChoices.sat}
+          name="sat"
+          size="small"
+          sx={{ padding: "0px 3px" }}
+        />
+        土
+        <Checkbox
+          checked={dayOfWeekChoices.sun}
+          name="sun"
+          size="small"
+          sx={{ padding: "0px 3px" }}
+        />
+        日
       </>
     </Box>
   );

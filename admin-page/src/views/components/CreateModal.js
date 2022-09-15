@@ -20,7 +20,7 @@ import React, { useState, useEffect } from "react";
 import addData from "../../function/addData";
 import editData from "../../function/editData";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "../../scema";
 
@@ -31,6 +31,7 @@ const CreateModal = (props) => {
   const { newOpen, setNewOpen, newData, setNewData } = props;
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -55,11 +56,9 @@ const CreateModal = (props) => {
         isAgreement: true,
       });
     }
-    console.log(newData.id);
   }, [newOpen]);
 
   const onSubmit = async (data) => {
-    console.log(data);
     // 新規作成時
     if (newData.id === undefined || newData.id === "") {
       let userList = [];
@@ -352,23 +351,25 @@ const CreateModal = (props) => {
         <Typography variant="body" sx={{ display: "inline-block", mt: 4 }}>
           ヶ月
         </Typography>
-        <FormControl variant="filled" fullWidth>
-          <InputLabel id="select-label">ステータス</InputLabel>
-          <Select
-            labelId="select-label"
-            id="simple-select"
-            value={newData.isAgreement}
-            label="ステータス"
-            onChange={(e) => {
-              setNewData({ ...newData, isAgreement: e.target.value });
-            }}
-          >
-            <MenuItem value={true}>契約中</MenuItem>
-            <MenuItem value={false}>解約中</MenuItem>
-          </Select>
-        </FormControl>
+        <Controller
+          name="isAgreement"
+          control={control}
+          render={({ field, fieldState }) => (
+            <FormControl fullWidth variant="filled">
+              <InputLabel id="isAgreement">ステータス</InputLabel>
+              <Select
+                labelId="isAgreement"
+                label="状況" // フォーカスを外した時のラベルの部分これを指定しないとラベルとコントロール線が被る
+                {...field}
+              >
+                <MenuItem value={true}>契約中</MenuItem>
+                <MenuItem value={false}>解約中</MenuItem>
+              </Select>
+            </FormControl>
+          )}
+        />
       </DialogContent>
-      <DialogActions sx={{ my: 2 }}>
+      <DialogActions sx={{ my: 2, pr: 5 }}>
         <Button
           onClick={() => setNewOpen(false)}
           variant="contained"

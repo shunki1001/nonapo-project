@@ -3,11 +3,19 @@ import { db } from "../firebase";
 
 const registFromUrl = async (domain, fromUrl, navigate) => {
   try {
-    await addDoc(collection(db, "tempAppointment"), {
-      date: serverTimestamp(),
-      fromUrl: fromUrl,
-      domain: domain,
-    });
+    if (fromUrl.slice(-1) === "/") {
+      await addDoc(collection(db, "tempAppointment"), {
+        date: serverTimestamp(),
+        fromUrl: fromUrl.slice(0, -1),
+        domain: domain,
+      });
+    } else {
+      await addDoc(collection(db, "tempAppointment"), {
+        date: serverTimestamp(),
+        fromUrl: fromUrl,
+        domain: domain,
+      });
+    }
   } catch (error) {
     console.log(error);
   }

@@ -18,7 +18,7 @@ import {
   collection,
   where,
 } from "firebase/firestore";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { DataContext } from "../../contexts/DataContext";
 
@@ -41,7 +41,9 @@ const dateFormater = (year, month, duration) => {
 
 const DataTable = (props) => {
   const { setNewOpen, setNewData } = props;
-  const { dataList } = useContext(DataContext);
+  const { dataList, searchValue } = useContext(DataContext);
+
+  const [renderList, setRenderList] = useState([]);
 
   const handleEditButton = (data) => {
     setNewData(data);
@@ -62,6 +64,23 @@ const DataTable = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (searchValue.length > 0) {
+      console.log(searchValue);
+      setRenderList(
+        dataList.filter((item) => {
+          return (
+            new RegExp(searchValue).test(item.enterprise) ||
+            new RegExp(searchValue).test(item.email) ||
+            new RegExp(searchValue).test(item.address)
+          );
+        })
+      );
+    } else {
+      setRenderList(dataList);
+    }
+  }, [dataList, searchValue]);
+
   return (
     <TableContainer>
       <Table sx={{ minWidth: 650 }} aria-label="data-table">
@@ -73,7 +92,7 @@ const DataTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataList.map((data) => {
+          {renderList.map((data) => {
             return (
               <TableRow key={data.id}>
                 <TableCell>{data.enterprise}</TableCell>

@@ -144,7 +144,6 @@ function FormPage() {
         setInputError({ ...inputError, name: true });
       }
     }
-    console.log(renderCount);
   }, [name]);
 
   useEffect(() => {
@@ -155,7 +154,6 @@ function FormPage() {
         setInputError({ ...inputError, email: true });
       }
     }
-    console.log(renderCount);
   }, [email]);
   useEffect(() => {
     if (renderCount.current > 2) {
@@ -165,7 +163,6 @@ function FormPage() {
         setInputError({ ...inputError, enterprise: true });
       }
     }
-    console.log(renderCount);
   }, [enterprise]);
 
   useEffect(() => {
@@ -176,7 +173,6 @@ function FormPage() {
         setInputError({ ...inputError, phone: true });
       }
     }
-    console.log(renderCount);
   }, [phone]);
 
   useEffect(() => {
@@ -187,7 +183,6 @@ function FormPage() {
         setInputError({ ...inputError, address: true });
       }
     }
-    console.log(renderCount);
   }, [address]);
 
   return (
@@ -425,7 +420,7 @@ function FormPage() {
           <Box>
             <Button
               variant="contained"
-              sx={{ my: 3, width: "50%", height: "5em" }}
+              sx={{ my: 3, width: "50%", height: "5em", textTransform: "none" }}
               onClick={() => (window.location.href = appointmentUrl)}
             >
               {appointmentUrl}

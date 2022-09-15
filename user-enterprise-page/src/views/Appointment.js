@@ -56,6 +56,15 @@ const columns = [
     headerName: "流入サイト",
     sortable: false,
     width: "200",
+    renderCell: (cellValues) => {
+      return (
+        <>
+          {cellValues.value.url}
+          <br />
+          {cellValues.value.title}
+        </>
+      );
+    },
   },
   {
     field: "state",
@@ -103,7 +112,7 @@ const Appointment = () => {
       phone: item.phone,
       email: item.email,
       address: item.address,
-      fromUrl: item.fromUrl,
+      fromUrl: { title: item.title, url: item.fromUrl },
       state: stateString[item.state - 1],
       concierge: item.concierge,
     };
@@ -214,8 +223,12 @@ const Appointment = () => {
               },
               "& .MuiDataGrid-cell": {
                 border: "none",
-                overflowWrap: "break-word",
               },
+              "& .MuiDataGrid-row:not(.MuiDataGrid-row--dynamicHeight)>.MuiDataGrid-cell":
+                {
+                  whiteSpace: "normal",
+                  wordBreak: "break-word",
+                },
               "& .MuiDataGrid-cell:nth-child(8)": { color: "red" },
               "& .MuiDataGrid-row": {
                 border: "1px solid #B1B1B1",

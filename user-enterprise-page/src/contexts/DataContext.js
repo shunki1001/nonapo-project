@@ -6,6 +6,7 @@ import {
   onSnapshot,
   orderBy,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { createContext, useEffect, useState } from "react";
@@ -71,18 +72,72 @@ const DataContextProvider = (props) => {
     phone: false,
     subButtonTitle: false,
     url: false,
+    company: false,
     firstRender: false,
   });
   useEffect(() => {
-    setError({
-      username: false,
-      mail: false,
-      phone: false,
-      subButtonTitle: false,
-      url: false,
-      firstRender: true,
-    });
-  }, [account]);
+    if (
+      username.length > 0 &&
+      email.length > 0 &&
+      phone.length > 0 &&
+      url.length > 0
+    ) {
+      setError({
+        username: false,
+        mail: false,
+        phone: false,
+        subButtonTitle: false,
+        url: false,
+        company: false,
+        firstRender: false,
+      });
+    } else {
+      setError({
+        username: false,
+        mail: false,
+        phone: false,
+        subButtonTitle: false,
+        url: false,
+        company: false,
+        firstRender: true,
+      });
+    }
+  }, [username, email, phone, url]);
+  // useEffect(() => {
+  //   if (username.length > 0) {
+  //     setError({ ...error, username: false });
+  //   } else {
+  //     setError({ ...error, username: true });
+  //   }
+  // }, [username]);
+  // useEffect(() => {
+  //   if (email.length > 0) {
+  //     setError({ ...error, mail: false });
+  //   } else {
+  //     setError({ ...error, mail: true });
+  //   }
+  // }, [email]);
+  // useEffect(() => {
+  //   if (url.length > 0) {
+  //     setError({ ...error, url: false });
+  //   } else {
+  //     setError({ ...error, url: true });
+  //   }
+  // }, [url]);
+  // useEffect(() => {
+  //   if (phone.length > 0) {
+  //     setError({ ...error, phone: false });
+  //   } else {
+  //     setError({ ...error, phone: true });
+  //   }
+  // }, [phone]);
+  // useEffect(() => {
+  //   if (company.length > 0) {
+  //     setError({ ...error, company: false });
+  //   } else {
+  //     setError({ ...error, company: true });
+  //   }
+  // }, [company]);
 
   // マスターで制御するもの
   const [InviteUrl, setInviteUrl] = useState(
@@ -271,6 +326,19 @@ const DataContextProvider = (props) => {
     }
   }, [account]);
 
+  useEffect(() => {
+    if (isFirstId.length > 0) {
+      try {
+        updateDoc(doc(db, "enterprise", localStorage.getItem("id")), {
+          isFirst: isFirstId,
+        });
+      } catch (error) {
+        console.log("最初に配置アカウントの通信エラー");
+        console.log(error);
+      }
+    }
+  }, [isFirstId]);
+
   // useEffect(() => {
   //   const q = query(
   //     collection(db, "multibutton"),
@@ -306,6 +374,8 @@ const DataContextProvider = (props) => {
     setUsername,
     isFirst,
     setIsFirst,
+    isFirstId,
+    setIsFirstId,
     avatar,
     setAvatar,
     avatarLink,

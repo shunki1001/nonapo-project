@@ -10,6 +10,7 @@ const SiteRadio = () => {
     useContext(DataContext);
   const handleDelete = (item) => {
     setUserSiteList(userSiteList.filter((eachItem) => eachItem !== item));
+    setUserSite("");
   };
   return (
     <>
@@ -65,7 +66,10 @@ const SiteRadio = () => {
             >
               {item}
             </Typography>
-            <IconButton onClick={() => handleDelete(item)}>
+            <IconButton
+              onClick={() => handleDelete(item)}
+              sx={{ color: "#5E72E4" }}
+            >
               <HighlightOffIcon />
             </IconButton>
           </Box>

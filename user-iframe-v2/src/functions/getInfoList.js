@@ -35,7 +35,7 @@ const getInfoList = async (domain, whereFrom, setAccountList, setWhereFrom) => {
       query(
         collection(db, "tempAppointment"),
         where("domain", "==", domain),
-        orderBy("date"),
+        orderBy("date", "desc"),
         limit(1)
       )
     );
@@ -57,7 +57,9 @@ const getInfoList = async (domain, whereFrom, setAccountList, setWhereFrom) => {
       query(
         collection(db, "site"),
         where("domain", "==", domain),
-        where("userSite", "==", tempUrl)
+        where("userSite", "==", tempUrl),
+        orderBy("created_at", "desc"),
+        limit(1)
       )
     );
     docRef.forEach((element) => {

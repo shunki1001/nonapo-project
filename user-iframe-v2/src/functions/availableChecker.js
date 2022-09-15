@@ -9,7 +9,7 @@ const availableChecker = (account, setOnline) => {
   );
   const startTime = new Date(
     today.getFullYear(),
-    today.getMonth() + 1,
+    today.getMonth(),
     today.getDate(),
     startHour,
     startMinute,
@@ -19,31 +19,35 @@ const availableChecker = (account, setOnline) => {
   const endMinute = account.endTime.substr(account.endTime.indexOf(":") + 1);
   const endTime = new Date(
     today.getFullYear(),
-    today.getMonth() + 1,
+    today.getMonth(),
     today.getDate(),
     endHour,
     endMinute,
     0
   );
+  console.log(startTime < today);
+  console.log(today < endTime);
+  console.log(endTime);
   if (account.dayOfWeekChoices[todayOfWeekStr]) {
     if (startTime < today && today < endTime) {
-      if(setOnline === undefined){
-        return true
-      }else{
+      if (setOnline === undefined) {
+        return true;
+      } else {
         setOnline(true);
+        console.log("ここ？");
       }
-      
     } else {
-      if(setOnline === undefined){
-        return false
-      }else{
+      if (setOnline === undefined) {
+        return false;
+      } else {
         setOnline(false);
+        console.log("それともここ？");
       }
     }
   } else {
-    if(setOnline === undefined){
-      return false
-    }else{
+    if (setOnline === undefined) {
+      return false;
+    } else {
       setOnline(false);
     }
   }
