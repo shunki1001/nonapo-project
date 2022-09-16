@@ -1,9 +1,8 @@
-import { Box, IconButton, Radio, Typography } from "@mui/material";
+import { Box, IconButton, RadioGroup, FormControlLabel } from "@mui/material";
 import React, { useContext } from "react";
 import { DataContext } from "../../../contexts/DataContext";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import CircleIcon from "@mui/icons-material/Circle";
-import radioIcon from "../../../img/radioIcon.svg";
+import CustomRadio from "../CustomRadio";
 
 const SiteRadio = () => {
   const { userSiteList, setUserSiteList, userSite, setUserSite } =
@@ -14,12 +13,37 @@ const SiteRadio = () => {
   };
   return (
     <>
-      {userSiteList.map((item, index) => {
-        return (
-          <Box
+      <RadioGroup
+        value={userSite}
+        onChange={(e) => setUserSite(e.target.value)}
+        sx={{ maxWidth: "600px" }}
+      >
+        {userSiteList.map((item, index) => {
+          return (
+            <Box sx={{ display: "flex" }}>
+              <FormControlLabel
+                value={item}
+                control={<CustomRadio />}
+                label={item}
+                name={item}
+                key={item}
+                sx={{ flexGrow: 1 }}
+              />
+              <IconButton
+                onClick={() => handleDelete(item)}
+                sx={{ color: "#5E72E4", width: "2em" }}
+              >
+                <HighlightOffIcon />
+              </IconButton>
+            </Box>
+          );
+        })}
+      </RadioGroup>
+
+      {/* <Box
             width="100%"
             key={item}
-            sx={{ display: "flex", maxWidth: "600px" }}
+            sx={{ display: "flex" }}
           >
             <Radio
               checked={userSite === item}
@@ -66,15 +90,8 @@ const SiteRadio = () => {
             >
               {item}
             </Typography>
-            <IconButton
-              onClick={() => handleDelete(item)}
-              sx={{ color: "#5E72E4" }}
-            >
-              <HighlightOffIcon />
-            </IconButton>
-          </Box>
-        );
-      })}
+            
+          </Box> */}
     </>
   );
 };

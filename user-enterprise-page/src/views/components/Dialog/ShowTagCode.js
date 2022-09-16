@@ -14,8 +14,7 @@ const ShowTagCode = (props) => {
   const { domain, userSite } = useContext(DataContext);
 
   // Todo: restrict url
-  const tag = `<script type="text/javascript">const createIframe = () => {let modal = document.createElement("div");modal.style.position = "fixed";modal.style.bottom = "0";modal.style.right = "0";let obj = document.createElement("iframe");obj.setAttribute("frameBorder", "0");obj.setAttribute("scrolling", "no");obj.style.width = "350px";obj.style.height = "400px";obj.src = "https://mtg-non-apo.web.app/iframe/${domain}";modal.appendChild(obj);document.body.appendChild(modal);};setTimeout(() => {if (location.href.slice(-1) == "/") {if(location.href.slice(0,-1) == "${userSite}"){createIframe(); }} else {if(location.href == "${userSite}"){createIframe();}}}, 6000)</script>`;
-
+  const tag = `<script type="text/javascript">const createIframe = () => {let modal = document.createElement("div");modal.style.position = "fixed";modal.style.bottom = "0";modal.style.right = "0";let obj = document.createElement("iframe");obj.setAttribute("frameBorder", "0");obj.setAttribute("scrolling", "no");obj.style.width = "350px";obj.style.height = "400px";obj.src = "https://mtg-non-apo.web.app/iframe/${domain}";modal.appendChild(obj);document.body.appendChild(modal);};setTimeout(() => {const httpIndex = location.href.indexOf("://");const domainIndex = location.href.indexOf("/", httpIndex + 3);if (domainIndex !== -1) {if (location.href.slice(httpIndex + 3, domainIndex) == "${userSite}") {createIframe();}} else if (domainIndex === -1) {if (location.href.slice(httpIndex + 3) == "${userSite}") {createIframe();}}}, 6000)</script>`;
   const handleClickDialog = () => {
     navigator.clipboard.writeText(tag);
     setShowTag(false);
@@ -37,7 +36,7 @@ const ShowTagCode = (props) => {
         >
           <Typography variant="h5">商談タグを発行完了</Typography>
           <Typography>
-            HPの &lt;head&gt;~&lt;/head&gt;の内側に設置ください。
+            HPの &lt;body&gt;~&lt;/body&gt;の内側に設置ください。
           </Typography>
         </Box>
         <Box sx={{ border: "1px solid #707070", m: 2, p: 2 }}>

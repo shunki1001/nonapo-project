@@ -1,10 +1,17 @@
-import { Box, Button, Grid, Radio, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  FormControlLabel,
+  RadioGroup,
+} from "@mui/material";
 import React, { useContext } from "react";
 import { DataContext } from "../../../../contexts/DataContext";
 import DateChoice from "./DateChoice";
 import GoogleCalendarChoice from "./GoogleCalendarChoice";
-import CircleIcon from "@mui/icons-material/Circle";
-import radioIcon from "../../../../img/radioIcon.svg";
+import CustomRadio from "../../CustomRadio";
 
 // Todo: Timepicker で入力の制限
 const ScheduleInput = (props) => {
@@ -12,86 +19,25 @@ const ScheduleInput = (props) => {
   const { endTime, setEndTime, startTime, setStartTime } =
     useContext(DataContext);
   return (
-    <Box sx={{ mt: 4, mb: 2 }}>
+    <Box sx={{ mt: 4, mb: 2, ml: 0.5 }}>
       <Typography variant="h6">商談可能な曜日/時間帯</Typography>
       <Box>
-        <Radio
-          checked={isGoogleCalendar === true}
-          onChange={(e) => setIsGoogleCalendar(true)}
-          name="a-radio"
-          icon={
-            <img
-              src={radioIcon}
-              alt="checked"
-              style={{
-                width: "1em",
-                fontSize: "1.5rem",
-              }}
-            />
-          }
-          checkedIcon={
-            <>
-              <img
-                src={radioIcon}
-                alt="checked"
-                style={{
-                  position: "absolute",
-                  width: "1em",
-                  fontSize: "1.5rem",
-                }}
-              />
-              <CircleIcon
-                fontSize="small"
-                sx={{
-                  color: "#5E72E4",
-                  position: "relative",
-                }}
-              />
-            </>
-          }
-        />
-        <Typography sx={{ display: "inline-block", fontWeight: 700 }}>
-          Googleカレンダー連携
-        </Typography>
-        <Radio
-          checked={isGoogleCalendar === false}
-          onChange={(e) => setIsGoogleCalendar(false)}
-          name="b-radio"
-          icon={
-            <img
-              src={radioIcon}
-              alt="checked"
-              style={{
-                width: "1em",
-                fontSize: "1.5rem",
-              }}
-            />
-          }
-          checkedIcon={
-            <>
-              <img
-                src={radioIcon}
-                alt="checked"
-                style={{
-                  position: "absolute",
-                  width: "1em",
-                  fontSize: "1.5rem",
-                }}
-              />
-              <CircleIcon
-                fontSize="small"
-                sx={{
-                  color: "#5E72E4",
-                  position: "relative",
-                }}
-              />
-            </>
-          }
-          sx={{ ml: 3 }}
-        />
-        <Typography sx={{ display: "inline-block", fontWeight: 700 }}>
-          手動設置
-        </Typography>
+        <RadioGroup
+          value={isGoogleCalendar}
+          onChange={(e) => setIsGoogleCalendar(e.target.value)}
+          row
+        >
+          <FormControlLabel
+            value={true}
+            control={<CustomRadio />}
+            label="Googleカレンダー連携"
+          />
+          <FormControlLabel
+            value={false}
+            control={<CustomRadio />}
+            label="手動設置"
+          />
+        </RadioGroup>
       </Box>
       <Box height="5em" sx={{ mb: 1 }}>
         {isGoogleCalendar ? (

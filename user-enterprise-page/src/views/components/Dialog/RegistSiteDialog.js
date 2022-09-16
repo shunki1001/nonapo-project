@@ -31,7 +31,25 @@ const RegistSiteDialog = () => {
   }, [userSiteList]);
 
   const handleAddClick = () => {
-    setUserSiteList([...userSiteList, addingSite]);
+    if (/https?/.test(addingSite)) {
+      const httpIndex = addingSite.indexOf("://");
+      const domainIndex = addingSite.indexOf("/", httpIndex + 3);
+      if (domainIndex !== -1) {
+        setUserSiteList([
+          ...userSiteList,
+          addingSite.slice(httpIndex + 3, domainIndex),
+        ]);
+      } else if (domainIndex === -1) {
+        setUserSiteList([...userSiteList, addingSite.slice(httpIndex + 3)]);
+      }
+    } else {
+      const domainIndex = addingSite.indexOf("/");
+      if (domainIndex !== -1) {
+        setUserSiteList([...userSiteList, addingSite.slice(0, domainIndex)]);
+      } else if (domainIndex === -1) {
+        setUserSiteList([...userSiteList, addingSite]);
+      }
+    }
   };
   const handleClickDialog = () => {
     registSite(userSiteList);
@@ -72,11 +90,7 @@ const RegistSiteDialog = () => {
             sx={{ width: "60%" }}
             value={addingSite}
             onChange={(e) => {
-              if (e.target.value.slice(-1) === "/") {
-                setAddingSite(e.target.value.slice(0, -1));
-              } else {
-                setAddingSite(e.target.value);
-              }
+              setAddingSite(e.target.value);
             }}
           />
           <Button
@@ -93,7 +107,7 @@ const RegistSiteDialog = () => {
       </DialogContent>
       <DialogActions sx={{ justifyContent: "center", mt: 3, mb: 8 }}>
         <Button
-          onClick={() => setOpen(false)}
+          onClick={() => handleClickDialog()}
           disabled={userSite === ""}
           variant="outlined"
           sx={{ mx: 3, py: 2, px: 6 }}

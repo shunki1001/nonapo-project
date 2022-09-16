@@ -4,7 +4,7 @@ import "../styles/form-component.css";
 
 import { useEffect, useRef, useState, useContext } from "react";
 
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import logTop from "../img/log-tp.png";
 
@@ -14,14 +14,7 @@ import { Container } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import MailIcon from "@mui/icons-material/Mail";
 import PortraitIcon from "@mui/icons-material/Portrait";
@@ -40,11 +33,11 @@ import getInfoAccount from "../functions/getInfoAccount";
 import mailSender from "../functions/mailSender";
 
 function FormPage() {
-  const { whereFrom, setWhereFrom } = useContext(DataContext);
+  const { whereFrom, setWhereFrom, setAppointmentUrl } =
+    useContext(DataContext);
   const [showBackButton, setShowBackButton] = useState(false);
   const [showNextButton, setShowNextButton] = useState(true);
   const [showSendButton, setShowSendButton] = useState(false);
-  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
 
   const [tabkey, setTabkey] = useState("input");
 
@@ -55,11 +48,11 @@ function FormPage() {
   const [address, setAddress] = useState("");
 
   const [accountList, setAccountList] = useState([]);
-  const [appointmentUrl, setAppointmentUrl] = useState("");
 
   let params = useParams();
   const domain = params.domain;
   const index = params.index;
+  const navigate = useNavigate();
 
   // validation用state
   const [inputError, setInputError] = useState({
@@ -104,7 +97,7 @@ function FormPage() {
       whereFrom,
       selectedAccount
     );
-    setSuccessDialogOpen(true);
+    navigate(`/${domain}/complete`);
   };
 
   useEffect(() => {
@@ -376,7 +369,7 @@ function FormPage() {
                         id="submit"
                         className="btn btn-finish btn-fill btn-danger btn-wd"
                         name="finish"
-                        value="商談を始める"
+                        value="商談開始"
                         onClick={() => handleClickSend()}
                       />
                     )}
@@ -401,42 +394,6 @@ function FormPage() {
           </Col>
         </Row>
       </Container>
-      <Dialog
-        open={successDialogOpen}
-        onClose={() => setSuccessDialogOpen(false)}
-        maxWidth="md"
-        sx={{
-          "& .MuiDialog-paper": {
-            width: "80vw",
-            height: "40vh",
-          },
-        }}
-      >
-        <DialogContent sx={{ textAlign: "center", paddingTop: "10%" }}>
-          <Typography variant="h6">商談用のURLを発行しました。</Typography>
-          <Typography variant="h6">
-            下記URLからアクセスお願い致します。
-          </Typography>
-          <Box>
-            <Button
-              variant="contained"
-              sx={{ my: 3, width: "50%", height: "5em", textTransform: "none" }}
-              onClick={() => (window.location.href = appointmentUrl)}
-            >
-              {appointmentUrl}
-            </Button>
-          </Box>
-          <Box>
-            <Button
-              variant="outlined"
-              sx={{ my: 3 }}
-              onClick={() => (window.location.href = whereFrom)}
-            >
-              元のページへ戻る
-            </Button>
-          </Box>
-        </DialogContent>
-      </Dialog>
 
       <div className="footer">
         <div className="container text-center text-white">

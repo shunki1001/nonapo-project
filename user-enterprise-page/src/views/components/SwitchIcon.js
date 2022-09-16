@@ -1,4 +1,4 @@
-import Switch, { SwitchProps } from "@mui/material/Switch";
+import Switch from "@mui/material/Switch";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 
@@ -6,7 +6,7 @@ const SwitchIcon = styled((props) => (
   <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
 ))(({ theme }) => ({
   width: 42,
-  height: 20,
+  height: 26,
   padding: 0,
   "& .MuiSwitch-switchBase": {
     padding: 0,
@@ -41,7 +41,7 @@ const SwitchIcon = styled((props) => (
   "& .MuiSwitch-thumb": {
     boxSizing: "border-box",
     width: 22,
-    height: 18,
+    height: 22,
   },
   "& .MuiSwitch-track": {
     borderRadius: 26 / 2,

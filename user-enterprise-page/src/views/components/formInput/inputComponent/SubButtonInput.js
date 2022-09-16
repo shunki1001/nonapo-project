@@ -2,14 +2,14 @@ import {
   Box,
   Divider,
   Grid,
-  Radio,
   TextField,
   Typography,
+  FormControlLabel,
+  RadioGroup,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { DataContext } from "../../../../contexts/DataContext";
-import CircleIcon from "@mui/icons-material/Circle";
-import radioIcon from "../../../../img/radioIcon.svg";
+import CustomRadio from "../../CustomRadio";
 
 const placeholder = [
   {
@@ -37,7 +37,9 @@ const SubButtonInput = () => {
     subButtonTitle,
     setSubButtonTitle,
     subButtonList,
-    setSubButtonList,error,setError
+    setSubButtonList,
+    error,
+    setError,
   } = useContext(DataContext);
 
   // const [multiSubButton, setMultiSubButton] = useState([]);
@@ -45,13 +47,13 @@ const SubButtonInput = () => {
 
   const [renderList, setRenderList] = useState([]);
 
-  const handleBlur = (e)=>{
-    if(!(e.target.value)){
-      setError({...error, subButtonTitle:true,firstRender:false})
-    }else {
-      setError({...error, subButtonTitle:false,firstRender:false})
+  const handleBlur = (e) => {
+    if (!e.target.value) {
+      setError({ ...error, subButtonTitle: true, firstRender: false });
+    } else {
+      setError({ ...error, subButtonTitle: false, firstRender: false });
     }
-  }
+  };
   // useEffect(() => {
   //   setOnlySubButton(subButtonList.filter((item) => item.isOnly === true)[0]);
   //   setMultiSubButton(subButtonList.filter((item) => item.isOnly === false));
@@ -59,93 +61,33 @@ const SubButtonInput = () => {
   useEffect(() => {
     setRenderList(
       subButtonList.filter((item) => {
-        return item.isOnly === isOneSubButton;
+        return item.isOnly === (isOneSubButton === "true");
       })
     );
   }, [isOneSubButton, subButtonList]);
 
   return (
     <>
-      <Box sx={{ my: 4 }}>
-        <Radio
-          checked={isOneSubButton === true}
-          onChange={(e) => setIsOneSubButton(true)}
-          name="a-radio"
-          icon={
-            <img
-              src={radioIcon}
-              alt="checked"
-              style={{
-                width: "1em",
-                fontSize: "1.5rem",
-              }}
-            />
-          }
-          checkedIcon={
-            <>
-              <img
-                src={radioIcon}
-                alt="checked"
-                style={{
-                  position: "absolute",
-                  width: "1em",
-                  fontSize: "1.5rem",
-                }}
-              />
-              <CircleIcon
-                fontSize="small"
-                sx={{
-                  color: "#5E72E4",
-                  position: "relative",
-                }}
-              />
-            </>
-          }
-        />
-        <Typography sx={{ display: "inline-block", fontWeight: 700 }}>
-          サブボタンをつける（任意）
-        </Typography>
-        <Radio
-          checked={isOneSubButton === false}
-          onChange={(e) => setIsOneSubButton(false)}
-          name="b-radio"
-          icon={
-            <img
-              src={radioIcon}
-              alt="checked"
-              style={{
-                width: "1em",
-                fontSize: "1.5rem",
-              }}
-            />
-          }
-          checkedIcon={
-            <>
-              <img
-                src={radioIcon}
-                alt="checked"
-                style={{
-                  position: "absolute",
-                  width: "1em",
-                  fontSize: "1.5rem",
-                }}
-              />
-              <CircleIcon
-                fontSize="small"
-                sx={{
-                  color: "#5E72E4",
-                  position: "relative",
-                }}
-              />
-            </>
-          }
-        />
-        <Typography sx={{ display: "inline-block", fontWeight: 700 }}>
-          サブボタンを複数つける（任意）
-        </Typography>
+      <Box sx={{ my: 4, ml: 0.5 }}>
+        <RadioGroup
+          value={isOneSubButton}
+          onChange={(e) => setIsOneSubButton(e.target.value)}
+          row
+        >
+          <FormControlLabel
+            value={true}
+            control={<CustomRadio />}
+            label="サブボタンをつける（任意）"
+          />
+          <FormControlLabel
+            value={false}
+            control={<CustomRadio />}
+            label="サブボタンを複数つける（任意）"
+          />
+        </RadioGroup>
       </Box>
       <Box>
-        {!isOneSubButton && (
+        {isOneSubButton === "false" && (
           <>
             <Typography sx={{ fontWeight: 700 }}>ボタンタイトル</Typography>
             <TextField

@@ -55,6 +55,7 @@ const CustomMenu = (props) => {
     } else if (location.pathname === "/appointment") {
       setSelectedIndex(1);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -67,6 +68,8 @@ const CustomMenu = (props) => {
           width: `${drawerWidth}px`,
           boxSizing: "border-box",
           backgroundColor: "#4357C9",
+          overflowY: "hidden",
+          height: "100vh",
         },
       }}
       open={menuOpen}
@@ -77,7 +80,7 @@ const CustomMenu = (props) => {
         <img src={logoTop} alt="logo" style={{ maxHeight: "100%" }} />
       </Box>
       <Box height="10vh"></Box>
-      <List sx={{ height: "20vh" }}>
+      <List>
         {menuOptions.map((menuItem, index) => {
           return (
             <Box key={menuItem.label}>

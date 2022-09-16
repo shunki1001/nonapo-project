@@ -26,7 +26,7 @@ function IframePage() {
   const domain = params.domain;
   let fromUrl = document.referrer;
 
-  // const fromUrl = "https://sukenojo.com/";
+  // const fromUrl = "https://family.sukenojo.com/";
 
   const scrollToTop = () => {
     console.log("clicked");
@@ -44,7 +44,7 @@ function IframePage() {
 
   useEffect(() => {
     // ドメイン取得して、isFirstアカウントの情報を取得
-    console.log(fromUrl);
+
     getInfo(domain, fromUrl, setFirstAccount, setOnline, setHaveSubbutton);
     setWhereFrom(fromUrl);
   }, []);
@@ -114,7 +114,7 @@ function IframePage() {
                 <img
                   className="mtg-bg"
                   src={firstAccount?.thumbnail}
-                  style={{ maxHeight: "200px" }}
+                  style={{ maxHeight: "100px" }}
                 />
                 <div className="mtg-btn message-submit btn-gradient-bg">
                   <a href="#">アポなし面談</a>

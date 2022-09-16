@@ -5,7 +5,8 @@ export const DataContext = createContext();
 
 const DataContextProvider = (props) => {
   const [whereFrom, setWhereFrom] = useState("");
-  const value = { whereFrom, setWhereFrom };
+  const [appointmentUrl, setAppointmentUrl] = useState("");
+  const value = { whereFrom, setWhereFrom, appointmentUrl, setAppointmentUrl };
 
   return (
     <DataContext.Provider value={value}>{props.children}</DataContext.Provider>

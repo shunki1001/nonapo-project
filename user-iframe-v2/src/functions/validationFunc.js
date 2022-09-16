@@ -16,8 +16,12 @@ const validationFunc = (index, validationText) => {
     case "email":
       const emailRegex =
         /^([a-zA-Z0-9])+([a-zA-Z0-9._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9._-]+)+$/;
+      const emailRegex2 = /^(?!.*(gmail|yahoo|icloud.com|outlook.com)).*$/;
       if (validationText.length > 0) {
-        if (validationText.match(emailRegex)) {
+        if (
+          validationText.match(emailRegex) &&
+          validationText.match(emailRegex2)
+        ) {
           return true;
         } else {
           return false;

@@ -22,49 +22,35 @@ const getInfo = async (
 ) => {
   let firstAccountId = "";
   try {
-    if (fromUrl.slice(-1) === "/") {
-      const docRef = await getDocs(
-        query(
-          collection(db, "site"),
-          where("domain", "==", domain),
-          where("userSite", "==", fromUrl.slice(0, -1))
-        )
-      );
-      console.log(docRef);
-      let userIdList = [];
-      let tempFirstId = "";
-      docRef.forEach((element) => {
-        userIdList.push(element.data().account);
-        tempFirstId = element.data().isFirst;
-      });
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // 表示するアカウントを選択
-      firstAccountId = userIdList[0].filter((item) => {
-        return item === tempFirstId;
-      })[0];
-    } else {
-      const docRef = await getDocs(
-        query(
-          collection(db, "site"),
-          where("domain", "==", domain),
-          where("userSite", "==", fromUrl)
-        )
-      );
-      console.log(docRef);
-      let userIdList = [];
-      let tempFirstId = "";
-      docRef.forEach((element) => {
-        userIdList.push(element.data().account);
-        tempFirstId = element.data().isFirst;
-      });
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // 表示するアカウントを選択
-      firstAccountId = userIdList[0].filter((item) => {
-        return item === tempFirstId;
-      })[0];
+    let domainCheck;
+    const httpIndex = fromUrl.indexOf("://");
+    const domainIndex = fromUrl.indexOf("/", httpIndex + 3);
+    if (domainIndex !== -1) {
+      domainCheck = fromUrl.slice(httpIndex + 3, domainIndex);
+    } else if (domainIndex === -1) {
+      domainCheck = fromUrl.slice(httpIndex + 3);
     }
+    console.log(domainCheck);
+    const docRef = await getDocs(
+      query(
+        collection(db, "site"),
+        where("domain", "==", domain),
+        where("userSite", "==", domainCheck)
+      )
+    );
+    console.log(docRef);
+    let userIdList = [];
+    let tempFirstId = "";
+    docRef.forEach((element) => {
+      userIdList.push(element.data().account);
+      tempFirstId = element.data().isFirst;
+    });
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // 表示するアカウントを選択
+    firstAccountId = userIdList[0].filter((item) => {
+      return item === tempFirstId;
+    })[0];
   } catch (error) {
     console.log(error);
   }

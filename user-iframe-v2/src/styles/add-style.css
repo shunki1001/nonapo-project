@@ -51,3 +51,7 @@
   );
   height: 100vh;
 }
+
+.custom-tab-nav li button{
+  pointer-events: none;
+}

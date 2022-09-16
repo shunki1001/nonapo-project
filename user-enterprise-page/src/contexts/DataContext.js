@@ -54,7 +54,7 @@ const DataContextProvider = (props) => {
   const [phone, setPhone] = useState("");
   const [url, setUrl] = useState("");
   const [mainButton, setMainButton] = useState("アポなし商談");
-  const [isOneSubButton, setIsOneSubButton] = useState();
+  const [isOneSubButton, setIsOneSubButton] = useState(true);
   const [subButtonList, setSubButtonList] = useState([]);
   const [onlySubButton, setOnlySubButton] = useState({});
   const [subButtonTitle, setSubButtonTitle] = useState("");
@@ -323,6 +323,7 @@ const DataContextProvider = (props) => {
           setDayOfWeekChoices(targetAccount[0]?.dayOfWeekChoices);
         }
       }
+    } else {
     }
   }, [account]);
 
