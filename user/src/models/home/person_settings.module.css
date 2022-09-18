@@ -1,0 +1,32 @@
+@media screen and (min-width: 1024px) {
+    .person_setting{
+        height: 65vh;
+        overflow: auto;
+    }    
+    .top_container{
+        height: 10vh;
+    }
+    .avatar{
+        width: 9vh !important;
+        height: 9vh !important;
+    }
+    .thumbnail{
+        width: 15vh !important;
+        height: 9vh !important;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .avatar{
+        width: 120px !important;
+        height: 120px !important;
+    }
+    .thumbnail{
+        width: 120px !important;
+        height: 78px !important;
+    }
+}
+.save_button{
+    top: 90%;
+    left: 100%;
+    z-index: 100;
+}

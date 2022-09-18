@@ -3,11 +3,11 @@ import React, { useContext } from "react";
 import { DataContext } from "../../contexts/DataContext";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
-const SiteSelect = () => {
+const SiteSelect = (props) => {
   const { userSite } = useContext(DataContext);
 
   const handleClick = () => {
-    alert("サイトセレクトボタンクリック");
+    props.setSiteOpen(true);
   };
   return (
     <>

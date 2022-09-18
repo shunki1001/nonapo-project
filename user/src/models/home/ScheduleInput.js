@@ -7,23 +7,26 @@ import {
   FormControlLabel,
   RadioGroup,
 } from "@mui/material";
-import React, { useContext } from "react";
-import { DataContext } from "../../../../contexts/DataContext";
-import DateChoice from "./DateChoice";
+import React, { useContext, useEffect } from "react";
+import { DataContext } from "../../contexts/DataContext";
+import DateChoice from "../../ui/DateChoice";
 import GoogleCalendarChoice from "./GoogleCalendarChoice";
-import CustomRadio from "../../CustomRadio";
+import CustomRadio from "../../ui/CustomRadio";
 
 const ScheduleInput = (props) => {
   const { isGoogleCalendar, setIsGoogleCalendar } = useContext(DataContext);
   const { endTime, setEndTime, startTime, setStartTime } =
     useContext(DataContext);
+
   return (
     <Box sx={{ mt: 4, mb: 2, ml: 0.5 }}>
       <Typography variant="h6">商談可能な曜日/時間帯</Typography>
       <Box>
         <RadioGroup
           value={isGoogleCalendar}
-          onChange={(e) => setIsGoogleCalendar(e.target.value)}
+          onChange={(e) => {
+            setIsGoogleCalendar(e.target.value === "true");
+          }}
           row
         >
           <FormControlLabel
@@ -46,7 +49,7 @@ const ScheduleInput = (props) => {
         )}
       </Box>
       <Grid container>
-        <Grid item xs={12} sm={3.5}>
+        <Grid item xs={12} md={3}>
           <Typography sx={{ fontWeight: 700 }}>開始時刻</Typography>
           <TextField
             fullWidth
@@ -56,10 +59,10 @@ const ScheduleInput = (props) => {
             placeholder="10:00"
           />
         </Grid>
-        <Grid item xs={12} sm={1} sx={{ mt: 5, textAlign: "center" }}>
+        <Grid item xs={12} md={1} sx={{ mt: 5, textAlign: "center" }}>
           ～
         </Grid>
-        <Grid item xs={12} sm={3.5}>
+        <Grid item xs={12} md={3}>
           <Typography sx={{ fontWeight: 700 }}>終了時刻</Typography>
           <TextField
             fullWidth
@@ -69,7 +72,7 @@ const ScheduleInput = (props) => {
             placeholder="17:00"
           />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} md={5}>
           <Button
             variant="outlined"
             onClick={() => {

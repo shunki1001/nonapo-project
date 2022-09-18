@@ -1,6 +1,6 @@
 import { MenuItem, Select } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import { DataContext } from "../../../contexts/DataContext";
+import { DataContext } from "../../contexts/DataContext";
 
 const AccountSelect = () => {
   const { account, setAccount, accountList } = useContext(DataContext);
@@ -38,12 +38,10 @@ const AccountSelect = () => {
           value={account}
           label="アカウント名"
           sx={{
-            fontSize: "18px",
-
             "& .MuiSelect-select": {
               backgroundColor: "white",
-              width: "10em",
-              maxWidth: "200px",
+              maxWidth: "6em",
+              py: 1,
             },
             "& .MuiOutlinedInput-notchedOutline": {
               border: "none",
