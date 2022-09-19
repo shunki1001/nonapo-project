@@ -7,7 +7,7 @@ import CustomRadio from "../../ui/CustomRadio";
 const SiteRadio = () => {
   const { userSiteList, setUserSiteList, userSite, setUserSite } =
     useContext(DataContext);
-  const handleDelete = (item) => {
+  const handleDelete = (item, index) => {
     setUserSiteList(userSiteList.filter((eachItem) => eachItem !== item));
     setUserSite("");
   };
@@ -24,13 +24,14 @@ const SiteRadio = () => {
               <FormControlLabel
                 value={item}
                 control={<CustomRadio />}
+                // label={`${item} ${siteTitleList[index]}`}
                 label={item}
                 name={item}
                 key={item}
                 sx={{ flexGrow: 1 }}
               />
               <IconButton
-                onClick={() => handleDelete(item)}
+                onClick={() => handleDelete(item, index)}
                 sx={{ color: "#5E72E4", width: "2em" }}
               >
                 <HighlightOffIcon />

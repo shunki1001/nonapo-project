@@ -13,13 +13,9 @@
   width: 220px;
 }
 
-.image-container::before {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 0;
+.image-container{
   width: 100%;
+  min-height: 100vh;
   height: 100%;
   background: #418dff;
   z-index: -2;

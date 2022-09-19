@@ -26,7 +26,7 @@ function IframePage() {
   const domain = params.domain;
   let fromUrl = document.referrer;
 
-  // const fromUrl = "https://family.sukenojo.com/";
+  // const fromUrl = "https://sukenojo.com/";
 
   const scrollToTop = () => {
     console.log("clicked");

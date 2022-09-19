@@ -12,12 +12,13 @@ const TopText = () => {
             borderRadius: "50%",
             padding: "9px",
             marginRight: "10px",
-          }}></Button>
+          }}
+        ></Button>
         担当者へコールしております。
       </h4>
-      <h5 style={{ fontSize: "1.25em", lineHeight: "1.4em" }}>
+      <h6 style={{ fontSize: "1.25em", lineHeight: "1.4em" }}>
         下記内容を入力してお待ちください※全て必須項目です。
-      </h5>
+      </h6>
     </div>
   );
 };

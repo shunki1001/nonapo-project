@@ -43,7 +43,7 @@ const Complete = () => {
             <Button
               fullWidth
               sx={{ my: 3, textDecoration: "underline", fontSize: "35px" }}
-              onClick={() => (window.location.href = whereFrom)}
+              onClick={() => (window.location.href = `https://${whereFrom}`)}
             >
               元のページへ戻る
             </Button>

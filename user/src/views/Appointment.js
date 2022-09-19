@@ -78,7 +78,6 @@ const columns = [
       if (params.value == null) {
         return "";
       }
-
       return clsx("cell-state", {
         state1: params.value === stateString[0],
         state2: params.value === stateString[1],
@@ -167,10 +166,11 @@ const Appointment = () => {
       <ThemeProvider theme={theme}>
         <Box
           sx={{
-            height: "100vh",
+            height: "80vh",
             width: "1550px",
             maxWidth: "100%",
             bgcolor: "#ffffff",
+            boxShadow: "0px 3px 6px 0px #00000029",
             "& .cell-state.state1 div": {
               color: "#2D92FE",
               background: "#E8FDFF",
@@ -208,6 +208,7 @@ const Appointment = () => {
             processRowUpdate={(newRow, oldRow) =>
               processRowUpdate(newRow, oldRow)
             }
+            onProcessRowUpdateError={(error) => console.log(error)}
             sx={{
               border: "none",
               p: 2,
@@ -228,6 +229,7 @@ const Appointment = () => {
                 {
                   whiteSpace: "normal",
                   wordBreak: "break-word",
+                  overflow: "auto",
                 },
               "& .MuiDataGrid-cell:nth-child(8)": { color: "red" },
               "& .MuiDataGrid-row": {

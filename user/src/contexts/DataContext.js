@@ -11,11 +11,14 @@ import {
 } from "firebase/firestore";
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { db } from "../firebase";
 import firstSrc from "../img/defaultThumbnail.PNG";
 import firstSrcAvatar from "../img/defaultAvatar.PNG";
 
 export const DataContext = createContext();
+
+const serverDomain = "http://127.0.0.1:5001/non-apo/asia-northeast1/functions";
 
 const DataContextProvider = (props) => {
   const [isAuth, setIsAuth] = useState(false);
@@ -166,6 +169,21 @@ const DataContextProvider = (props) => {
   useEffect(() => {
     reloadFunc();
   }, []);
+
+  // サイトタイトル取得
+  // const [siteTitleList, setSiteTitleList] = useState([])
+  // const getTitle = async (url) => {
+  //   return await axios.get(
+  //     `${serverDomain}/get-title?url=${url}`
+  //   );
+  //   setSiteTitleList([...siteTitleList, result.data.title]);
+  // };
+  // useEffect(() => {
+  //   userSiteList.forEach((item, index) => {
+  //     const result = getTitle(item)
+  //     setSiteTitleList(siteTitleList[index])
+  //   })
+  // }, [userSiteList]);
 
   useEffect(() => {
     if (localStorage.getItem("isAuth") === "true") {

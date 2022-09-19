@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useContext, useEffect, useRef, useState } from "react";
+
 import { DataContext } from "../../../contexts/DataContext";
 import registSite from "../../../functions/registSite";
 import SiteRadio from "../SiteRadio";
@@ -18,6 +19,7 @@ const RegistSiteDialog = (props) => {
   const { numberOfSite, userSiteList, setUserSiteList, userSite } =
     useContext(DataContext);
   const [addingSite, setAddingSite] = useState("");
+  const [siteTitleList, setSiteTitleList] = useState([]);
 
   const renderingRef = useRef(false);
   useEffect(() => {
@@ -30,7 +32,7 @@ const RegistSiteDialog = (props) => {
     }
   }, [userSiteList]);
 
-  const handleAddClick = () => {
+  const handleAddClick = async () => {
     if (/https?/.test(addingSite)) {
       const httpIndex = addingSite.indexOf("://");
       const domainIndex = addingSite.indexOf("/", httpIndex + 3);
@@ -78,7 +80,10 @@ const RegistSiteDialog = (props) => {
             選択肢がありません。下記から設置するサイトのURLを入力してください。
           </Typography>
         ) : (
-          <SiteRadio />
+          <SiteRadio
+            siteTitleList={siteTitleList}
+            setSiteTitleList={setSiteTitleList}
+          />
         )}
         <Divider sx={{ my: 4 }} />
         <Box sx={{ textAlign: "center" }}>

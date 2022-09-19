@@ -1,11 +1,12 @@
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import MenuIcon from "@mui/icons-material/Menu";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Menu from "../models/common/CustomMenu";
 import UserSelect from "../models/home/UserSelect";
 import SiteSelect from "../models/home/SiteSelect";
 import RegistSiteDialog from "../models/home/dialog/RegistSiteDialog";
+import { DataContext } from "../contexts/DataContext";
 
 const drawerWidth = "240";
 
@@ -23,6 +24,14 @@ const HomeLayout = (props) => {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [siteOpen, setSiteOpen] = useState(false);
+
+  const { userSite } = useContext(DataContext);
+
+  useEffect(() => {
+    if (userSite === "") {
+      setSiteOpen(true);
+    }
+  }, [userSite]);
 
   return (
     <>

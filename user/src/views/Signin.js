@@ -24,7 +24,7 @@ export default function SignIn() {
       sx={{
         width: "100%",
         height: "100vh",
-        paddingTop: "10vh",
+        paddingTop: "5vh",
         backgroundColor: "#4357C9",
       }}
     >
@@ -33,7 +33,7 @@ export default function SignIn() {
       </Box>
       <Container
         component="main"
-        maxWidth="md"
+        maxWidth="sm"
         sx={{
           backgroundColor: "#ffffff",
           height: "60vh",
@@ -46,7 +46,6 @@ export default function SignIn() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            px: 20,
           }}
         >
           <Typography sx={{ fontSize: "33px", fontWeight: "700" }}>
@@ -106,7 +105,7 @@ export default function SignIn() {
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ mt: 10, mb: 2, px: 10, py: 2 }}
+                sx={{ mt: 6, mb: 2, px: 10, py: 2 }}
               >
                 ログイン
               </Button>

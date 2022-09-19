@@ -60,6 +60,7 @@ const PersonSettings = () => {
     subButtonList,
     subButtonTitle,
     setErrorSnackOpen,
+    account,
   } = useContext(DataContext);
 
   const [getTag, setGetTag] = useState(false);
@@ -98,6 +99,7 @@ const PersonSettings = () => {
   useEffect(() => {
     reset(hookData);
   }, [hookData]);
+
   return (
     <>
       <Box
