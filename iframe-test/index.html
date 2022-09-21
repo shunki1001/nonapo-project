@@ -40,5 +40,25 @@
           createIframe();
         }
       }}, 6000)</script>
+      <div id="ukokkei-landing-page-container"></div>
+
+      <script type="text/javascript">
+        window.ukLpAsyncInit = function() {
+          UK.initLp({
+            cart_domain: "https://cart.ilcsi-beauty.com",
+            lp_form_code: "bs30-fb"
+          });
+        };
+      
+        (function(d, s, id) {
+           var js, hjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;};
+           js = d.createElement(s);
+           js.async = true;
+           js.id = id;
+           js.src = "https://cart.ilcsi-beauty.com/ukokkei-sdk.js";
+           hjs.parentNode.insertBefore(js, hjs);
+         }(document, "script", "ukokkei-sdk"));
+      </script>
   </body>
 </html>

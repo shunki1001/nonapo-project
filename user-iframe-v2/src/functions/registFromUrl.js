@@ -3,19 +3,19 @@ import { db } from "../firebase";
 
 const registFromUrl = async (domain, fromUrl, navigate) => {
   try {
-    if (fromUrl.slice(-1) === "/") {
-      await addDoc(collection(db, "tempAppointment"), {
-        date: serverTimestamp(),
-        fromUrl: fromUrl.slice(0, -1),
-        domain: domain,
-      });
-    } else {
-      await addDoc(collection(db, "tempAppointment"), {
-        date: serverTimestamp(),
-        fromUrl: fromUrl,
-        domain: domain,
-      });
+    let domainCheck;
+    const httpIndex = fromUrl.indexOf("://");
+    const domainIndex = fromUrl.indexOf("/", httpIndex + 3);
+    if (domainIndex !== -1) {
+      domainCheck = fromUrl.slice(httpIndex + 3, domainIndex);
+    } else if (domainIndex === -1) {
+      domainCheck = fromUrl.slice(httpIndex + 3);
     }
+    await addDoc(collection(db, "tempAppointment"), {
+      date: serverTimestamp(),
+      fromUrl: domainCheck,
+      domain: domain,
+    });
   } catch (error) {
     console.log(error);
   }

@@ -38,7 +38,6 @@ const AccountSelect = () => {
           value={account}
           label="アカウント名"
           sx={{
-            height: "46px",
             fontSize: "18px",
 
             "& .MuiSelect-select": {

@@ -5,25 +5,17 @@ import axios from "axios";
 export const serverDomain =
   "https://asia-northeast1-non-apo.cloudfunctions.net/functions";
 
-const mailSender = async (
-  name,
-  phone,
-  email,
-  enterprise,
-  address,
-  whereFrom,
-  account
-) => {
+const mailSender = async (data, whereFrom, account) => {
   const userMailApi = `${serverDomain}/mailer/user`;
   const onlineApi = `${serverDomain}/mailer/online`;
   const offlineApi = `${serverDomain}/mailer/offline`;
 
   try {
     await axios.post(userMailApi, {
-      name: name,
-      phone: phone,
-      email: email,
-      enterprise: enterprise,
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      enterprise: data.enterprise,
       whereFrom: whereFrom,
       accountName: account.username,
       mtgUrl: account.url,
@@ -35,7 +27,7 @@ const mailSender = async (
 
   if (account.online) {
     await axios.post(onlineApi, {
-      email: email,
+      email: data.email,
       enterprise: account.company,
       account: account.username,
       mtgUrl: account.url,
@@ -43,9 +35,9 @@ const mailSender = async (
     });
   } else {
     await axios.post(offlineApi, {
-      email: email,
-      enterprise: enterprise,
-      account: name,
+      email: data.email,
+      enterprise: data.enterprise,
+      account: data.name,
       contents: account.mailContent,
     });
   }

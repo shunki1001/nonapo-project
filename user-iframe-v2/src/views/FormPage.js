@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // import "./bootstrap.min.css"
 import "../styles/form-component.css";
 
-import { useEffect, useRef, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -25,12 +25,17 @@ import BoxCoveringInput from "../components/BoxCoveringInpuut";
 import PartnerCard from "../components/PartnerCard";
 
 import TopText from "../components/TopText";
-import validationFunc from "../functions/validationFunc";
 import { DataContext } from "../context/DataContext";
 import getInfoList from "../functions/getInfoList";
 import registAppointment from "../functions/registAppointment";
 import getInfoAccount from "../functions/getInfoAccount";
 import mailSender from "../functions/mailSender";
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import schema from "../scema";
+
+import { Helmet } from "react-helmet";
 
 function FormPage() {
   const { whereFrom, setWhereFrom, setAppointmentUrl } =
@@ -41,11 +46,7 @@ function FormPage() {
 
   const [tabkey, setTabkey] = useState("input");
 
-  const [name, setName] = useState("");
-  const [enterprise, setEnterprise] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [formData, setFormData] = useState({});
 
   const [accountList, setAccountList] = useState([]);
 
@@ -54,29 +55,18 @@ function FormPage() {
   const index = params.index;
   const navigate = useNavigate();
 
-  // validation用state
-  const [inputError, setInputError] = useState({
-    name: false,
-    enterprise: false,
-    email: false,
-    phone: false,
-    address: false,
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
   const [selected, setSelected] = useState("");
   const [selectedIndex, setSelectedIndex] = useState();
 
-  const handleClickSend = async () => {
+  const handleClickSend = async (data) => {
     console.log("submit button clicked!");
-    registAppointment(
-      name,
-      phone,
-      email,
-      enterprise,
-      address,
-      whereFrom,
-      selected
-    );
+    registAppointment(data, whereFrom, selected);
     // iframeから来た場合、選択された担当者のURLをセット
     if (index === undefined) {
       setAppointmentUrl(
@@ -88,15 +78,7 @@ function FormPage() {
     let selectedAccount = accountList[selectedIndex];
     await new Promise((resolve) => setTimeout(resolve, 1000));
     // メール送信
-    mailSender(
-      name,
-      phone,
-      email,
-      enterprise,
-      address,
-      whereFrom,
-      selectedAccount
-    );
+    mailSender(data, whereFrom, selectedAccount);
     navigate(`/${domain}/complete`);
   };
 
@@ -122,64 +104,18 @@ function FormPage() {
     }
   }, [tabkey]);
 
-  // 初回validationを防ぐため
-  const renderCount = useRef(0);
-  useEffect(() => {
-    renderCount.current = renderCount.current + 1;
-  }, []);
-
-  // validationレンダリング用
-  useEffect(() => {
-    if (renderCount.current > 2) {
-      if (validationFunc("name", name)) {
-        setInputError({ ...inputError, name: false });
-      } else {
-        setInputError({ ...inputError, name: true });
-      }
+  const onSubmit = (data) => {
+    setFormData(data);
+    if (index === undefined) {
+      setTabkey("choice");
+    } else {
+      handleClickSend(data);
     }
-  }, [name]);
-
-  useEffect(() => {
-    if (renderCount.current > 2) {
-      if (validationFunc("email", email)) {
-        setInputError({ ...inputError, email: false });
-      } else {
-        setInputError({ ...inputError, email: true });
-      }
-    }
-  }, [email]);
-  useEffect(() => {
-    if (renderCount.current > 2) {
-      if (validationFunc("enterprise", enterprise)) {
-        setInputError({ ...inputError, enterprise: false });
-      } else {
-        setInputError({ ...inputError, enterprise: true });
-      }
-    }
-  }, [enterprise]);
-
-  useEffect(() => {
-    if (renderCount.current > 2) {
-      if (validationFunc("phone", phone)) {
-        setInputError({ ...inputError, phone: false });
-      } else {
-        setInputError({ ...inputError, phone: true });
-      }
-    }
-  }, [phone]);
-
-  useEffect(() => {
-    if (renderCount.current > 2) {
-      if (validationFunc("address", address)) {
-        setInputError({ ...inputError, address: false });
-      } else {
-        setInputError({ ...inputError, address: true });
-      }
-    }
-  }, [address]);
+  };
 
   return (
     <div className="image-container set-full-height">
+      <Helmet title="テストです" />
       <a href="/">
         <div className="logo-container">
           <div className="brand">
@@ -215,16 +151,16 @@ function FormPage() {
                           />
                           <TextField
                             id="name"
+                            name="name"
                             label="お名前(required)"
                             variant="standard"
-                            required
                             fullWidth
-                            error={inputError.name}
-                            value={name}
-                            onChange={(e) => {
-                              setName(e.target.value);
-                              renderCount.current = renderCount.current + 1;
+                            error={"name" in errors}
+                            sx={{
+                              "& label": { fontSize: "14px", color: "#aaaaaa" },
                             }}
+                            {...register("name")}
+                            helperText={errors.name?.message}
                           />
                         </BoxCoveringInput>
                         <BoxCoveringInput>
@@ -233,19 +169,19 @@ function FormPage() {
                           />
                           <TextField
                             id="email"
+                            name="email"
                             label="メールアドレス(required)"
                             variant="standard"
-                            required
                             fullWidth
-                            error={inputError.email}
-                            value={email}
-                            onChange={(e) => {
-                              setEmail(e.target.value);
-                              renderCount.current = renderCount.current + 1;
+                            sx={{
+                              "& label": { fontSize: "14px", color: "#aaaaaa" },
                             }}
+                            error={"email" in errors}
+                            {...register("email")}
+                            helperText={errors.email?.message}
                           />
                         </BoxCoveringInput>
-                        <Typography variant="caption">
+                        <Typography variant="caption" sx={{ color: "#aaaaaa" }}>
                           ※gmailなどのフリーメールは受付ておりません
                         </Typography>
                       </Col>
@@ -257,16 +193,16 @@ function FormPage() {
                           />
                           <TextField
                             id="enterprise"
+                            name="enterprise"
                             label="会社名(required)"
                             variant="standard"
-                            required
                             fullWidth
-                            error={inputError.enterprise}
-                            value={enterprise}
-                            onChange={(e) => {
-                              setEnterprise(e.target.value);
-                              renderCount.current = renderCount.current + 1;
+                            error={"enterprise" in errors}
+                            helperText={errors.enterprise?.message}
+                            sx={{
+                              "& label": { fontSize: "14px", color: "#aaaaaa" },
                             }}
+                            {...register("enterprise")}
                           />
                         </BoxCoveringInput>
                         <BoxCoveringInput>
@@ -275,16 +211,16 @@ function FormPage() {
                           />
                           <TextField
                             id="phone"
+                            name="phone"
                             label="電話番号(ハイフンあり)(required)"
                             variant="standard"
-                            required
                             fullWidth
-                            error={inputError.phone}
-                            value={phone}
-                            onChange={(e) => {
-                              setPhone(e.target.value);
-                              renderCount.current = renderCount.current + 1;
+                            error={"phone" in errors}
+                            helperText={errors.phone?.message}
+                            sx={{
+                              "& label": { fontSize: "14px", color: "#aaaaaa" },
                             }}
+                            {...register("phone")}
                           />
                         </BoxCoveringInput>
                       </Col>
@@ -295,34 +231,22 @@ function FormPage() {
                           />
                           <TextField
                             id="address"
+                            name="address"
                             label="住所(required)"
                             variant="standard"
-                            required
                             fullWidth
-                            error={inputError.address}
-                            value={address}
-                            onChange={(e) => {
-                              setAddress(e.target.value);
-                              renderCount.current = renderCount.current + 1;
+                            error={"address" in errors}
+                            helperText={errors.address?.message}
+                            sx={{
+                              "& label": { fontSize: "14px", color: "#aaaaaa" },
                             }}
+                            {...register("address")}
                           />
                         </BoxCoveringInput>
                       </Col>
                     </Row>
                   </Tab>
-                  <Tab
-                    id="captain"
-                    eventKey="choice"
-                    title="商談相手選択"
-                    disabled={
-                      inputError.name ||
-                      inputError.email ||
-                      inputError.enterprise ||
-                      inputError.phone ||
-                      inputError.address ||
-                      renderCount.current < 2
-                    }
-                  >
+                  <Tab id="captain" eventKey="choice" title="商談相手選択">
                     <PartnerCard
                       selected={selected}
                       setSelected={setSelected}
@@ -340,27 +264,7 @@ function FormPage() {
                         className="btn btn-next btn-fill btn-danger btn-wd"
                         name="next"
                         value="次へ"
-                        onClick={() => {
-                          if (
-                            !inputError.name &&
-                            !inputError.email &&
-                            !inputError.enterprise &&
-                            !inputError.phone &&
-                            !inputError.address &&
-                            renderCount.current > 2 &&
-                            name.length > 0 &&
-                            email.length > 0 &&
-                            enterprise.length > 0 &&
-                            phone.length > 0 &&
-                            address.length > 0
-                          ) {
-                            if (index === undefined) {
-                              setTabkey("choice");
-                            } else {
-                              handleClickSend();
-                            }
-                          }
-                        }}
+                        onClick={handleSubmit(onSubmit)}
                       />
                     )}
                     {showSendButton && (
@@ -370,7 +274,7 @@ function FormPage() {
                         className="btn btn-finish btn-fill btn-danger btn-wd"
                         name="finish"
                         value="商談開始"
-                        onClick={() => handleClickSend()}
+                        onClick={() => handleClickSend(formData)}
                       />
                     )}
                   </div>

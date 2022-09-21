@@ -26,7 +26,7 @@ const functions = require("firebase-functions");
 const app = express();
 app.use(
   cors({
-    origin: "https://mtg-non-apo.web.app",
+    origin: ["https://mtg-non-apo.web.app", "https://non-apo.web.app"],
   })
 );
 

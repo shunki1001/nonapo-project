@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 const schema = yup.object({
-  enterprise: yup.string().required("この項目は必須です"),
+  username: yup.string().required("この項目は必須です"),
   email: yup
     .string()
     .required("この項目は必須です")

@@ -41,7 +41,6 @@ const getInfoList = async (domain, whereFrom, setAccountList, setWhereFrom) => {
     );
     tempDoc.forEach((element) => {
       tempUrl = element.data().fromUrl;
-      console.log(element.data());
     });
   } catch (error) {
     console.log(error);
@@ -52,7 +51,6 @@ const getInfoList = async (domain, whereFrom, setAccountList, setWhereFrom) => {
   let userIdList = [];
   let tempList = [];
   try {
-    console.log(tempUrl);
     const docRef = await getDocs(
       query(
         collection(db, "site"),
@@ -66,7 +64,6 @@ const getInfoList = async (domain, whereFrom, setAccountList, setWhereFrom) => {
       userIdList.push(element.data().account);
     });
     await new Promise((resolve) => setTimeout(resolve, 500));
-    console.log(userIdList);
   } catch (error) {
     console.log(error);
   }

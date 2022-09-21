@@ -13,7 +13,6 @@ import DateChoice from "./DateChoice";
 import GoogleCalendarChoice from "./GoogleCalendarChoice";
 import CustomRadio from "../../CustomRadio";
 
-// Todo: Timepicker で入力の制限
 const ScheduleInput = (props) => {
   const { isGoogleCalendar, setIsGoogleCalendar } = useContext(DataContext);
   const { endTime, setEndTime, startTime, setStartTime } =

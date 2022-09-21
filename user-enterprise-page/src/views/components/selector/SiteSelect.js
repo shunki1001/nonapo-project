@@ -1,15 +1,20 @@
-import { MenuItem, Select } from "@mui/material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import React, { useContext } from "react";
-import { DataContext } from "../../../contexts/DataContext";
+import { DataContext } from "../../contexts/DataContext";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 const SiteSelect = () => {
-  const { userSite, setUserSite, userSiteList } = useContext(DataContext);
+  const { userSite } = useContext(DataContext);
+
+  const handleClick = () => {
+    alert("サイトセレクトボタンクリック");
+  };
   return (
     <>
       {/* <InputLabel id="site-select-label" sx={{ color: "white" }}>
         サイト名
       </InputLabel> */}
-      <Select
+      {/* <Select
         id="site-select"
         value={userSite}
         sx={{
@@ -29,7 +34,22 @@ const SiteSelect = () => {
             </MenuItem>
           );
         })}
-      </Select>
+      </Select> */}
+      <TextField
+        value={userSite}
+        disabled
+        sx={{ borderRadius: "5px" }}
+        size="small"
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton onClick={handleClick} sx={{ pr: 0 }}>
+                <ArrowRightIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
     </>
   );
 };
