@@ -27,12 +27,6 @@ const HomeLayout = (props) => {
 
   const { userSite } = useContext(DataContext);
 
-  useEffect(() => {
-    if (userSite === "") {
-      setSiteOpen(true);
-    }
-  }, [userSite]);
-
   return (
     <>
       {isWideScreen ? (
@@ -47,6 +41,16 @@ const HomeLayout = (props) => {
               height: "30vh",
               background:
                 "linear-gradient(143.38deg, rgba(53, 68, 150, 0.81) 3.06%, rgba(82, 56, 168, 0.81) 118.21%)",
+            }}
+          ></Box>
+          <Box
+            sx={{
+              position: "absolute",
+              width: "100%",
+              zIndex: "-2",
+              top: "0",
+              height: "100vh",
+              background: "#F8F9FA",
             }}
           ></Box>
           <Box sx={{ ml: `${drawerWidth}px` }}>
@@ -77,7 +81,7 @@ const HomeLayout = (props) => {
                   sx={{
                     color: "white",
                     display: "inline-block",
-                    fontSize: "34px",
+                    fontSize: "24px",
                     fontWeight: "600",
                   }}
                 >

@@ -4,8 +4,8 @@ import React from "react";
 const CustomTextField = (props) => {
   const { label, width, name, register, errors, placeholder } = props;
   return (
-    <Box sx={{ mt: 5 }}>
-      <Typography>{label}</Typography>
+    <Box sx={{ mt: "20px" }}>
+      <Typography sx={{ marginBottom: "7px" }}>{label}</Typography>
       <TextField
         name={name}
         placeholder={placeholder}
@@ -15,9 +15,11 @@ const CustomTextField = (props) => {
         sx={{
           width: width,
           "& p": {
-            color: "green",
             position: "absolute",
             bottom: "-2em",
+          },
+          "& fieldset": {
+            borderWidth: "0",
           },
         }}
       />

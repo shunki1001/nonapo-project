@@ -108,7 +108,7 @@ const PersonSettings = () => {
           flexWrap: "wrap",
           gap: "1em",
           alignItems: "center",
-          py: 2,
+          py: 1,
         }}
       >
         <AccountSelect />
@@ -144,12 +144,15 @@ const PersonSettings = () => {
           variant="contained"
           onClick={handleSubmit(onSubmit)}
           className={styles.save_button}
-          sx={{ padding: "1em 3em", position: "sticky" }}
+          sx={{ padding: "0.6em 2em", position: "sticky" }}
           disabled={Object.keys(errors).length > 0}
         >
           変更内容を保存
         </Button>
-        <Grid container sx={{ mt: -5, alignItems: "center", rowGap: "1em" }}>
+        <Grid
+          container
+          sx={{ mt: "-14px", alignItems: "center", rowGap: "1em" }}
+        >
           <Grid item xs={12} md={5} className={styles.top_container}>
             <Grid container sx={{ alignItems: "center" }}>
               <Grid item xs={12} md={4} sx={{ textAlign: "center" }}>
@@ -231,7 +234,10 @@ const PersonSettings = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <ScheduleInput setGoogleDialog={setGoogleDialog} />
+            <ScheduleInput
+              setGoogleDialog={setGoogleDialog}
+              setMailSetting={setMailSetting}
+            />
           </Grid>
           <Grid item xs={12} md={4}>
             <CustomTextField
@@ -274,6 +280,7 @@ const PersonSettings = () => {
             <SubButtonInput />
           </Grid>
           <Grid item xs={12} md={12}>
+            <Divider sx={{ height: "1vh" }} />
             <InviteUrl />
           </Grid>
           <Grid item xs={12} md={12} sx={{ height: "10vh" }}></Grid>

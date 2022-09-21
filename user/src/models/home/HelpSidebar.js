@@ -24,17 +24,17 @@ const HelpSidebar = () => {
         </Icon>
         <Typography sx={{ fontSize: "1rem" }}>Help</Typography>
       </Box>
-      <Typography>
+      <Typography sx={{ fontSize: "14px" }}>
         任意項目以外は必須項目です。 商談担当者の表情がわかりやすいサムネイルを
         設置する事で商談化率向上に繋がります。
       </Typography>
       <Box height="1em"></Box>
-      <Typography>
+      <Typography sx={{ fontSize: "14px" }}>
         サムネイルの参考デザインは
         <Link href="https://non-appoint.com/thumbnail.html">こちら</Link>
       </Typography>
       <Box height="2em"></Box>
-      <Typography>LP掲載イメージ</Typography>
+      <Typography sx={{ fontSize: "14px" }}>LP掲載イメージ</Typography>
       <Box
         sx={{
           verticalAlign: "middle",

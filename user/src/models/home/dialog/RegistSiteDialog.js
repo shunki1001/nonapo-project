@@ -21,16 +21,20 @@ const RegistSiteDialog = (props) => {
   const [addingSite, setAddingSite] = useState("");
   const [siteTitleList, setSiteTitleList] = useState([]);
 
-  const renderingRef = useRef(false);
-  useEffect(() => {
-    if (renderingRef.current === false) {
-      renderingRef.current = true;
-    } else {
-      if (userSiteList.length === 0) {
-        setSiteOpen(true);
-      }
-    }
-  }, [userSiteList]);
+  // const renderingRef = useRef(false);
+  // useEffect(() => {
+  //   if (renderingRef.current === false) {
+  //     renderingRef.current = true;
+  //   } else {
+  //     if (userSite.length === 0) {
+  //       setSiteOpen(true);
+  //       console.log("koko?");
+  //     } else {
+  //       setSiteOpen(false);
+  //       console.log("asoko?");
+  //     }
+  //   }
+  // }, [userSite]);
 
   const handleAddClick = async () => {
     if (/https?/.test(addingSite)) {
@@ -92,7 +96,7 @@ const RegistSiteDialog = (props) => {
             margin="dense"
             label="サイトURL"
             type="text"
-            sx={{ width: "60%" }}
+            sx={{ width: "60%", "& input": { padding: "16px 14px" } }}
             value={addingSite}
             onChange={(e) => {
               setAddingSite(e.target.value);

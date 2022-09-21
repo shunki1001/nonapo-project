@@ -23,12 +23,13 @@ export default function SignIn() {
     <Box
       sx={{
         width: "100%",
-        height: "100vh",
-        paddingTop: "5vh",
+        minHeight: "100vh",
+        height: "100%",
+        py: "5vh",
         backgroundColor: "#4357C9",
       }}
     >
-      <Box width="260px" sx={{ margin: "0 auto", marginBottom: "4em" }}>
+      <Box width="200px" sx={{ margin: "0px auto 2em" }}>
         <img src={logo} alt="logo" style={{ width: "100%" }} />
       </Box>
       <Container
@@ -36,7 +37,8 @@ export default function SignIn() {
         maxWidth="sm"
         sx={{
           backgroundColor: "#ffffff",
-          height: "60vh",
+          minHeight: "60vh",
+          height: "auto",
           py: 12,
           boxShadow: "0px 8px 23px 0px #000000A3",
         }}
@@ -48,7 +50,7 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Typography sx={{ fontSize: "33px", fontWeight: "700" }}>
+          <Typography sx={{ fontSize: "25px", fontWeight: "700" }}>
             ログイン
           </Typography>
           <Box
@@ -72,11 +74,8 @@ export default function SignIn() {
               sx={{
                 my: 2,
                 backgroundColor: "#f5f5f5",
-                "& label": { fontSize: "30px", ml: 2, mt: -1 },
-                "& div input": { fontSize: "30px" },
-                "& .MuiInput .MuiOutlinedInput-notchedOutline": {
-                  border: "0",
-                },
+                "& label": { fontSize: "16px" },
+                "& div input": { fontSize: "17px" },
               }}
             />
             <TextField
@@ -94,18 +93,15 @@ export default function SignIn() {
               sx={{
                 my: 2,
                 backgroundColor: "#f5f5f5",
-                "& label": { fontSize: "30px", ml: 2, mt: -1 },
-                "& div input": { fontSize: "30px" },
-                "& .MuiInput .MuiOutlinedInput-notchedOutline": {
-                  border: "0",
-                },
+                "& label": { fontSize: "16px" },
+                "& div input": { fontSize: "17px" },
               }}
             />
             <Box sx={{ width: "100%", textAlign: "center" }}>
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ mt: 6, mb: 2, px: 10, py: 2 }}
+                sx={{ margin: "30px 0px 16px", padding: "11px 63px" }}
               >
                 ログイン
               </Button>

@@ -34,9 +34,7 @@ const InviteUrl = () => {
         disabled
         sx={{
           boxShadow: "none",
-          py: 1,
           borderRadius: "10px",
-          pl: 3,
           "& .Mui-disabled": { WebkitTextFillColor: "rgba(0,0,0,1)" },
         }}
         InputProps={{

@@ -71,12 +71,16 @@ const theme = createTheme({
         root: {
           backgroundColor: "#fff",
           border: "none",
-          boxShadow: "0px 3px 6px 0px #00000029",
+          boxShadow: "rgb(137 137 137 / 16%) 0px 4px 5px 0px",
           "& .MuiInput .MuiOutlinedInput-notchedOutline": {
             border: "0",
           },
           "& input": {
             fontWeight: 700,
+            padding: "9.5px 14px",
+          },
+          "& fieldset": {
+            borderWidth: "0",
           },
         },
       },

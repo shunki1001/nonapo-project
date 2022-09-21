@@ -17,7 +17,7 @@ const MailSettingDialog = (props) => {
     useContext(DataContext);
 
   useEffect(() => {
-    setMailSubject(`【${username}】商談依頼ありがとうございます。`);
+    setMailSubject(`商談依頼ありがとうございます。`);
     setMailContent(`この度は、リード獲得自動化Saas「リードダイナミクス」にノンアポ商談依頼誠にありがとうございます。
     
 いつも大変お世話になっております。

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import HomeLayout from "../Layout/HomeLayout";
 
 import { Box, createTheme, ThemeProvider } from "@mui/material";
-import { DataGrid, GridToolbarExport } from "@mui/x-data-grid";
+import { DataGrid, GridCellModes, GridToolbarExport } from "@mui/x-data-grid";
 import {
   collection,
   doc,
@@ -21,12 +21,11 @@ const theme = createTheme({}, jaJP);
 
 const stateString = ["商談済み", "成約", "検討中", "商談希望連絡あり"];
 const columns = [
-  { field: "date", headerName: "商談日", width: "150" },
+  { field: "date", headerName: "商談日" },
   {
     field: "enterprise",
     headerName: "会社名",
     sortable: false,
-    width: "200",
   },
   {
     field: "selectedAccount",
@@ -37,25 +36,21 @@ const columns = [
     field: "phone",
     headerName: "電話番号",
     sortable: false,
-    width: "150",
   },
   {
     field: "email",
     headerName: "Eメール",
     sortable: false,
-    width: "150",
   },
   {
     field: "address",
     headerName: "住所",
     sortable: false,
-    width: "200",
   },
   {
     field: "fromUrl",
     headerName: "流入サイト",
     sortable: false,
-    width: "200",
     renderCell: (cellValues) => {
       return (
         <>
@@ -73,7 +68,6 @@ const columns = [
     type: "singleSelect",
     valueOptions: stateString,
     editable: true,
-    width: "150",
     cellClassName: (params) => {
       if (params.value == null) {
         return "";
@@ -91,7 +85,6 @@ const columns = [
     headerName: "商談対応者",
     sortable: false,
     editable: true,
-    width: "150",
   },
 ];
 
@@ -161,39 +154,80 @@ const Appointment = () => {
     }
   }, [dataList]);
 
+  // セルをクリックで編集できるようにするコード
+  const [cellModesModel, setCellModesModel] = useState({});
+
+  const handleCellClick = React.useCallback((params) => {
+    setCellModesModel((prevModel) => {
+      return {
+        // Revert the mode of the other cells from other rows
+        ...Object.keys(prevModel).reduce(
+          (acc, id) => ({
+            ...acc,
+            [id]: Object.keys(prevModel[id]).reduce(
+              (acc2, field) => ({
+                ...acc2,
+                [field]: { mode: GridCellModes.View },
+              }),
+              {}
+            ),
+          }),
+          {}
+        ),
+        [params.id]: {
+          // Revert the mode of other cells in the same row
+          ...Object.keys(prevModel[params.id] || {}).reduce(
+            (acc, field) => ({ ...acc, [field]: { mode: GridCellModes.View } }),
+            {}
+          ),
+          [params.field]: { mode: GridCellModes.Edit },
+        },
+      };
+    });
+  }, []);
+
+  const handleCellModesModelChange = React.useCallback((newModel) => {
+    setCellModesModel(newModel);
+  }, []);
+
   return (
     <HomeLayout title="アポイント管理">
       <ThemeProvider theme={theme}>
         <Box
           sx={{
-            height: "80vh",
-            width: "1550px",
+            height: "78vh",
+            width: "100%",
             maxWidth: "100%",
+            borderRadius: "4px",
             bgcolor: "#ffffff",
-            boxShadow: "0px 3px 6px 0px #00000029",
+            boxShadow: "rgb(137 137 137 / 16%) 0px 4px 5px 0px",
             "& .cell-state.state1 div": {
               color: "#2D92FE",
               background: "#E8FDFF",
               padding: "1px 0.5em",
               borderRadius: "10px",
+              cursor: "pointer",
             },
             "& .cell-state.state2 div": {
               color: "#1DBC9C",
               background: "#D9FEC7",
               padding: "1px 0.5em",
               borderRadius: "10px",
+              cursor: "pointer",
             },
             "& .cell-state.state3 div": {
               color: "#C97F00",
               background: "#FFF5A5",
               padding: "1px 0.5em",
               borderRadius: "10px",
+              cursor: "pointer",
             },
             "& .cell-state.state4 div": {
               color: "#fff",
               background: "#FF5555",
               padding: "1px 0.5em",
               borderRadius: "10px",
+              cursor: "pointer",
             },
           }}
         >
@@ -205,6 +239,9 @@ const Appointment = () => {
             disableSelectionOnClick
             experimentalFeatures={{ newEditingApi: true }}
             rowHeight={80}
+            cellModesModel={cellModesModel}
+            onCellModesModelChange={handleCellModesModelChange}
+            onCellClick={handleCellClick}
             processRowUpdate={(newRow, oldRow) =>
               processRowUpdate(newRow, oldRow)
             }
@@ -231,11 +268,11 @@ const Appointment = () => {
                   wordBreak: "break-word",
                   overflow: "auto",
                 },
-              "& .MuiDataGrid-cell:nth-child(8)": { color: "red" },
+              // "& .MuiDataGrid-cell:nth-child(1)": { width: "50%" },
               "& .MuiDataGrid-row": {
                 border: "1px solid #B1B1B1",
                 borderRadius: "5px",
-                width: "1450px",
+                width: "97.5%",
                 my: 1,
               },
             }}

@@ -14,7 +14,7 @@ const Home = () => {
           <Box
             sx={{
               bgcolor: "#F0F2FA",
-              borderRadius: "10px",
+              borderRadius: "4px",
               border: "none",
               px: 3,
               py: 1,
@@ -28,9 +28,9 @@ const Home = () => {
           <Box
             sx={{
               bgcolor: "#ffffff",
-              borderRadius: "10px",
+              borderRadius: "4px",
               border: "none",
-              boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.29)",
+              boxShadow: "rgb(136 133 133 / 29%) 0px 3px 6px 0px",
               p: 3,
             }}
           >

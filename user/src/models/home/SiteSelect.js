@@ -1,4 +1,4 @@
-import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import React, { useContext } from "react";
 import { DataContext } from "../../contexts/DataContext";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
@@ -35,21 +35,21 @@ const SiteSelect = (props) => {
           );
         })}
       </Select> */}
-      <TextField
-        value={userSite}
-        disabled
-        sx={{ borderRadius: "5px" }}
-        size="small"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={handleClick} sx={{ pr: 0 }}>
+      <Button onClick={handleClick}>
+        <TextField
+          value={userSite}
+          disabled
+          sx={{ borderRadius: "5px", "& input": { cursor: "pointer" } }}
+          size="small"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
                 <ArrowRightIcon />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Button>
     </>
   );
 };

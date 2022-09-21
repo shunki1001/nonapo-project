@@ -96,6 +96,7 @@ const DataContextProvider = (props) => {
       if (element.data().isChecked === undefined) {
         setNewNotice(true);
       }
+      console.log(element.data());
     });
   };
 
