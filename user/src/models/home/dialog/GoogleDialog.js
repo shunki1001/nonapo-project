@@ -5,6 +5,7 @@ import {
   DialogActions,
   DialogContent,
   IconButton,
+  InputAdornment,
   Link,
   TextField,
   Typography,
@@ -30,16 +31,19 @@ const GoogleDialog = (props) => {
       fullWidth
       onClose={() => setGoogleDialog(false)}
     >
-      <DialogContent sx={{ mx: 2 }}>
+      <DialogContent sx={{ margin: "2em 10%" }}>
         <Box sx={{ textAlign: "center", mb: 3, "& p": { marginTop: "1em" } }}>
           <Typography variant="h5">Googleカレンダー連携</Typography>
           <Typography>
             Googleカレンダーでスケジュール管理している方は、カレンダー連携して頂くと
             ノンアポへ自動反映され、予定が埋まっている所は商談受付不可にできます。
           </Typography>
-          <Link href="https://www.google.com/search?q=Google%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%80%E3%83%BC+%E7%89%B9%E5%AE%9A%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%81%A8%E3%81%AE%E5%85%B1%E6%9C%89%E3%81%99%E3%82%8B">
+          <a
+            href="https://www.google.com/search?q=Google%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%80%E3%83%BC+%E7%89%B9%E5%AE%9A%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%81%A8%E3%81%AE%E5%85%B1%E6%9C%89%E3%81%99%E3%82%8B"
+            target="_blank"
+          >
             詳しいやり方はこちら
-          </Link>
+          </a>
         </Box>
         <Typography sx={{ "& span": { fontWeight: "bold" } }}>
           <span>STEP１</span>
@@ -50,14 +54,26 @@ const GoogleDialog = (props) => {
             value={googleAddress}
             variant="standard"
             disabled
-            sx={{ width: "50%" }}
+            sx={{
+              width: "80%",
+              boxShadow: "none",
+              border: "1px solid #000000",
+              borderRadius: "3px",
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    sx={{ color: "action.active", ml: 1, mt: 1 }}
+                    onClick={() => navigator.clipboard.writeText(googleAddress)}
+                  >
+                    <ContentCopyIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+              disableUnderline: true,
+            }}
           />
-          <IconButton
-            sx={{ color: "action.active", ml: 1, mt: 1 }}
-            onClick={() => navigator.clipboard.writeText(googleAddress)}
-          >
-            <ContentCopyIcon />
-          </IconButton>
         </Box>
         <Typography sx={{ "& span": { fontWeight: "bold" }, mt: 3 }}>
           <span>STEP２</span>
@@ -66,8 +82,7 @@ const GoogleDialog = (props) => {
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>
           <TextField
             value={googleId}
-            variant="standard"
-            label="カレンダーID"
+            variant="outlined"
             placeholder="yamadataro@gmail.com"
             sx={{ width: "50%" }}
             onChange={(e) => setGoogleId(e.target.value)}

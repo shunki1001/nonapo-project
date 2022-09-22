@@ -26,7 +26,7 @@ const DataContextProvider = (props) => {
   // アカウント情報関係
   const [enterprise, setEnterprise] = useState("テスト株式会社　営業部");
   const [userSiteList, setUserSiteList] = useState([]);
-  const [userSite, setUserSite] = useState("");
+  const [userSite, setUserSite] = useState("サイトを選択してください");
   // firebase通信用のaccount（ユーザー名）
   const [account, setAccount] = useState("");
   // account情報のリスト

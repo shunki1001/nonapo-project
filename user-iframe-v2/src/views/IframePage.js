@@ -65,14 +65,26 @@ function IframePage() {
             {online ? (
               <>
                 <span className="atn btn--shockwave is-active"></span>
-                <span style={{ color: "#181b31", fontSize: "12px" }}>
+                <span
+                  style={{
+                    color: "#181b31",
+                    fontSize: "10px",
+                    marginRight: "6px",
+                  }}
+                >
                   オンライン
                 </span>
               </>
             ) : (
               <>
                 <span className="btn btn_shockwave passive"></span>
-                <span style={{ color: "#181b31", fontSize: "12px" }}>
+                <span
+                  style={{
+                    color: "#181b31",
+                    fontSize: "10px",
+                    marginRight: "6px",
+                  }}
+                >
                   オフライン
                 </span>
               </>

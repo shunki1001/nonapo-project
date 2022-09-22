@@ -100,7 +100,7 @@ const getInfo = async (
       const result = await axios.get(
         `${serverDomain}/google?google=${temp.googleId}`
       );
-      setOnline(result.isOnline);
+      setOnline(result.data.isOnline);
     } catch (error) {
       console.log(error);
     }

@@ -50,9 +50,7 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Typography sx={{ fontSize: "25px", fontWeight: "700" }}>
-            ログイン
-          </Typography>
+          <Typography sx={{ fontSize: "25px" }}>ログイン</Typography>
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -76,6 +74,7 @@ export default function SignIn() {
                 backgroundColor: "#f5f5f5",
                 "& label": { fontSize: "16px" },
                 "& div input": { fontSize: "17px" },
+                "& input": { fontWeight: "400" },
               }}
             />
             <TextField
@@ -95,6 +94,7 @@ export default function SignIn() {
                 backgroundColor: "#f5f5f5",
                 "& label": { fontSize: "16px" },
                 "& div input": { fontSize: "17px" },
+                "& input": { fontWeight: "400" },
               }}
             />
             <Box sx={{ width: "100%", textAlign: "center" }}>

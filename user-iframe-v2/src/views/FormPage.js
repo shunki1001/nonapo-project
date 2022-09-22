@@ -158,6 +158,18 @@ function FormPage() {
                             error={"name" in errors}
                             sx={{
                               "& label": { fontSize: "14px", color: "#aaaaaa" },
+                              "& .MuiInput-underline:before": {
+                                borderBottom:
+                                  "0.6px solid rgb(139 139 139 / 42%)",
+                              },
+                              "& .MuiInput-underline:after": {
+                                borderBottom: "0.6px solid rgba(0, 0, 0, 0.87)",
+                              },
+                              "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                                {
+                                  borderBottom:
+                                    "0.6px solid rgba(0, 0, 0, 0.87)", // ホバー時のボーダー色
+                                },
                             }}
                             {...register("name")}
                             helperText={errors.name?.message}
@@ -175,6 +187,18 @@ function FormPage() {
                             fullWidth
                             sx={{
                               "& label": { fontSize: "14px", color: "#aaaaaa" },
+                              "& .MuiInput-underline:before": {
+                                borderBottom:
+                                  "0.6px solid rgb(139 139 139 / 42%)",
+                              },
+                              "& .MuiInput-underline:after": {
+                                borderBottom: "0.6px solid rgba(0, 0, 0, 0.87)",
+                              },
+                              "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                                {
+                                  borderBottom:
+                                    "0.6px solid rgba(0, 0, 0, 0.87)", // ホバー時のボーダー色
+                                },
                             }}
                             error={"email" in errors}
                             {...register("email")}
@@ -201,6 +225,18 @@ function FormPage() {
                             helperText={errors.enterprise?.message}
                             sx={{
                               "& label": { fontSize: "14px", color: "#aaaaaa" },
+                              "& .MuiInput-underline:before": {
+                                borderBottom:
+                                  "0.6px solid rgb(139 139 139 / 42%)",
+                              },
+                              "& .MuiInput-underline:after": {
+                                borderBottom: "0.6px solid rgba(0, 0, 0, 0.87)",
+                              },
+                              "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                                {
+                                  borderBottom:
+                                    "0.6px solid rgba(0, 0, 0, 0.87)", // ホバー時のボーダー色
+                                },
                             }}
                             {...register("enterprise")}
                           />
@@ -219,6 +255,18 @@ function FormPage() {
                             helperText={errors.phone?.message}
                             sx={{
                               "& label": { fontSize: "14px", color: "#aaaaaa" },
+                              "& .MuiInput-underline:before": {
+                                borderBottom:
+                                  "0.6px solid rgb(139 139 139 / 42%)",
+                              },
+                              "& .MuiInput-underline:after": {
+                                borderBottom: "0.6px solid rgba(0, 0, 0, 0.87)",
+                              },
+                              "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                                {
+                                  borderBottom:
+                                    "0.6px solid rgba(0, 0, 0, 0.87)", // ホバー時のボーダー色
+                                },
                             }}
                             {...register("phone")}
                           />
@@ -239,6 +287,18 @@ function FormPage() {
                             helperText={errors.address?.message}
                             sx={{
                               "& label": { fontSize: "14px", color: "#aaaaaa" },
+                              "& .MuiInput-underline:before": {
+                                borderBottom:
+                                  "0.6px solid rgb(139 139 139 / 42%)",
+                              },
+                              "& .MuiInput-underline:after": {
+                                borderBottom: "0.6px solid rgba(0, 0, 0, 0.87)",
+                              },
+                              "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                                {
+                                  borderBottom:
+                                    "0.6px solid rgba(0, 0, 0, 0.87)", // ホバー時のボーダー色
+                                },
                             }}
                             {...register("address")}
                           />

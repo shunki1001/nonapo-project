@@ -82,6 +82,13 @@ const theme = createTheme({
           "& fieldset": {
             borderWidth: "0",
           },
+          input: {
+            "&::placeholder": {
+              // textOverflow: "ellipsis !important",
+              color: "#cbcbcb",
+              fontWeight: "500",
+            },
+          },
         },
       },
     },

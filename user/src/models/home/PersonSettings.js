@@ -134,6 +134,7 @@ const PersonSettings = () => {
           variant="contained"
           onClick={handleClickGoTag}
           disabled={!saveClick}
+          sx={{ padding: "6px 4%" }}
         >
           商談タグを発行
         </Button>
@@ -167,7 +168,7 @@ const PersonSettings = () => {
                 <Button
                   variant="outlined"
                   component="label"
-                  sx={{ px: "2em", mt: 1 }}
+                  sx={{ padding: "5px 6%", mt: 1 }}
                 >
                   ファイルを選択
                   <input
@@ -198,7 +199,7 @@ const PersonSettings = () => {
                 <Button
                   variant="outlined"
                   component="label"
-                  sx={{ px: "2em", mt: 1 }}
+                  sx={{ padding: "5px 6%", mt: 1 }}
                 >
                   ファイルを選択
                   <input

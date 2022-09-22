@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <HomeLayout title="商談対応者設定">
       <Grid container sx={{ bgcolor: "transparent" }}>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} sm={8.3}>
           <Box
             sx={{
               bgcolor: "#F0F2FA",
@@ -23,7 +23,7 @@ const Home = () => {
             <PersonSettings />
           </Box>
         </Grid>
-        <Grid item xs={12} sm={0.5} sx={{ bgcolor: "transparent" }}></Grid>
+        <Grid item xs={12} sm={0.2} sx={{ bgcolor: "transparent" }}></Grid>
         <Grid item xs={12} sm={3.5}>
           <Box
             sx={{

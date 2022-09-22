@@ -75,7 +75,12 @@ const HomeLayout = (props) => {
               }}
             >
               <Box
-                sx={{ display: "flex", alignItems: "center", height: "7vh" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  height: "7vh",
+                  mb: "7px",
+                }}
               >
                 <Typography
                   sx={{

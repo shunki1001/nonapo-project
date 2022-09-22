@@ -21,36 +21,48 @@ const theme = createTheme({}, jaJP);
 
 const stateString = ["商談済み", "成約", "検討中", "商談希望連絡あり"];
 const columns = [
-  { field: "date", headerName: "商談日" },
+  { field: "date", headerName: "商談日", flex: 1, minwidth: 50 },
   {
     field: "enterprise",
     headerName: "会社名",
     sortable: false,
+    flex: 1,
+    minwidth: 100,
   },
   {
     field: "selectedAccount",
     headerName: "担当者名",
     sortable: false,
+    flex: 0.75,
+    minwidth: 50,
   },
   {
     field: "phone",
     headerName: "電話番号",
     sortable: false,
+    width: 150,
   },
   {
     field: "email",
     headerName: "Eメール",
     sortable: false,
+    flex: 1,
+    minwidth: 50,
   },
   {
     field: "address",
     headerName: "住所",
     sortable: false,
+    flex: 1,
+    minwidth: 50,
   },
   {
     field: "fromUrl",
     headerName: "流入サイト",
     sortable: false,
+    flex: 1,
+    editable: false,
+    minwidth: 50,
     renderCell: (cellValues) => {
       return (
         <>
@@ -68,6 +80,8 @@ const columns = [
     type: "singleSelect",
     valueOptions: stateString,
     editable: true,
+    flex: 0.75,
+    minwidth: 50,
     cellClassName: (params) => {
       if (params.value == null) {
         return "";
@@ -85,6 +99,8 @@ const columns = [
     headerName: "商談対応者",
     sortable: false,
     editable: true,
+    flex: 0.75,
+    minwidth: 50,
   },
 ];
 
@@ -158,32 +174,38 @@ const Appointment = () => {
   const [cellModesModel, setCellModesModel] = useState({});
 
   const handleCellClick = React.useCallback((params) => {
-    setCellModesModel((prevModel) => {
-      return {
-        // Revert the mode of the other cells from other rows
-        ...Object.keys(prevModel).reduce(
-          (acc, id) => ({
-            ...acc,
-            [id]: Object.keys(prevModel[id]).reduce(
-              (acc2, field) => ({
-                ...acc2,
+    if (params.field === "state" || params.field === "concierge") {
+      setCellModesModel((prevModel) => {
+        return {
+          // Revert the mode of the other cells from other rows
+          ...Object.keys(prevModel).reduce(
+            (acc, id) => ({
+              ...acc,
+              [id]: Object.keys(prevModel[id]).reduce(
+                (acc2, field) => ({
+                  ...acc2,
+                  [field]: { mode: GridCellModes.View },
+                }),
+                {}
+              ),
+            }),
+            {}
+          ),
+          [params.id]: {
+            // Revert the mode of other cells in the same row
+            ...Object.keys(prevModel[params.id] || {}).reduce(
+              (acc, field) => ({
+                ...acc,
                 [field]: { mode: GridCellModes.View },
               }),
               {}
             ),
-          }),
-          {}
-        ),
-        [params.id]: {
-          // Revert the mode of other cells in the same row
-          ...Object.keys(prevModel[params.id] || {}).reduce(
-            (acc, field) => ({ ...acc, [field]: { mode: GridCellModes.View } }),
-            {}
-          ),
-          [params.field]: { mode: GridCellModes.Edit },
-        },
-      };
-    });
+
+            [params.field]: { mode: GridCellModes.Edit },
+          },
+        };
+      });
+    }
   }, []);
 
   const handleCellModesModelChange = React.useCallback((newModel) => {
@@ -248,7 +270,7 @@ const Appointment = () => {
             onProcessRowUpdateError={(error) => console.log(error)}
             sx={{
               border: "none",
-              p: 2,
+              p: 1,
               color: "#000000",
               "& .MuiDataGrid-columnHeaders": {
                 border: "none",
@@ -272,7 +294,7 @@ const Appointment = () => {
               "& .MuiDataGrid-row": {
                 border: "1px solid #B1B1B1",
                 borderRadius: "5px",
-                width: "97.5%",
+                width: "98%",
                 my: 1,
               },
             }}

@@ -77,7 +77,8 @@ https://zoom.us/s/0000000（登録一切不要、お時間になりましたら�
               value={mailContent}
               onChange={(e) => setMailContent(e.target.value)}
               multiline
-              height="30vh"
+              maxRows={8}
+              sx={{ height: "310px", fontSize: "14px" }}
             />
           </Grid>
         </Grid>
