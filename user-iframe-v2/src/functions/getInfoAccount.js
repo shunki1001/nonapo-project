@@ -5,7 +5,8 @@ const getInfoAccount = async (
   domain,
   index,
   setSelected,
-  setAppointmentUrl
+  setAppointmentUrl,
+  setSnsAccount
 ) => {
   let tempList = [];
   let enterpriseId = "";
@@ -23,6 +24,7 @@ const getInfoAccount = async (
   }
   let tempName = "";
   let tempUrl = "";
+  let tempAccount = {};
   try {
     const docRef2 = await getDocs(
       query(
@@ -32,7 +34,7 @@ const getInfoAccount = async (
       )
     );
     docRef2.forEach(async (element) => {
-      console.log(element);
+      tempAccount = element.data();
       tempName = element.data().username;
       tempUrl = element.data().url;
     });
@@ -40,6 +42,7 @@ const getInfoAccount = async (
     console.log(error);
   }
   await new Promise((resolve) => setTimeout(resolve, 1000));
+  setSnsAccount(tempAccount);
   setSelected(tempName);
   setAppointmentUrl(tempUrl);
 };

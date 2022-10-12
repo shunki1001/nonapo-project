@@ -12,7 +12,7 @@ const schema = yup.object({
   mainButton: yup
     .string()
     .required("この項目は必須です")
-    .max(10, "最大10文字です"),
+    .max(8, "最大8文字です"),
   // password: yup
   //   .string()
   //   .required("この項目は必須です")

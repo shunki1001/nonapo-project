@@ -30,7 +30,7 @@ const TagCard = (props) => {
           height: "160px",
           width: "300px",
           bgcolor: "#F8F9FE",
-          borderRadius: "25px",
+          borderRadius: "12px",
           boxShadow: "0px 3px 6px 0px rgba(0,0,0,0.161)",
           px: 2,
           py: 1,

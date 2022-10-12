@@ -35,7 +35,9 @@ const getInfo = async (
       query(
         collection(db, "site"),
         where("domain", "==", domain),
-        where("userSite", "==", domainCheck)
+        where("userSite", "==", domainCheck),
+        orderBy("created_at", "desc"),
+        limit(1)
       )
     );
     console.log(docRef);
@@ -51,6 +53,11 @@ const getInfo = async (
     firstAccountId = userIdList[0].filter((item) => {
       return item === tempFirstId;
     })[0];
+    console.log(
+      userIdList[0].filter((item) => {
+        return item === tempFirstId;
+      })[0]
+    );
   } catch (error) {
     console.log(error);
   }

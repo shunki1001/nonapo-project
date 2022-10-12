@@ -1,10 +1,11 @@
 import { Snackbar } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { DataContext } from "../contexts/DataContext";
 
 const MainLayout = () => {
   const { errorSnackOpen, setErrorSnackOpen } = useContext(DataContext);
+
   return (
     <>
       <Outlet />

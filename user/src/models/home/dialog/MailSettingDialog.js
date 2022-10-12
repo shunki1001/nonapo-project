@@ -7,6 +7,7 @@ import {
   Grid,
   TextField,
   Typography,
+  Paper,
 } from "@mui/material";
 import React, { useContext, useEffect } from "react";
 import { DataContext } from "../../../contexts/DataContext";
@@ -16,31 +17,51 @@ const MailSettingDialog = (props) => {
   const { mailSubject, setMailSubject, mailContent, setMailContent, username } =
     useContext(DataContext);
 
-  useEffect(() => {
-    setMailSubject(`商談依頼ありがとうございます。`);
-    setMailContent(`この度は、リード獲得自動化Saas「リードダイナミクス」にノンアポ商談依頼誠にありがとうございます。
-    
-いつも大変お世話になっております。
-    
-現在、別件のオンラインMTGに対応中でして、改めてオンラインMTGのお時間頂ければと思います。
-    
-下記日程でご都合いかがでしょうか。
-    
-日程調整URL
-https://google.com/calendar.app
-    
-こちらMTG URLになります。
-https://zoom.us/s/0000000（登録一切不要、お時間になりましたらアクセスお願いします）
-    
-当日は営業が対応致します。
-    
-緊急連絡先：090-0000-0000
-    
-ご返信お待ちしております。`);
-  }, []);
+  //   useEffect(() => {
+  //     setMailSubject(`商談依頼ありがとうございます。`);
+  //     setMailContent(`この度は、リード獲得自動化Saas「リードダイナミクス」にノンアポ商談依頼誠にありがとうございます。\nいつも大変お世話になっております。
 
-  const handleClickDialog = () => {
-    navigator.clipboard.writeText("メールの設定を完了する");
+  // 現在、別件のオンラインMTGに対応中でして、改めてオンラインMTGのお時間頂ければと思います。
+
+  // 下記日程でご都合いかがでしょうか。
+
+  // 日程調整URL
+  // https://google.com/calendar.app
+
+  // こちらMTG URLになります。
+  // https://zoom.us/s/0000000（登録一切不要、お時間になりましたらアクセスお願いします）
+
+  // 当日は営業が対応致します。
+
+  // 緊急連絡先：090-0000-0000
+
+  // ご返信お待ちしております。`);
+  //   }, []);
+  const contentSample = `この度は、リード獲得自動化Saas「リードダイナミクス」にノンアポ商談依頼誠にありがとうございます。\nいつも大変お世話になっております。
+
+  現在、別件のオンラインMTGに対応中でして、改めてオンラインMTGのお時間頂ければと思います。
+
+  下記日程でご都合いかがでしょうか。
+
+  日程調整URL
+  https://google.com/calendar.app
+
+  こちらMTG URLになります。
+  https://zoom.us/s/0000000（登録一切不要、お時間になりましたらアクセスお願いします）
+
+  当日は営業が対応致します。
+
+  緊急連絡先：090-0000-0000
+
+  ご返信お待ちしております。`;
+
+  const handleClickDialog = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    setMailSubject(data.get("subject"));
+    setMailContent(data.get("content"));
+    // console.log(data.get("content").match(/[\r\n]/gs));
+    // console.log(data.get("content").replace(/\r?\n/g, "neXtLine"));
     setMailSetting(false);
   };
   return (
@@ -49,6 +70,12 @@ https://zoom.us/s/0000000（登録一切不要、お時間になりましたら�
       maxWidth="md"
       fullWidth
       onClose={() => setMailSetting(false)}
+      sx={{
+        "& .MuiDialog-paper": {
+          padding: "40px 24px 20px 24px",
+        },
+      }}
+      PaperProps={{ component: "form", onSubmit: handleClickDialog }}
     >
       <DialogContent sx={{ mx: 2 }}>
         <Box sx={{ textAlign: "center", "& p": { marginTop: "1em" } }}>
@@ -63,9 +90,10 @@ https://zoom.us/s/0000000（登録一切不要、お時間になりましたら�
           </Grid>
           <Grid item xs={12} sm={10}>
             <TextField
+              id="subject"
+              name="subject"
               fullWidth
-              value={mailSubject}
-              onChange={(e) => setMailSubject(e.target.value)}
+              defaultValue={mailSubject}
             />
           </Grid>
           <Grid item xs={12} sm={2} sx={{ textAlign: "right", p: 1 }}>
@@ -73,12 +101,14 @@ https://zoom.us/s/0000000（登録一切不要、お時間になりましたら�
           </Grid>
           <Grid item xs={12} sm={10}>
             <TextField
+              id="content"
+              name="content"
               fullWidth
-              value={mailContent}
-              onChange={(e) => setMailContent(e.target.value)}
+              defaultValue={mailContent}
               multiline
               maxRows={8}
-              sx={{ height: "310px", fontSize: "14px" }}
+              sx={{ fontSize: "14px" }}
+              placeholder={contentSample}
             />
           </Grid>
         </Grid>
@@ -87,7 +117,7 @@ https://zoom.us/s/0000000（登録一切不要、お時間になりましたら�
         <Button onClick={() => setMailSetting(false)} variant="outlined">
           キャンセル
         </Button>
-        <Button onClick={() => handleClickDialog()} variant="contained">
+        <Button type="submit" variant="contained">
           メール設定完了
         </Button>
       </DialogActions>

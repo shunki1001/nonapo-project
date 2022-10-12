@@ -21,7 +21,11 @@ const GetTagDialog = (props) => {
   const [issueAccountList, setIssueAccountList] = useState([]);
 
   useEffect(() => {
-    setIssueAccountList(accountList);
+    setIssueAccountList(
+      accountList.filter((item) => {
+        return item.alreadyRegist === true;
+      })
+    );
   }, [accountList]);
 
   const handleClickDialog = async () => {
@@ -86,7 +90,7 @@ const GetTagDialog = (props) => {
           })}
         </Grid>
       </DialogContent>
-      <DialogActions sx={{ mt: 3, mb: 6 }}>
+      <DialogActions sx={{ mt: 3, mb: 3 }}>
         <Box sx={{ width: "50%", textAlign: "right", pr: 1 }}>
           <Button
             onClick={() => setGetTag(false)}
@@ -95,8 +99,8 @@ const GetTagDialog = (props) => {
               width: "13em",
               background: "grey",
               borderRadius: "10px",
+              py: "10px",
               px: 0,
-              py: 2,
             }}
           >
             キャンセル
@@ -104,7 +108,7 @@ const GetTagDialog = (props) => {
         </Box>
         <Box sx={{ width: "50%", textAlign: "left", pl: 1 }}>
           <Button
-            sx={{ width: "13em", borderRadius: "10px", px: 0, py: 2 }}
+            sx={{ width: "13em", borderRadius: "10px", py: "10px", px: 0 }}
             onClick={() => handleClickDialog()}
             variant="contained"
           >

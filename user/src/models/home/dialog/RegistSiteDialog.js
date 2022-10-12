@@ -119,7 +119,7 @@ const RegistSiteDialog = (props) => {
           onClick={() => handleClickDialog()}
           disabled={userSite === ""}
           variant="outlined"
-          sx={{ mx: 3, py: 2, px: 6 }}
+          sx={{ mx: 3, py: "10px", px: 6 }}
         >
           キャンセル
         </Button>
@@ -127,7 +127,7 @@ const RegistSiteDialog = (props) => {
           onClick={() => handleClickDialog()}
           disabled={userSite === ""}
           variant="contained"
-          sx={{ mx: 3, py: 2, px: 6 }}
+          sx={{ mx: 3, py: "10px", px: 6 }}
         >
           このサイトに設置
         </Button>

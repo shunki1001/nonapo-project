@@ -1,3 +1,4 @@
+import { Avatar } from "@mui/material";
 import { Col, Row } from "react-bootstrap";
 
 const PartnerCard = (props) => {
@@ -71,7 +72,10 @@ const PartnerCard = (props) => {
                         className="avatar"
                         style={{ width: "54px", height: "54px" }}
                       >
-                        <img src={account.avatar} alt="" />
+                        <Avatar
+                          sx={{ width: "50px", height: "50px" }}
+                          src={account.avatar}
+                        />
                       </figure>
                     </div>
                   </label>

@@ -35,7 +35,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "../scema";
 
-import { Helmet } from "react-helmet";
+import MetaTag from "../MetaTag";
 
 function FormPage() {
   const { whereFrom, setWhereFrom, setAppointmentUrl } =
@@ -63,6 +63,7 @@ function FormPage() {
 
   const [selected, setSelected] = useState("");
   const [selectedIndex, setSelectedIndex] = useState();
+  const [snsAccount, setSnsAccount] = useState({});
 
   const handleClickSend = async (data) => {
     console.log("submit button clicked!");
@@ -78,7 +79,7 @@ function FormPage() {
     let selectedAccount = accountList[selectedIndex];
     await new Promise((resolve) => setTimeout(resolve, 1000));
     // メール送信
-    mailSender(data, whereFrom, selectedAccount);
+    mailSender(data, whereFrom, selectedAccount, snsAccount);
     navigate(`/${domain}/complete`);
   };
 
@@ -88,7 +89,13 @@ function FormPage() {
       getInfoList(domain, whereFrom, setAccountList, setWhereFrom);
     } else {
       console.log("SNSからの流入");
-      getInfoAccount(domain, index, setSelected, setAppointmentUrl);
+      getInfoAccount(
+        domain,
+        index,
+        setSelected,
+        setAppointmentUrl,
+        setSnsAccount
+      );
     }
   }, []);
 
@@ -115,7 +122,7 @@ function FormPage() {
 
   return (
     <div className="image-container set-full-height">
-      <Helmet title="テストです" />
+      <MetaTag account={snsAccount} sns={index !== undefined} />
       <a href="/">
         <div className="logo-container">
           <div className="brand">

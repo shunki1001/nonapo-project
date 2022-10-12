@@ -38,13 +38,7 @@
 }
 
 .customize-chat {
-  background: linear-gradient(
-    45deg,
-    rgba(39, 72, 193, 0.5),
-    rgba(41, 111, 239, 0.5),
-    rgba(94, 114, 228, 0.5),
-    rgba(104, 153, 255, 0.5)
-  );
+
   height: 100vh;
 }
 

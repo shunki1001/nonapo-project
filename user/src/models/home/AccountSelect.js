@@ -7,27 +7,36 @@ const AccountSelect = () => {
 
   const [renderFlag, setRenderFlag] = useState(false);
 
+  const [renderList, setRenderList] = useState([]);
+  const [renderAccount, setRenderAccount] = useState("");
+
   useEffect(() => {
     if (accountList.length > 0) {
       setRenderFlag(true);
+      setRenderList(accountList);
     } else {
       setRenderFlag(false);
     }
   }, [accountList]);
   useEffect(() => {
     if (accountList.length > 0) {
-      if (account !== "") {
-        setAccount((prev) => {
-          const choicedAccount = accountList.filter((item) => {
-            return item.username === prev;
-          });
-          return choicedAccount[0]?.username;
-        });
+      if (renderAccount !== "") {
+        setRenderAccount(
+          accountList.filter((item) => {
+            return item.id === localStorage.getItem("userId");
+          })[0].username
+        );
       } else {
+        // 初回レンダリング用
+        setRenderAccount(accountList[0].username);
         setAccount(accountList[0].username);
       }
     }
-  }, [accountList]);
+  }, [renderList]);
+
+  useEffect(() => {
+    setAccount(renderAccount);
+  }, [renderAccount]);
 
   return (
     <>
@@ -35,7 +44,7 @@ const AccountSelect = () => {
         <Select
           labelId="site-select-label"
           id="site-select"
-          value={account}
+          value={renderAccount}
           label="アカウント名"
           sx={{
             "& .MuiSelect-select": {
@@ -49,16 +58,15 @@ const AccountSelect = () => {
           }}
           onChange={(e, index) => {
             if (accountList.length > 0) {
-              setAccount(e.target.value);
+              setRenderAccount(e.target.value);
             }
-
             const targetuser = accountList.filter(
               (item) => item.username === e.target.value
             );
             localStorage.setItem("userId", targetuser[0].id);
           }}
         >
-          {accountList.map((item) => (
+          {renderList.map((item) => (
             <MenuItem value={item.username} key={item.id}>
               {item.username}
             </MenuItem>

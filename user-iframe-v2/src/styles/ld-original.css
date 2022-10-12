@@ -35,7 +35,7 @@ h6 .h6 {
 
 .h1,
 h1 {
-  font-family: "neuzeit-grotesk", "sans-serif";
+  font-family: "neuzeit-grotesk", sans-serif;
   font-size: 50px;
   line-height: 1.4em;
 }
@@ -124,6 +124,12 @@ Chat
   justify-content: space-between;
   flex-direction: column;
 }
+@media screen and (max-width: 412px) {
+  .chat {
+    width: 270px;
+    right: -126px;
+  }
+}
 
 /*--------------------
 Chat Title
@@ -181,6 +187,7 @@ Messages
   width: 100%;
 }
 .messages .messages-content {
+  padding: 0 10px;
   position: absolute;
   top: 0;
   left: 0;
@@ -368,7 +375,7 @@ Message Box
 .mtg-bg {
   position: relative;
   margin-top: 5px;
-  max-width: 200px;
+  width: 200px;
 }
 .mtg-btn {
   border-radius: 15px;
@@ -382,7 +389,7 @@ Message Box
   text-align: center;
   font-size: 10px;
   line-height: 2;
-  left: 70px;
+  left: 50px;
 }
 .message-submit a {
   color: #fff;
@@ -1221,14 +1228,17 @@ body {
 .content .buttons .button {
   display: inline-block;
   text-align: center;
-  font-size: 18px;
   height: 33px;
-
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   color: #fff;
   font-weight: 800;
   border-radius: 50px;
+}
+@media screen and (max-width: 412px) {
+  .content .buttons .button {
+    font-size: 14px;
+  }
 }
 .content .buttons .button:hover {
   color: white;

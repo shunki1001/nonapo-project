@@ -10,8 +10,7 @@ import {
   where,
 } from "firebase/firestore";
 import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
 import { db } from "../firebase";
 import firstSrc from "../img/defaultThumbnail.PNG";
 import firstSrcAvatar from "../img/defaultAvatar.PNG";
@@ -85,24 +84,44 @@ const DataContextProvider = (props) => {
   });
 
   // アポイントの未読通知
+  const [dataList, setDataList] = useState([]);
   const [newNotice, setNewNotice] = useState(false);
-  const newAppointmentCheck = async () => {
+  // const newAppointmentCheck = async () => {
+  //   const q = query(
+  //     collection(db, "appointment"),
+  //     where("enterpriseId", "==", localStorage.getItem("id"))
+  //   );
+  //   const result = await getDocs(q);
+  //   result.forEach((element) => {
+  // if (element.data().isChecked === undefined) {
+  //   setNewNotice(true);
+  // }
+  //   });
+  // };
+  // useEffect(() => {
+  //   newAppointmentCheck();
+  // }, [enterprise]);
+  useEffect(() => {
     const q = query(
       collection(db, "appointment"),
       where("enterpriseId", "==", localStorage.getItem("id"))
     );
-    const result = await getDocs(q);
-    result.forEach((element) => {
-      if (element.data().isChecked === undefined) {
-        setNewNotice(true);
-      }
-      console.log(element.data());
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const dataTemp = [];
+      let temp = {};
+      querySnapshot.forEach((doc) => {
+        temp = doc.data();
+        temp.id = doc.id;
+        dataTemp.push(temp);
+        if (doc.data().isChecked === undefined) {
+          setNewNotice(true);
+        }
+      });
+      setDataList(dataTemp);
     });
-  };
-
-  useEffect(() => {
-    newAppointmentCheck();
+    return () => unsubscribe();
   }, [enterprise]);
+
   const navigate = useNavigate();
 
   // ログイン認証関係
@@ -167,9 +186,25 @@ const DataContextProvider = (props) => {
     }
   };
 
+  // 更新後のurlとかメニューとか
+  const [selectedIndex, setSelectedIndex] = useState(0);
   useEffect(() => {
     reloadFunc();
+    if (localStorage.getItem("pathname") === "/appointment") {
+      navigate("/appointment");
+    }
+    // eslint-disable-next-line
   }, []);
+
+  const location = useLocation();
+  useEffect(() => {
+    localStorage.setItem("pathname", location.pathname);
+    if (localStorage.getItem("pathname") === "/") {
+      setSelectedIndex(0);
+    } else if (localStorage.getItem("pathname") === "/appointment") {
+      setSelectedIndex(1);
+    }
+  }, [location]);
 
   // サイトタイトル取得
   // const [siteTitleList, setSiteTitleList] = useState([])
@@ -188,9 +223,18 @@ const DataContextProvider = (props) => {
 
   useEffect(() => {
     if (localStorage.getItem("isAuth") === "true") {
-      navigate("/");
+      if (localStorage.getItem("pathname") === "/appointment") {
+        navigate("/appointment");
+      } else {
+        navigate("/");
+      }
     } else {
       navigate("/signin");
+      // window.location.reload();
+      setEnterprise("");
+      setAccountList([]);
+      setAccount("");
+      setUserSite("サイトを選択してください");
     }
     // eslint-disable-next-line
   }, [isAuth]);
@@ -253,7 +297,7 @@ const DataContextProvider = (props) => {
         setGoogleId(targetAccount[0]?.googleId);
         setStartTime(targetAccount[0]?.startTime);
         setEndTime(targetAccount[0]?.endTime);
-        setMailContent(targetAccount[0]?.mailContent);
+        setMailContent(targetAccount[0]?.mailContent.replace(/<br>/g, "\n"));
         setMailSubject(targetAccount[0]?.mailSubject);
         if (targetAccount[0]?.avatar === undefined) {
           setAvatarLink(firstSrcAvatar);
@@ -368,6 +412,10 @@ const DataContextProvider = (props) => {
     setNewNotice,
     hookData,
     setFookData,
+    dataList,
+    setDataList,
+    selectedIndex,
+    setSelectedIndex,
   };
 
   return (

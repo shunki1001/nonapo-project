@@ -21,7 +21,7 @@ const UserSelect = () => {
           setAnchorEl(e.currentTarget);
         }}
         endIcon={<KeyboardArrowDownIcon />}
-        sx={{ color: "#ffffff", fontSize: "21px" }}
+        sx={{ color: "#ffffff", fontSize: "17px" }}
       >
         {enterprise}
       </Button>

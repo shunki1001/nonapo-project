@@ -14,7 +14,9 @@ const registAccount = async (
   mailSubject,
   mailContent,
   avatar,
+  setAvatarLink,
   thumbnail,
+  setThumbnailLink,
   subButtonList,
   subButtonTitle,
   setErrorSnackOpen,
@@ -38,8 +40,10 @@ const registAccount = async (
       mainButton: hookData.mainButton,
       googleId: googleId,
       mailSubject: mailSubject,
-      mailContent: mailContent,
+      mailContent: mailContent.replace(/\r?\n/g, "<br>"),
       subButtonTitle: subButtonTitle,
+      // 1回でも登録されたか
+      alreadyRegist: true,
     });
     setErrorSnackOpen({
       open: true,
@@ -122,6 +126,7 @@ const registAccount = async (
           updateDoc(docRef2, {
             avatar: downloadURL,
           });
+          setAvatarLink(downloadURL);
         });
       }
     );
@@ -155,6 +160,7 @@ const registAccount = async (
           updateDoc(docRef2, {
             thumbnail: downloadURL,
           });
+          setThumbnailLink(downloadURL);
         });
       }
     );

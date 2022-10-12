@@ -3,6 +3,8 @@ import HomeLayout from "../Layout/HomeLayout";
 
 import { Box, createTheme, ThemeProvider } from "@mui/material";
 import { DataGrid, GridCellModes, GridToolbarExport } from "@mui/x-data-grid";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {
   collection,
   doc,
@@ -19,7 +21,7 @@ import clsx from "clsx";
 
 const theme = createTheme({}, jaJP);
 
-const stateString = ["商談済み", "成約", "検討中", "商談希望連絡あり"];
+const stateString = ["商談済み", "成約", "検討中", "商談依頼あり"];
 const columns = [
   { field: "date", headerName: "商談日", flex: 1, minwidth: 50 },
   {
@@ -30,7 +32,7 @@ const columns = [
     minwidth: 100,
   },
   {
-    field: "selectedAccount",
+    field: "name",
     headerName: "担当者名",
     sortable: false,
     flex: 0.75,
@@ -98,15 +100,16 @@ const columns = [
     field: "concierge",
     headerName: "商談対応者",
     sortable: false,
-    editable: true,
-    flex: 0.75,
+    editable: false,
+    filterable: false,
+    flex: 1,
     minwidth: 50,
   },
 ];
 
 const Appointment = () => {
-  const { enterprise, setNewNotice } = useContext(DataContext);
-  const [dataList, setDataList] = useState([]);
+  const { enterprise, setNewNotice, dataList, setDataList } =
+    useContext(DataContext);
 
   const rows = dataList.map((item) => {
     let todayTimestamp = new Date(item.date.seconds * 1000);
@@ -116,7 +119,7 @@ const Appointment = () => {
         todayTimestamp.getMonth() + 1
       }/${todayTimestamp.getDate()} ${todayTimestamp.getHours()}:${todayTimestamp.getMinutes()}`,
       enterprise: item.enterprise,
-      selectedAccount: item.selectedAccount,
+      name: item.name,
       phone: item.phone,
       email: item.email,
       address: item.address,
@@ -157,7 +160,6 @@ const Appointment = () => {
   }, [enterprise]);
 
   useEffect(() => {
-    console.log(dataList);
     try {
       dataList.forEach((item) => {
         updateDoc(doc(db, "appointment", item.id), {
@@ -174,7 +176,7 @@ const Appointment = () => {
   const [cellModesModel, setCellModesModel] = useState({});
 
   const handleCellClick = React.useCallback((params) => {
-    if (params.field === "state" || params.field === "concierge") {
+    if (params.field === "state") {
       setCellModesModel((prevModel) => {
         return {
           // Revert the mode of the other cells from other rows
@@ -264,16 +266,32 @@ const Appointment = () => {
             cellModesModel={cellModesModel}
             onCellModesModelChange={handleCellModesModelChange}
             onCellClick={handleCellClick}
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "date", sort: "desc" }],
+              },
+            }}
             processRowUpdate={(newRow, oldRow) =>
               processRowUpdate(newRow, oldRow)
             }
             onProcessRowUpdateError={(error) => console.log(error)}
             sx={{
               border: "none",
-              p: 1,
+              py: 1,
+              px: "2%",
               color: "#000000",
+              "& .MuiDataGrid-menuIcon": {
+                display: "none",
+              },
+              "& .MuiDataGrid-columnHeader:nth-child(8) .MuiDataGrid-menuIcon":
+                {
+                  display: "flex",
+                },
               "& .MuiDataGrid-columnHeaders": {
                 border: "none",
+              },
+              "& .MuiDataGrid-columnHeader:focus-within": {
+                outline: "none",
               },
               "& .MuiDataGrid-columnHeaderTitle": {
                 fontWeight: 700,
@@ -283,6 +301,20 @@ const Appointment = () => {
               },
               "& .MuiDataGrid-cell": {
                 border: "none",
+                fontSize: "0.765rem",
+              },
+              "& .MuiDataGrid-cell:focus-within": {
+                outline: "none",
+              },
+              "& .MuiDataGrid-cell.MuiDataGrid-cell--editing": {
+                backgroundColor: "transparent",
+                boxShadow: "none",
+              },
+              "& .MuiDataGrid-cell.MuiDataGrid-cell--editing .Mui-focused": {
+                fontSize: "0.765rem",
+              },
+              "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                border: "0",
               },
               "& .MuiDataGrid-row:not(.MuiDataGrid-row--dynamicHeight)>.MuiDataGrid-cell":
                 {
@@ -300,6 +332,8 @@ const Appointment = () => {
             }}
             components={{
               Toolbar: CustomToolbar,
+              ColumnSortedDescendingIcon: ArrowDropUpIcon,
+              ColumnSortedAscendingIcon: ArrowDropDownIcon,
             }}
           />
         </Box>

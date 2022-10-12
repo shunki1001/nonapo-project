@@ -17,19 +17,19 @@ const DataContextProvider = (props) => {
       password === process.env.REACT_APP_PASSWORD
     ) {
       setIsAuth(true);
-      localStorage.setItem("isAuth", true);
+      localStorage.setItem("isAuthAdmin", true);
     } else {
       setErrorLogin(true);
     }
   };
   const signout = () => {
     setIsAuth(false);
-    localStorage.setItem("isAuth", false);
+    localStorage.setItem("isAuthAdmin", false);
   };
 
   useEffect(() => {
-    if (localStorage.getItem("isAuth")) {
-      setIsAuth(localStorage.getItem("isAuth"));
+    if (localStorage.getItem("isAuthAdmin")) {
+      setIsAuth(localStorage.getItem("isAuthAdmin"));
     }
   }, []);
 

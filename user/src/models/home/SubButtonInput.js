@@ -40,29 +40,14 @@ const SubButtonInput = () => {
     setSubButtonList,
   } = useContext(DataContext);
 
-  // const [multiSubButton, setMultiSubButton] = useState([]);
-  // const [onlySubButton, setOnlySubButton] = useState({});
-
   const [renderList, setRenderList] = useState([]);
 
-  // const handleBlur = (e) => {
-  //   if (!e.target.value) {
-  //     setError({ ...error, subButtonTitle: true, firstRender: false });
-  //   } else {
-  //     setError({ ...error, subButtonTitle: false, firstRender: false });
-  //   }
-  // };
-  // useEffect(() => {
-  //   setOnlySubButton(subButtonList.filter((item) => item.isOnly === true)[0]);
-  //   setMultiSubButton(subButtonList.filter((item) => item.isOnly === false));
-  // }, [subButtonList]);
   useEffect(() => {
     setRenderList(
       subButtonList.filter((item) => {
         return item.isOnly === isOneSubButton;
       })
     );
-    console.log();
   }, [isOneSubButton, subButtonList]);
 
   return (
@@ -91,9 +76,13 @@ const SubButtonInput = () => {
             <Typography sx={{ fontWeight: 700 }}>ボタンタイトル</Typography>
             <TextField
               value={subButtonTitle}
-              onChange={(e) => setSubButtonTitle(e.target.value)}
+              onChange={(e) => {
+                setSubButtonTitle(e.target.value);
+              }}
               placeholder="ヘルプ・その他"
-              // onBlur={handleBlur}
+              inputProps={{
+                maxLength: 8,
+              }}
             />
             <Box sx={{ display: "inline-block", mt: 2 }}>
               <Typography variant="caption" sx={{ ml: 3 }}>
@@ -110,9 +99,9 @@ const SubButtonInput = () => {
                 <Grid item xs={12} sm={5} sx={{ my: 1 }}>
                   <Typography sx={{ fontWeight: 700 }}>
                     {isOneSubButton ? (
-                      <>ボタンタイトル（最大10文字）</>
+                      <>ボタンタイトル（最大8文字）</>
                     ) : (
-                      <>ボタンタイトル{index + 1}（最大12文字）</>
+                      <>ボタンタイトル{index + 1}（最大8文字）</>
                     )}
                   </Typography>
                   <TextField
@@ -138,6 +127,9 @@ const SubButtonInput = () => {
                           }
                         })
                       );
+                    }}
+                    inputProps={{
+                      maxLength: 8,
                     }}
                   />
                 </Grid>

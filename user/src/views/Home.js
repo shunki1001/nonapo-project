@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import HomeLayout from "../Layout/HomeLayout";
 import { Box, Grid } from "@mui/material";

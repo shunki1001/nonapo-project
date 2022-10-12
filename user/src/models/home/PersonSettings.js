@@ -86,7 +86,9 @@ const PersonSettings = () => {
       mailSubject,
       mailContent,
       avatar,
+      setAvatarLink,
       thumbnail,
+      setThumbnailLink,
       subButtonList,
       subButtonTitle,
       setErrorSnackOpen,
@@ -106,7 +108,6 @@ const PersonSettings = () => {
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          gap: "1em",
           alignItems: "center",
           py: 1,
         }}
@@ -128,6 +129,7 @@ const PersonSettings = () => {
             />
           }
           label="このユーザーを先頭に配置"
+          sx={{ ml: 2 }}
         />
         <Box sx={{ flexGrow: 1 }}></Box>
         <Button
@@ -145,7 +147,7 @@ const PersonSettings = () => {
           variant="contained"
           onClick={handleSubmit(onSubmit)}
           className={styles.save_button}
-          sx={{ padding: "0.6em 2em", position: "sticky" }}
+          sx={{ padding: "0.6em 2em", display: "block", position: "sticky" }}
           disabled={Object.keys(errors).length > 0}
         >
           変更内容を保存
@@ -269,7 +271,7 @@ const PersonSettings = () => {
           </Grid>
           <Grid item xs={12} md={12}>
             <CustomTextField
-              label="メインボタンのタイトル (最大10文字)"
+              label="メインボタンのタイトル (最大8文字)"
               name="mainButton"
               register={register}
               errors={errors}

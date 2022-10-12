@@ -49,6 +49,7 @@ const HomeLayout = (props) => {
               width: "100%",
               zIndex: "-2",
               top: "0",
+              minHeight: "calc(550px + 30vh)",
               height: "100vh",
               background: "#F8F9FA",
             }}
@@ -68,40 +69,87 @@ const HomeLayout = (props) => {
               </Box>
             </Box>
             <Menu variant="permanent" drawerWidth={drawerWidth} />
-            <Box
-              sx={{
-                height: "87vh",
-                px: 6,
-              }}
-            >
+            {props.title === "商談対応者設定" ? (
               <Box
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  height: "7vh",
-                  mb: "7px",
+                  minHeight: "87vh",
+                  height: "auto",
+                  px: "2.5%",
                 }}
               >
-                <Typography
+                <Box
                   sx={{
-                    color: "white",
-                    display: "inline-block",
-                    fontSize: "24px",
-                    fontWeight: "600",
+                    display: "flex",
+                    alignItems: "center",
+                    height: "7vh",
+                    mb: "7px",
                   }}
                 >
-                  {props.title}
-                </Typography>
-                <Box sx={{ display: "inline-block", mx: 2 }}>
-                  {props.title === "商談対応者設定" && (
+                  <Typography
+                    sx={{
+                      color: "white",
+                      display: "inline-block",
+                      fontSize: "24px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {props.title}
+                  </Typography>
+                  <Box sx={{ display: "inline-block", mx: 2 }}>
                     <SiteSelect setSiteOpen={setSiteOpen} />
-                  )}
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    backgroundColor: "transparent",
+                    height: "calc(80vh- 7px)",
+                  }}
+                >
+                  {props.children}
                 </Box>
               </Box>
-              <Box sx={{ backgroundColor: "transparent", height: "80vh" }}>
-                {props.children}
+            ) : (
+              <Box
+                sx={{
+                  minHeight: "87vh",
+                  height: "auto",
+                  px: "2.5%",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    height: "7vh",
+                    mb: "7px",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: "white",
+                      display: "inline-block",
+                      fontSize: "24px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {props.title}
+                  </Typography>
+                  <Box sx={{ display: "inline-block", mx: 2 }}>
+                    {props.title === "商談対応者設定" && (
+                      <SiteSelect setSiteOpen={setSiteOpen} />
+                    )}
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    backgroundColor: "transparent",
+                    height: "calc(80vh- 7px)",
+                  }}
+                >
+                  {props.children}
+                </Box>
               </Box>
-            </Box>
+            )}
           </Box>
           {siteOpen && (
             <RegistSiteDialog siteOpen={siteOpen} setSiteOpen={setSiteOpen} />
@@ -144,7 +192,7 @@ const HomeLayout = (props) => {
             >
               {props.title}
             </Typography>
-            設置するサイト{props.title === "商談対応者設定" && <SiteSelect />}
+            {props.title === "商談対応者設定" && <SiteSelect />}
             {props.children}
           </Box>
         </>

@@ -40,21 +40,23 @@ const ShowTagCode = (props) => {
           </Typography>
         </Box>
         <Box sx={{ border: "1px solid #707070", m: 2, p: 2 }}>
-          <Typography sx={{ overflowWrap: "break-word" }}>{tag}</Typography>
+          <Typography sx={{ overflowWrap: "break-word", fontSize: "0.7rem" }}>
+            {tag}
+          </Typography>
         </Box>
       </DialogContent>
-      <DialogActions sx={{ justifyContent: "center" }}>
+      <DialogActions sx={{ justifyContent: "center", mb: "20px" }}>
         <Button
           onClick={() => setShowTag(false)}
           variant="contained"
-          sx={{ py: 2, px: 6, background: "grey" }}
+          sx={{ py: "10px", px: 6, background: "grey" }}
         >
           閉じる
         </Button>
         <Button
           onClick={() => handleClickDialog()}
           variant="contained"
-          sx={{ py: 2, px: 6 }}
+          sx={{ py: "10px", px: 6 }}
         >
           タグをコピー
         </Button>

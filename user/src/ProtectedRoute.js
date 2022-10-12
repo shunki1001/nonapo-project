@@ -9,7 +9,7 @@ const ProtectedRoute = () => {
   //   } else {
   //     return <Navigate to="/signin" replace />;
   //   }
-  // if (localStorage.getItem("isAuth") === "true") {
+  // if (isAuth === true) {
   //   return <Navigate to="/signin" replace />;
   // }
   return <Outlet />;

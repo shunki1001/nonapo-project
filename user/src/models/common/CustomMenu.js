@@ -7,8 +7,8 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { DataContext } from "../../contexts/DataContext";
 
 import logoTop from "../../img/log-tp.png";
@@ -35,28 +35,18 @@ const menuOptions = [
 
 const CustomMenu = (props) => {
   const { menuOpen, setMenuOpen, variant, drawerWidth } = props;
-  const { newNotice } = useContext(DataContext);
+  const { newNotice, selectedIndex } = useContext(DataContext);
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const navigate = useNavigate();
-  const location = useLocation();
 
   const handleClickMenu = (menuItem, index) => {
     if (menuItem.external === true) {
-      window.location.replace(menuItem.url);
+      window.open(menuItem.url, "_blank");
       return null;
     } else {
       navigate(menuItem.url);
     }
   };
-  useEffect(() => {
-    if (location.pathname === "/") {
-      setSelectedIndex(0);
-    } else if (location.pathname === "/appointment") {
-      setSelectedIndex(1);
-    }
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <Drawer

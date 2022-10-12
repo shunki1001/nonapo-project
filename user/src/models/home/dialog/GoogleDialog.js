@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   IconButton,
-  InputAdornment,
   Link,
   TextField,
   Typography,
@@ -27,23 +26,23 @@ const GoogleDialog = (props) => {
   return (
     <Dialog
       open={googleDialog}
-      maxWidth="md"
+      sx={{ "& .MuiDialog-paper": { maxWidth: "800px", padding: "32px" } }}
       fullWidth
       onClose={() => setGoogleDialog(false)}
     >
-      <DialogContent sx={{ margin: "2em 10%" }}>
+      <DialogContent sx={{ mx: 2 }}>
         <Box sx={{ textAlign: "center", mb: 3, "& p": { marginTop: "1em" } }}>
           <Typography variant="h5">Googleカレンダー連携</Typography>
           <Typography>
             Googleカレンダーでスケジュール管理している方は、カレンダー連携して頂くと
             ノンアポへ自動反映され、予定が埋まっている所は商談受付不可にできます。
           </Typography>
-          <a
+          <Link
             href="https://www.google.com/search?q=Google%E3%82%AB%E3%83%AC%E3%83%B3%E3%83%80%E3%83%BC+%E7%89%B9%E5%AE%9A%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%81%A8%E3%81%AE%E5%85%B1%E6%9C%89%E3%81%99%E3%82%8B"
             target="_blank"
           >
             詳しいやり方はこちら
-          </a>
+          </Link>
         </Box>
         <Typography sx={{ "& span": { fontWeight: "bold" } }}>
           <span>STEP１</span>
@@ -54,39 +53,38 @@ const GoogleDialog = (props) => {
             value={googleAddress}
             variant="standard"
             disabled
-            sx={{
-              width: "80%",
-              boxShadow: "none",
-              border: "1px solid #000000",
-              borderRadius: "3px",
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    sx={{ color: "action.active", ml: 1, mt: 1 }}
-                    onClick={() => navigator.clipboard.writeText(googleAddress)}
-                  >
-                    <ContentCopyIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              disableUnderline: true,
-            }}
+            sx={{ width: "50%" }}
           />
+          <IconButton
+            sx={{ color: "action.active", ml: 1, mt: 1 }}
+            onClick={() => navigator.clipboard.writeText(googleAddress)}
+          >
+            <ContentCopyIcon />
+          </IconButton>
         </Box>
         <Typography sx={{ "& span": { fontWeight: "bold" }, mt: 3 }}>
           <span>STEP２</span>
           ：連携したいカレンダーのカレンダーIDを以下に入力。
         </Typography>
-        <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+        <Box sx={{ display: "flex", alignItems: "flex-end", gap: "10px" }}>
           <TextField
             value={googleId}
-            variant="outlined"
+            variant="standard"
+            label="カレンダーID"
             placeholder="yamadataro@gmail.com"
             sx={{ width: "50%" }}
             onChange={(e) => setGoogleId(e.target.value)}
           />
+          <Button
+            onClick={() => setGoogleId("")}
+            sx={{
+              background: "#F47474",
+              color: "white",
+              "&:hover": { background: "#F47474", opacity: "0.8" },
+            }}
+          >
+            Googleカレンダー連携を解除
+          </Button>
         </Box>
         <Typography sx={{ "& span": { fontWeight: "bold" }, mt: 3 }}>
           <span>STEP３</span>

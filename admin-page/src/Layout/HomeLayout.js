@@ -50,7 +50,7 @@ const HomeLayout = (props) => {
               py: 15,
             }}
           >
-            <Box sx={{ mx: 6, backgroundColor: "#ffffff" }}>
+            <Box sx={{ mx: "2.5%", backgroundColor: "#ffffff" }}>
               {props.children}
             </Box>
           </Box>
