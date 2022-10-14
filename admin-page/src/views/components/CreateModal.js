@@ -220,7 +220,7 @@ const CreateModal = (props) => {
             error={"numberOfSite" in errors}
             helperText={errors.numberOfSite?.message}
             {...register("numberOfSite")}
-            disabled={newData.id !== ""}
+            // disabled={newData.id !== ""}
             // error={inputError.numberOfSite}
             // value={newData.numberOfSite}
             // onBlur={(e)=>handleBlur(e, "numberOfSite")}
@@ -317,7 +317,7 @@ const CreateModal = (props) => {
             error={"numberOfAccount" in errors}
             helperText={errors.numberOfAccount?.message}
             {...register("numberOfAccount")}
-            disabled={newData.id !== ""}
+            // disabled={newData.id !== ""}
             // error={inputError.numberOfAccount}
             // value={newData.numberOfAccount}
             // onBlur={(e)=>handleBlur(e, "numberOfAccount")}

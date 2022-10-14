@@ -26,9 +26,16 @@
 }
 
 .custom_table td {
-    padding: 10px;
+    padding: 0px 10px;
     word-break: break-all;
+    
 }
+.custom_table td p{
+    overflow-y: auto;
+    max-height: 80px;
+    margin: 0;
+}
+
 .custom_table td:nth-child(-n+8){
     border-top: 1px solid #B1B1B1;
     border-bottom: 1px solid #B1B1B1;

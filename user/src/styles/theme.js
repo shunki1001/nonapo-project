@@ -85,7 +85,7 @@ const theme = createTheme({
           input: {
             "&::placeholder": {
               // textOverflow: "ellipsis !important",
-              color: "rgb(200 200 200 / 87%)",
+              color: "rgba(0, 0, 0, 0.38)",
               fontWeight: "500",
             },
           },

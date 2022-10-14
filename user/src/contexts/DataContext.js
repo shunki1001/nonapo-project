@@ -275,6 +275,7 @@ const DataContextProvider = (props) => {
       dataTemp.push(temp);
     });
     setSubButtonList(dataTemp);
+    console.log(dataTemp);
   };
   useEffect(() => {
     if (account !== undefined && account !== null) {

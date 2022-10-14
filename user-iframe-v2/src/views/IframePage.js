@@ -18,7 +18,7 @@ function IframePage() {
   const { setWhereFrom } = useContext(DataContext);
   const [firstAccount, setFirstAccount] = useState({});
   const [helpMessageOpen, setHelpMessageOpen] = useState(false);
-  const [online, setOnline] = useState(true);
+  const [online, setOnline] = useState(false);
   const [haveSubbutton, setHaveSubbutton] = useState(true);
 
   const [open, setOpen] = useState(true);
@@ -176,33 +176,33 @@ function IframePage() {
                               return <></>;
                             } else {
                               return (
-                                <Button
-                                  key={item.title}
-                                  fullWidth
-                                  variant="outlined"
-                                  sx={{
-                                    background: "rgb(255 255 255)",
-                                    border: "1px solid #4762ff !important",
-                                    color: "#4762ff !important",
-                                    borderRadius: "15px",
-                                    fontSize: "15px",
-                                    boxShadow:
-                                      "0px 3px 16px 0px rgb(0 0 0 / 12%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%)",
-                                    fontWeight: "700",
-                                    lineHeight: "0",
-                                    height: "33px",
-                                    py: 0,
-                                    mb: "10px",
-                                  }}
+                                <Link
+                                  target="_top"
+                                  href={item.url}
+                                  sx={{ textDecoration: "none" }}
                                 >
-                                  <Link
-                                    href={item.url}
-                                    target="_top"
-                                    sx={{ textDecoration: "none" }}
+                                  <Button
+                                    key={item.title}
+                                    fullWidth
+                                    variant="outlined"
+                                    sx={{
+                                      background: "rgb(255 255 255)",
+                                      border: "1px solid #4762ff !important",
+                                      color: "#4762ff !important",
+                                      borderRadius: "15px",
+                                      fontSize: "15px",
+                                      boxShadow:
+                                        "0px 3px 16px 0px rgb(0 0 0 / 12%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%)",
+                                      fontWeight: "700",
+                                      lineHeight: "0",
+                                      height: "33px",
+                                      py: 0,
+                                      mb: "10px",
+                                    }}
                                   >
                                     {item.title}
-                                  </Link>
-                                </Button>
+                                  </Button>
+                                </Link>
                               );
                             }
                           })}
@@ -232,6 +232,8 @@ function IframePage() {
                             p: 0,
                             color: "#fff",
                             backgroundColor: "#4762ff",
+                            paddingLeft: "calc(var(--bs-gutter-x)*.2)",
+                            paddingRight: "calc(var(--bs-gutter-x)*.2)",
                           }}
                           className="button btn-apo-bg circle"
                         >
@@ -248,23 +250,24 @@ function IframePage() {
                         {/* サブボタンを設定している人の内、複数ボタンを持っている？ */}
                         {firstAccount?.isOneSubButton ? (
                           <>
-                            <Button
-                              onClick={() => {
-                                // navigate(firstAccount?.button[0]?.url);
-                                window.location.href =
-                                  firstAccount?.button[0]?.url;
-                              }}
-                              variant="outlined"
-                              sx={{
-                                p: 0,
-                                fontSize: "16px",
-                                paddingLeft: "calc(var(--bs-gutter-x)*.2)",
-                                paddingRight: "calc(var(--bs-gutter-x)*.2)",
-                              }}
-                              className="button btn-now-bg circle message-sub"
+                            <Link
+                              href={firstAccount?.button[0]?.url}
+                              target="_top"
+                              sx={{ textDecoration: "none" }}
                             >
-                              {firstAccount?.button[0]?.title}
-                            </Button>
+                              <Button
+                                variant="outlined"
+                                sx={{
+                                  p: 0,
+                                  fontSize: "16px",
+                                  paddingLeft: "calc(var(--bs-gutter-x)*.2)",
+                                  paddingRight: "calc(var(--bs-gutter-x)*.2)",
+                                }}
+                                className="button btn-now-bg circle message-sub"
+                              >
+                                {firstAccount?.button[0]?.title}
+                              </Button>
+                            </Link>
                           </>
                         ) : (
                           <Button

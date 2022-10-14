@@ -143,15 +143,16 @@ const PersonSettings = () => {
       </Box>
       <Divider sx={{ height: "1vh" }} />
       <Box className={styles.person_setting}>
-        <Button
-          variant="contained"
-          onClick={handleSubmit(onSubmit)}
-          className={styles.save_button}
-          sx={{ padding: "0.6em 2em", display: "block", position: "sticky" }}
-          disabled={Object.keys(errors).length > 0}
-        >
-          変更内容を保存
-        </Button>
+        <Box className={styles.save_button}>
+          <Button
+            variant="contained"
+            onClick={handleSubmit(onSubmit)}
+            sx={{ padding: "0.6em 2em" }}
+            disabled={Object.keys(errors).length > 0}
+          >
+            変更内容を保存
+          </Button>
+        </Box>
         <Grid
           container
           sx={{ mt: "-14px", alignItems: "center", rowGap: "1em" }}
