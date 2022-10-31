@@ -113,13 +113,24 @@ app.get("/google", (req, res) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const userMail = process.env.TEST_USER;
+// const userMail = process.env.TEST_USER;
+// const transporter = nodemailer.createTransport({
+//   port: 465,
+//   host: "smtp.lolipop.jp",
+//   auth: {
+//     user: userMail,
+//     pass: process.env.TEST_PASSWORD,
+//   },
+//   secure: true, // upgrades later with STARTTLS -- change this based on the PORT
+// });
+
+const userMail = process.env.USER;
 const transporter = nodemailer.createTransport({
   port: 465,
   host: "smtp.lolipop.jp",
   auth: {
     user: userMail,
-    pass: process.env.TEST_PASSWORD,
+    pass: process.env.PASSWARD,
   },
   secure: true, // upgrades later with STARTTLS -- change this based on the PORT
 });
@@ -239,13 +250,18 @@ app.post("/mailer/online", (req, res) => {
       </html>
     `,
   };
-
-  transporter.sendMail(mailData, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    res.status(200).send({ message: "Mail send", message_id: info.messageId });
-  });
+  try {
+    transporter.sendMail(mailData, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      res
+        .status(200)
+        .send({ message: "Mail send", message_id: info.messageId });
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.post("/mailer/offline", (req, res) => {

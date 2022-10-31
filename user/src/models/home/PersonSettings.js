@@ -155,7 +155,8 @@ const PersonSettings = () => {
         </Box>
         <Grid
           container
-          sx={{ mt: "-14px", alignItems: "center", rowGap: "1em" }}
+          sx={{ alignItems: "center", rowGap: "1em" }}
+          className={styles.margin_control}
         >
           <Grid item xs={12} md={5} className={styles.top_container}>
             <Grid container sx={{ alignItems: "center" }}>

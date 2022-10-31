@@ -70,6 +70,8 @@ const registAccount = async (
     }
   });
 
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   // try {
   //   multiSubButton.forEach(async (element) => {
   //     await updateDoc(doc(db, "multibutton", element.id), {

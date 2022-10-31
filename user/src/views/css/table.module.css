@@ -16,9 +16,11 @@
 
 .custom_table th {
     color: #000;
-}
-.custom_table th{
     width: 10%;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
 }
 .custom_table th:nth-child(8){
     width: 7.5%;
@@ -69,3 +71,6 @@
     border-bottom: 2px solid #4357C9;
 }
 
+.pagination{
+    text-align: right;
+}

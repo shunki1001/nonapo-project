@@ -1,4 +1,10 @@
-import { useTable, useFilters, useGlobalFilter, useSortBy } from "react-table";
+import {
+  useTable,
+  useFilters,
+  useGlobalFilter,
+  useSortBy,
+  usePagination,
+} from "react-table";
 import React, { useContext, useEffect, useState } from "react";
 import HomeLayout from "../Layout/HomeLayout";
 import {
@@ -10,9 +16,12 @@ import {
   FormControl,
   Select,
   MenuItem,
+  Typography,
 } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 import styles from "./css/table.module.css";
 import { DataContext } from "../contexts/DataContext";
@@ -290,13 +299,25 @@ const NewAppointment = () => {
     }
   }, [dataList]);
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      { columns, data, defaultColumn, initialState, updateMyData },
-      useFilters,
-      useGlobalFilter,
-      useSortBy
-    );
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    nextPage,
+    previousPage,
+    state: { pageIndex },
+  } = useTable(
+    { columns, data, defaultColumn, initialState, updateMyData },
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
 
   return (
     <HomeLayout title="アポイント管理">
@@ -309,14 +330,22 @@ const NewAppointment = () => {
           bgcolor: "#ffffff",
           boxShadow: "rgb(137 137 137 / 16%) 0px 4px 5px 0px",
           px: 2,
-          py: 1,
+          py: 0,
+          overflowY: "auto",
         }}
       >
-        <Box sx={{ width: "100%", textAlign: "right" }}>
+        <Box
+          sx={{
+            width: "100%",
+            textAlign: "right",
+            mt: 1,
+          }}
+        >
           <Button
             variant="outlined"
             sx={{
               px: "2em",
+
               "& a": { textDecoration: "none", color: "inherit" },
             }}
           >
@@ -352,7 +381,7 @@ const NewAppointment = () => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {page.map((row) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
@@ -366,6 +395,20 @@ const NewAppointment = () => {
             })}
           </tbody>
         </table>
+        <div className={styles.pagination}>
+          <IconButton
+            onClick={() => previousPage()}
+            disabled={!canPreviousPage}
+          >
+            <KeyboardArrowLeftIcon />
+          </IconButton>
+          <IconButton onClick={() => nextPage()} disabled={!canNextPage}>
+            <KeyboardArrowRightIcon />
+          </IconButton>
+          <Typography variant="p">
+            Page {pageIndex + 1} of {pageOptions.length}
+          </Typography>
+        </div>
       </Box>
     </HomeLayout>
   );

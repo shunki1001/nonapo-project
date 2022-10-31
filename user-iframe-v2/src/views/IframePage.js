@@ -219,7 +219,13 @@ function IframePage() {
                 {haveSubbutton === false ? (
                   <div className="row">
                     <div className="col-3"></div>
-                    <div className="col-6">
+                    <div
+                      className="col-6"
+                      style={{
+                        paddingLeft: "calc(var(--bs-gutter-x)*.2)",
+                        paddingRight: "calc(var(--bs-gutter-x)*.2)",
+                      }}
+                    >
                       <div className="buttons">
                         <Button
                           onClick={() => {
@@ -245,7 +251,13 @@ function IframePage() {
                   </div>
                 ) : (
                   <div className="row">
-                    <div className="col-6">
+                    <div
+                      className="col-6"
+                      style={{
+                        paddingLeft: "calc(var(--bs-gutter-x)*.2)",
+                        paddingRight: "calc(var(--bs-gutter-x)*.2)",
+                      }}
+                    >
                       <div className="buttons">
                         {/* サブボタンを設定している人の内、複数ボタンを持っている？ */}
                         {firstAccount?.isOneSubButton ? (
@@ -289,7 +301,13 @@ function IframePage() {
                         )}
                       </div>
                     </div>
-                    <div className="col-6">
+                    <div
+                      className="col-6"
+                      style={{
+                        paddingLeft: "calc(var(--bs-gutter-x)*.2)",
+                        paddingRight: "calc(var(--bs-gutter-x)*.2)",
+                      }}
+                    >
                       <div className="buttons">
                         <Button
                           onClick={() => {
